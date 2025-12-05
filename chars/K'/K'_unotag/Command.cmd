@@ -313,17 +313,17 @@ time = 32
 
 [Command]
 name = "HCBx2+2P"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x+y
+command = ~F, D, DB, F, D, DB, x+y
 time = 64
 
 [Command]
 name = "HCBx2+2P"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, y+z
+command = ~F, D, DB, F, D, DB, y+z
 time = 64
 
 [Command]
 name = "HCBx2+2P"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x+z
+command = ~F, D, DB, F, D, DB, x+z
 time = 64
 
 

@@ -153,15 +153,15 @@ time = 1
 ;-| Super Motions |--------------------------------------------------------
 [Command]
 name = "4123641236pp"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, x+y
+command = ~B, D, DF, B, D, DF, x+y
 time = 64
 [Command]
 name = "4123641236pp"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, x+z
+command = ~B, D, DF, B, D, DF, x+z
 time = 64
 [Command]
 name = "4123641236pp"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, y+z
+command = ~B, D, DF, B, D, DF, y+z
 time = 64
 
 [Command]

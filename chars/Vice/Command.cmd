@@ -213,48 +213,48 @@ time = 1
 
 [Command]
 name = "NegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, a
+command = ~F, D, DB, F, D, DB, a
 time = 48
 
 [Command]
 name = "NegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, b
+command = ~F, D, DB, F, D, DB, b
 time = 48
 
 [Command]
 name = "NegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, c
+command = ~F, D, DB, F, D, DB, c
 time = 48
 
 [Command]
 name = "NegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~a
+command = ~F, D, DB, F, D, DB, ~a
 time = 48
 
 [Command]
 name = "NegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~b
+command = ~F, D, DB, F, D, DB, ~b
 time = 48
 
 [Command]
 name = "NegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~c
+command = ~F, D, DB, F, D, DB, ~c
 time = 48
 
 
 [Command]
 name = "MAXNegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, a+b
+command = ~F, D, DB, F, D, DB, a+b
 time = 48
 
 [Command]
 name = "MAXNegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, b+c
+command = ~F, D, DB, F, D, DB, b+c
 time = 48
 
 [Command]
 name = "MAXNegativeGain"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, a+c
+command = ~F, D, DB, F, D, DB, a+c
 time = 48
 
 

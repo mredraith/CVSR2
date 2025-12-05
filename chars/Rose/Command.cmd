@@ -354,62 +354,62 @@ time = 32
 
 [Command]
 name = "Aura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x
+command = ~F, D, DB, F, D, DB, x
 time = 32
 
 [Command]
 name = "Aura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, y
+command = ~F, D, DB, F, D, DB, y
 time = 32
 
 [Command]
 name = "Aura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, z
+command = ~F, D, DB, F, D, DB, z
 time = 32
 
 [Command]
 name = "Aura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~x
+command = ~F, D, DB, F, D, DB, ~x
 time = 32
 
 [Command]
 name = "Aura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~y
+command = ~F, D, DB, F, D, DB, ~y
 time = 32
 
 [Command]
 name = "Aura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~z
+command = ~F, D, DB, F, D, DB, ~z
 time = 32
 
 [Command]
 name = "MAXAura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x+y
+command = ~F, D, DB, F, D, DB, x+y
 time = 32
 
 [Command]
 name = "MAXAura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, y+z
+command = ~F, D, DB, F, D, DB, y+z
 time = 32
 
 [Command]
 name = "MAXAura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x+z
+command = ~F, D, DB, F, D, DB, x+z
 time = 32
 ;
 [Command]
 name = "MAXAura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~x+y
+command = ~F, D, DB, F, D, DB, ~x+y
 time = 32
 
 [Command]
 name = "MAXAura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~y+z
+command = ~F, D, DB, F, D, DB, ~y+z
 time = 32
 
 [Command]
 name = "MAXAura Soul Spark"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, ~x+z
+command = ~F, D, DB, F, D, DB, ~x+z
 time = 32
 
 [Command]

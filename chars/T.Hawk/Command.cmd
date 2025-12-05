@@ -199,62 +199,62 @@ time = 1
 
 [Command]
 name = "DoubleTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x
+command = ~F, D, DB, F, D, DB, x
 time = 45
 
 [Command]
 name = "DoubleTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, y
+command = ~F, D, DB, F, D, DB, y
 time = 45
 
 [Command]
 name = "DoubleTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, z
+command = ~F, D, DB, F, D, DB, z
 time = 45
 
 [Command]
 name = "MAXDoubleTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x+y
+command = ~F, D, DB, F, D, DB, x+y
 time = 45
 
 [Command]
 name = "MAXDoubleTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, y+z
+command = ~F, D, DB, F, D, DB, y+z
 time = 45
 
 [Command]
 name = "MAXDoubleTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, x+z
+command = ~F, D, DB, F, D, DB, x+z
 time = 45
 
 [Command]
 name = "DoubleTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, x
+command = ~B, D, DF, B, D, DF, x
 time = 45
 
 [Command]
 name = "DoubleTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, y
+command = ~B, D, DF, B, D, DF, y
 time = 45
 
 [Command]
 name = "DoubleTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, z
+command = ~B, D, DF, B, D, DF, z
 time = 45
 
 [Command]
 name = "MAXDoubleTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, x+y
+command = ~B, D, DF, B, D, DF, x+y
 time = 45
 
 [Command]
 name = "MAXDoubleTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, y+z
+command = ~B, D, DF, B, D, DF, y+z
 time = 45
 
 [Command]
 name = "MAXDoubleTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, x+z
+command = ~B, D, DF, B, D, DF, x+z
 time = 45
 
 [Command]
@@ -304,32 +304,32 @@ time = 32
 
 [Command]
 name = "RagingTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, a+b
+command = ~F, D, DB, F, D, DB, a+b
 time = 45
 
 [Command]
 name = "RagingTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, b+c
+command = ~F, D, DB, F, D, DB, b+c
 time = 45
 
 [Command]
 name = "RagingTyphoon"
-command = ~F, DF, D, DB, B, F, DF, D, DB, B, a+c
+command = ~F, D, DB, F, D, DB, a+c
 time = 45
 
 [Command]
 name = "RagingTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, a+b
+command = ~B, D, DF, B, D, DF, a+b
 time = 45
 
 [Command]
 name = "RagingTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, b+c
+command = ~B, D, DF, B, D, DF, b+c
 time = 45
 
 [Command]
 name = "RagingTyphoon"
-command = ~B, DB, D, DF, F, B, DB, D, DF, F, a+c
+command = ~B, D, DF, B, D, DF, a+c
 time = 45
 
 ;====================<SPECIAL MOTIONS>====================
