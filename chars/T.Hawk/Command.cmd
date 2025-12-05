@@ -446,62 +446,62 @@ time = 16
 
 [Command]
 name = "MexicanTyphoon"
-command = ~F, DF, D, DB, B, x
+command = ~F, D, DB, x
 time = 16
 
 [Command]
 name = "MexicanTyphoon"
-command = ~F, DF, D, DB, B, y
+command = ~F, D, DB, y
 time = 16
 
 [Command]
 name = "MexicanTyphoon"
-command = ~F, DF, D, DB, B, z
+command = ~F, D, DB, z
 time = 16
 
 [Command]
 name = "MexicanTyphoon"
-command = ~B, DB, D, DF, F, x
+command = ~B, D, DF, x
 time = 16
 
 [Command]
 name = "MexicanTyphoon"
-command = ~B, DB, D, DF, F, y
+command = ~B, D, DF, y
 time = 16
 
 [Command]
 name = "MexicanTyphoon"
-command = ~B, DB, D, DF, F, z
+command = ~B, D, DF, z
 time = 16
 
 [Command]
 name = "EXMexicanTyphoon"
-command = ~F, DF, D, DB, B, x+y
+command = ~F, D, DB, x+y
 time = 16
 
 [Command]
 name = "EXMexicanTyphoon"
-command = ~F, DF, D, DB, B, y+z
+command = ~F, D, DB, y+z
 time = 16
 
 [Command]
 name = "EXMexicanTyphoon"
-command = ~F, DF, D, DB, B, x+z
+command = ~F, D, DB, x+z
 time = 16
 
 [Command]
 name = "EXMexicanTyphoon"
-command = ~B, DB, D, DF, F, x+y
+command = ~B, D, DF, x+y
 time = 16
 
 [Command]
 name = "EXMexicanTyphoon"
-command = ~B, DB, D, DF, F, y+z
+command = ~B, D, DF, y+z
 time = 16
 
 [Command]
 name = "EXMexicanTyphoon"
-command = ~B, DB, D, DF, F, x+z
+command = ~B, D, DF, x+z
 time = 16
 
 [Command]

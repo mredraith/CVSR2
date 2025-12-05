@@ -5,7 +5,7 @@
 ;================================<SPECIAL MOVES>================================
 ;===============================================================================
 
-;=====================<MEXICAN TYPHOON>==========================
+;MEXICAN TYPHOON
 [StateDef 1000]
 type = S
 physics = S
@@ -611,7 +611,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 5100 ;Hit ground
 
-;========================<EX MEXICAN TYPHOON>========================
+;EX MEXICAN TYPHOON
 [StateDef 1030]
 type = S
 physics = S
@@ -1299,7 +1299,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 5100 ;Hit ground
 
-;========================<TOMAHAWK BUSTER>===========================
+;TOMAHAWK BUSTER
 [StateDef 1100]
 type = S
 physics = S
