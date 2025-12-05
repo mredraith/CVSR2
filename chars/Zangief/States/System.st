@@ -703,7 +703,7 @@ value = 100
 [State 110, VelSet]
 type = VelSet
 trigger1 = AnimElem = 2
-x = 7.8
+x = 6
 y = -3
 
 [State 110, VelMul]
