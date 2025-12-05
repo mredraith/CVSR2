@@ -2069,8 +2069,8 @@ physics = N
 [State 903, Vel]
 type = VelSet
 trigger1 = AnimElem = 4
-x = -5.5
-y = -9.5
+x = -3.5
+y = -6.5
 
 [State 903, Vel]
 type = VelAdd
@@ -2420,7 +2420,7 @@ physics = N
 type = VelSet
 trigger1 = AnimElem = 4
 x = -5.5
-y = -9.5
+y = -5.5
 
 [State 903, Vel]
 type = VelAdd
@@ -2835,8 +2835,8 @@ physics = N
 [State 903, Vel]
 type = VelSet
 trigger1 = AnimElem = 4
-x = -5.5
-y = -9.5
+x = -.5
+y = -5.5
 
 [State 903, Vel]
 type = VelAdd
