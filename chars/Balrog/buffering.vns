@@ -1,0 +1,835 @@
+;==============================================================================;
+;Command Buffering File for: Mike Bison (Capcom VS. SNK 2)                     ;
+;Original system for Capcom VS. SNK: Collision Course                          ;
+;by Vans                                                                       ;
+;Modifications by Jesuszilla for Capcom VS. SNK 2.                             ;
+;==============================================================================;
+;Introduction:
+;This is the 7-tick / 2-tick based command buffering system. Coded to be Capcom
+;compliant following SFZ3 as a guide.
+;
+;The helper is capable of providing buffering as well as PERFECT reversed
+;commands in addition to negative edge checking for command variables.
+;
+;Any and all editions should be done in the BUFFER DEFINITION section.
+;
+;Unless you plan to modify the whole system, do not touch the numbers in the
+;varsets, ever.
+;
+;Try to keep a list of the variables used as well as the respective commands,
+;just to keep some sort of order.
+;
+;In addition, try to follow this list as much as possible to avoid problems:
+;Basic and system commands   = var(0)  - var(20) (RESERVED.)
+;Special move type commands  = var(21) - var(52)
+;Multiple button commands    = var(30) - var(36) (RESERVED.)
+;Hold a,b,c                  = var(37) - var(39)
+;Super move type commands    = var(40) - var(49)
+;Double-tap                  = var(54) - var(56)
+;Free commands               = var(57) - var(59)
+
+
+[Statedef 10371]
+anim = 1
+ctrl = 0
+
+[State 10371, NO TURN BEHAVIOR.]
+type = AssertSpecial
+trigger1 = 1
+flag = invisible ;Just in case.
+ignorehitpause = 1
+
+[State 10371, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+time = 1
+pos = Const(size.mid.pos.x),Const(size.mid.pos.y)
+ignorehitpause = 1
+
+[State 10371, P]
+type = null;DisplayToClipboard
+trigger1 = 1
+text = "X %d  -X = %d | Y = %d  -Y = %d | Z = %d  -Z = %d"
+params = var(0),var(7),var(1),var(8),var(2),var(9)
+ignorehitpause = 1
+[State 10371, K]
+type = null;DisplayToClipboard
+trigger1 = 1
+text = "A %d  -A = %d | B = %d  -B = %d | C = %d  -C = %d"
+params = var(3),var(10),var(4),var(11),var(5),var(12)
+ignorehitpause = 1
+
+[State 10371, AM I WORKING ?]
+type = DisplayToClipboard
+trigger1 = 1
+text = "U = %d  D = %d  F = %d   B = %d\n"
+params = var(14),var(15),var(16),var(17)
+ignorehitpause = 1
+[State 10371, AM I WORKING ?]
+type = null;AppendToClipboard
+trigger1 = 1
+text = "\n             -F = %d  -B = %d Var(51) = %d"
+params = var(18),var(19),var(51)
+ignorehitpause = 1
+
+[State 10371, AM I WORKING ?]
+type = AppendToClipboard
+trigger1 = 1
+text = "DD = %d  FF = %d  BB = %d  POW = %d"
+params = var(54),var(55),var(56),var(28)
+ignorehitpause = 1
+
+[State 10371, DOES THE DAMN THING WORK]
+type = null;AppendToClipboard
+trigger1 = 1
+text = "K: LM: %d  LH: %d  MH: %d"
+params = var(33),var(34),var(35)
+ignorehitpause = 1
+
+[State 10371, DOES THE DAMN THING WORK]
+type = null;AppendToClipboard
+trigger1 = 1
+text = "P: LM: %d  LH: %d  MH: %d"
+params = var(30),var(31),var(32)
+ignorehitpause = 1
+
+[State 10371, DOES THE DAMN THING WORK]
+type = DisplayToClipboard
+trigger1 = 1
+text = "P: LL: %d  MM: %d  HH: %d"
+params = var(36),var(37),var(38)
+ignorehitpause = 1
+
+[State 10372, Does the damn thing work]
+type = AppendToClipboard
+trigger1 = 1
+text = "Bchg = %d, Dchg = %d, CB = %d, CD = %d"
+params = Var(23), Var(24), Var(25), Var(27)
+ignorehitpause = 1
+
+[State 10371, Custom Combo]
+type = VarSet
+trigger1 = 1
+fvar(30) = root,Var(30)
+
+;----------------------------[BUFFER DECREASE]---------------------------------;
+;--------------------------------[BUTTONS]-------------------------------------;
+;NON-NEGATIVE EDGE:
+;var(0)  = LP
+;var(1)  = MP
+;var(2)  = HP
+;var(3)  = LK
+;var(4)  = MK
+;var(5)  = HK
+;var(6)  = Start
+;NEGATIVE EDGE:
+;var(7)  = LP
+;var(8)  = MP
+;var(9)  = HP
+;var(10) = LK
+;var(11) = MK
+;var(12) = HK
+;var(13) = Start
+
+[State 10371, LP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(0)
+var(0) = -1
+
+[State 10371, MP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(1)
+var(1) = -1
+
+[State 10371, HP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(2)
+var(2) = -1
+
+[State 10371, LK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(3)
+var(3) = -1
+
+[State 10371, MK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(4)
+var(4) = -1
+
+[State 10371, HK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(5)
+var(5) = -1
+
+[State 10371, START Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(6)
+var(6) = -1
+
+;NEGATIVE EDGE SETS:
+
+[State 10371, NEG LP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(7) && !var(0)
+var(7) = -1
+
+[State 10371, NEG MP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(8) && !var(1)
+var(8) = -1
+
+[State 10371, NEG HP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(9) && !var(2)
+var(9) = -1
+
+[State 10371, NEG LK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(10) && !var(3)
+var(10) = -1
+
+[State 10371, NEG MK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(11) && !var(4)
+var(11) = -1
+
+[State 10371, NEG HK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(12) && !var(5)
+var(12) = -1
+
+[State 10371, NEG START Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(13) && !var(6)
+var(13) = -1
+
+;---------------------------------[DIRECTIONS]---------------------------------;
+;DIRECTIONAL:
+;var(14) = UP
+;var(15) = DOWN
+;var(16) = FWD
+;var(17) = BWD
+;var(18) = RELEASE FWD
+;var(19) = RELEASE BWD
+;var(54) = DD
+;var(55) = FF
+;var(56) = BB
+[State 10371, UP Dec]
+type = VarAdd
+trigger1 = var(14)>0
+var(14) = -1
+[State 10371, DOWN Dec]
+type = VarAdd
+trigger1 = var(15)>0
+var(15) = -1
+[State 10371, FWD Dec]
+type = VarAdd
+trigger1 = var(16)>0
+var(16) = -1
+[State 10371, BWD Dec]
+type = VarAdd
+trigger1 = var(17)>0
+var(17) = -1
+
+[State 10371, NEG FWD Dec]
+type = VarAdd
+trigger1 = var(18)>0
+var(18) = -1
+[State 10371, NEG BWD Dec]
+type = VarAdd
+trigger1 = var(19)>0
+var(19) = -1
+[State 10371, NEG DN Dec]
+type = VarAdd
+trigger1 = var(20)>0
+var(20) = -1
+
+[State 10371, FF Dec]
+type = VarAdd
+trigger1 = var(55)
+var(55) = -1
+[State 10371, BB Dec]
+type = VarAdd
+trigger1 = var(56)
+var(56) = -1
+
+;------------------------------[MULTIPLE BUTTONS]------------------------------;
+;DOUBLE BUTTON:
+;var(30) = LP+MP
+;var(31) = LP+HP
+;var(32) = MP+HP
+;var(33) = LK+MK
+;var(34) = LK+HK
+;var(35) = MK+HK
+;var(36) = LP+LK
+;var(37) = MP+MK
+;var(38) = HP+HK
+[State 10371, LP+MP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(30)
+var(30) = -1
+[State 10371, LP+HP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(31)
+var(31) = -1
+[State 10371, MP+HP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(32)
+var(32) = -1
+
+[State 10371, LK+MK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(33)
+var(33) = -1
+[State 10371, LK+HK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(34)
+var(34) = -1
+[State 10371, MK+HK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(35)
+var(35) = -1
+
+[State 10371, LP+LK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(36)
+var(36) = -1
+[State 10371, MP+MK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(37)
+var(37) = -1
+[State 10371, HP+HK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(38)
+var(38) = -1
+
+;----------------------------------[COMMANDS]----------------------------------;
+;var(25)  = CB,F
+;var(26)  = CB,DF
+;var(27)  = CD,U
+;var(40)  = CB,F,B,F
+
+;------------------- SUPERS ---------------------------------------------------;
+[State 10371, CB,F,B,F Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(40)
+var(40) = -1
+
+;------------------- SPECIALS -------------------------------------------------;
+[State 10371, CB,F Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(25)
+var(25) = -1
+
+[State 10371, CB,DF Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(26)
+var(26) = -1
+
+[State 10371, CD,U Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+trigger1 = var(27)
+var(27) = -1
+
+
+;--------------------------[BUFFER DEFINITION]---------------------------------;
+;---------------------------[MULTIPLE BUTTON BUFFER]---------------------------;
+;DOUBLE BUTTON:
+;var(30) = LP+MP
+;var(31) = LP+HP
+;var(32) = MP+HP
+;var(33) = LP+MP
+;var(34) = LP+HP
+;var(35) = MP+HP
+;var(36) = LP+LK
+;var(37) = MP+MK
+;var(38) = HP+HK
+
+[State 10371, LP+MP init]
+type = VarSet
+triggerall = !Var(30)
+trigger1 = (var(7) && var(8))
+var(30) = 2 & (var(7) := 2) & (var(8) := 2)
+[State 10371, LP+MP init]
+type = VarSet
+trigger1 = (command = "x" && command = "y")
+var(30) = 2
+[State 10371, LP+HP init]
+type = VarSet
+triggerall = !Var(31)
+trigger1 = (var(7) && var(9))
+var(31) = 2 & (var(7) := 2) & (var(9) := 2)
+[State 10371, LP+HP init]
+type = VarSet
+trigger1 = (command = "x" && command = "z")
+var(31) = 2
+[State 10371, MP+HP init]
+type = VarSet
+triggerall = !Var(32)
+trigger1 = (var(8) && var(9))
+var(32) = 2 & (var(8) := 2) & (var(9) := 2)
+[State 10371, MP+HP init]
+type = VarSet
+trigger1 = (command = "y" && command = "z")
+var(32) = 2
+
+[State 10371, LK+MK init]
+type = VarSet
+triggerall = !Var(33)
+trigger1 = (var(10) && var(11))
+var(33) = 2 & (var(10) := 2) & (var(11) := 2)
+[State 10371, LK+MK init]
+type = VarSet
+trigger1 = (command = "a" && command = "b")
+var(33) = 2
+[State 10371, LK+HK init]
+type = VarSet
+triggerall = !Var(34)
+trigger1 = (var(10) && var(12))
+var(34) = 2 & (var(10) := 2) & (var(12) := 2)
+[State 10371, LK+HK init]
+type = VarSet
+trigger1 = (command = "a" && command = "c")
+var(34) = 2
+[State 10371, MK+HK init]
+type = VarSet
+triggerall = !Var(35)
+trigger1 = (var(11) && var(12))
+var(35) = 2 & (var(11) := 2) & (var(12) := 2)
+[State 10371, MK+HK init]
+type = VarSet
+trigger1 = (command = "b" && command = "c")
+var(35) = 2
+
+[State 10371, LP+LK init]
+type = VarSet
+triggerall = !Var(36)
+trigger1 = (command = "x" && command = "a")
+trigger2 = (var(0) && var(3))
+var(36) = 2 ;& (var(0) := 3) & (var(3) := 3)
+[State 10371, MP+MK init]
+type = VarSet
+triggerall = !Var(37)
+trigger1 = (var(1) && var(4))
+;trigger2 = (command = "y" && command = "b")
+var(37) = 2 ;& (var(1) := 3) & (var(4) := 3)
+[State 10371, HP+HK init]
+type = VarSet
+triggerall = !Var(38)
+trigger1 = (var(2) && var(5))
+;trigger2 = (command = "z" && command = "c")
+var(38) = 2 ;& (var(2) := 3) & (var(5) := 3)
+
+;----------------------------[BUTTON BUFFER]-----------------------------------;
+;Leave the BUTTON BUFFER alone for compatibility.
+;NON-NEGATIVE EDGE:
+;var(0)  = LP
+;var(1)  = MP
+;var(2)  = HP
+;var(3)  = LK
+;var(4)  = MK
+;var(5)  = HK
+;var(6)  = Start
+;NEGATIVE EDGE:
+;var(7)  = LP
+;var(8)  = MP
+;var(9)  = HP
+;var(10) = LK
+;var(11) = MK
+;var(12) = HK
+;var(13) = Start
+;DIRECTIONAL:
+;var(13) = UP
+;var(14) = DOWN
+;var(15) = FWD
+;var(16) = BWD
+
+[State 10371, START Init]
+type = VarSet
+trigger1 = command = "start"
+var(6) = 2
+ignorehitpause = 1
+
+[State 10371, HK Init]
+type = VarSet
+trigger1 = command = "c"
+var(5) = 2
+ignorehitpause = 1
+
+[State 10371, HP Init]
+type = VarSet
+trigger1 = command = "z"
+var(2) = 2
+ignorehitpause = 1
+
+[State 10371, MK Init]
+type = VarSet
+trigger1 = command = "b"
+var(4) = 2
+ignorehitpause = 1
+
+[State 10371, MP Init]
+type = VarSet
+trigger1 = command = "y"
+var(1) = 2
+ignorehitpause = 1
+
+[State 10371, LK Init]
+type = VarSet
+trigger1 = command = "a"
+var(3) = 2
+ignorehitpause = 1
+
+[State 10371, LP Init]
+type = VarSet
+trigger1 = command = "x"
+var(0) = 2
+ignorehitpause = 1
+
+;NEGATIVE EDGE SETS:
+
+[State 10371, NEG START Init]
+type = VarSet
+trigger1 = command = "release_start" && !Var(6)
+var(13) = 2
+ignorehitpause = 1
+
+[State 10371, NEG HK Init]
+type = VarSet
+trigger1 = command = "release_c" && !Var(5)
+var(12) = 2
+ignorehitpause = 1
+
+[State 10371, NEG HP Init]
+type = VarSet
+trigger1 = command = "release_z" && !Var(2)
+var(9) = 2
+ignorehitpause = 1
+
+[State 10371, NEG MK Init]
+type = VarSet
+trigger1 = command = "release_b" && !Var(4)
+var(11) = 2
+ignorehitpause = 1
+
+[State 10371, NEG MP Init]
+type = VarSet
+trigger1 = command = "release_y" && !Var(1)
+var(8) = 2
+ignorehitpause = 1
+
+[State 10371, NEG LK Init]
+type = VarSet
+trigger1 = command = "release_a" && !Var(3)
+var(10) = 2
+ignorehitpause = 1
+
+[State 10371, NEG LP Init]
+type = VarSet
+trigger1 = command = "release_x" && !Var(0)
+var(7) = 2
+ignorehitpause = 1
+
+[State 10371, NEG FWD Init]
+type = VarSet
+triggerall = Var(16) = [1,9]
+trigger1 = p2dist X >= 0
+trigger1 = command = "release_fwd"
+trigger2 = p2dist X < 0
+trigger2 = command = "release_back"
+var(18) = 10
+ignorehitpause = 1
+[State 10371, NEG BWD Init]
+type = VarSet
+triggerall = Var(17) = [1,9]
+trigger1 = p2dist X >= 0
+trigger1 = command = "release_back"
+trigger2 = p2dist X < 0
+trigger2 = command = "release_fwd"
+var(19) = 10
+ignorehitpause = 1
+[State 10371, NEG DOWN Init]
+type = VarSet
+trigger1 = command = "release_down"
+var(20) = 10
+ignorehitpause = 1
+
+;-----------------------------[DIRECTIONAL BUFFER]-----------------------------;
+[State 10371, Reset X direction]
+type = VarRangeSet
+triggerall = Var(50) < 1
+trigger1 = root, P2Dist X < 0
+value = 0
+first = 16
+last = 17
+
+[State 10371, Hold DN]
+type = VarSet
+triggerall = Var(15) <= 0
+trigger1 = command != "holddown"
+var(15) = 0
+[State 10371, Hold FWD]
+type = VarSet
+triggerall = Var(16) <= 0
+trigger1 = p2dist X >= 0
+trigger1 = command != "holdfwd"
+trigger2 = p2dist X < 0
+trigger2 = command != "holdback"
+var(16) = 0
+[State 10371, Hold BWD]
+type = VarSet
+triggerall = Var(17) <= 0
+trigger1 = p2dist X >= 0
+trigger1 = command != "holdback"
+trigger2 = p2dist X < 0
+trigger2 = command != "holdfwd"
+var(17) = 0
+
+[State 0, Trigger Once]
+type = VarAdd
+trigger1 = root, P2Dist X < 0
+var(50) = 1
+[State 0, Trigger Once]
+type = VarSet
+trigger1 = root, P2Dist X >= 0
+var(50) = 0
+
+[State 10371, UP Init]
+type = VarSet
+triggerall = Var(14) = 0
+trigger1 = command = "rich" || command = "holdup"
+var(14) = 2
+[State 10371, DOWN Init]
+type = VarSet
+triggerall = Var(15) = 0
+trigger1 = command = "down2" || command = "holddown"
+var(15) = ifElse(Var(52), -1, 10+0*(var(52):=1))
+
+; This is where it gets tricky
+[State 10371, FWD Init]
+type = VarSet
+triggerall = Var(16) = 0
+trigger1 = p2dist X >= 0
+trigger1 = command = "parry" || command = "holdfwd_r"
+trigger2 = p2dist X < 0
+trigger2 = command = "back" || command = "holdback_r"
+var(16) = cond(Var(51), -1, 10+0*(var(51):=1)) ; I smoke crack
+
+[State 10371, BWD Init]
+type = VarSet
+triggerall = Var(17) = 0
+trigger1 = p2dist X >= 0
+trigger1 = command = "back" || command = "holdback_r"
+trigger2 = p2dist X < 0
+trigger2 = command = "parry" || command = "holdfwd_r"
+var(17) = cond(Var(51), -1, 10+0*(var(51):=1))
+
+[State 10371, F/B Timer] ; Because fuck you, that's why
+type = VarSet
+trigger1 = command != "holdfwd_r" && command != "holdback_r"
+var(51) = 0
+[State 10371, Timer Inc]
+type = VarAdd
+trigger1 = Var(51)
+trigger1 = command = "holdfwd_r" ^^ command = "holdback_r"
+var(51) = 1
+
+[State 10371, DOWN Timer]
+type = VarSet
+trigger1 = command != "holddown"
+var(52) = 0
+[State 10371, Timer Inc]
+type = VarAdd
+trigger1 = Var(52)
+trigger1 = command = "holddown"
+var(52) = 1
+
+[State 10371, FF Init]
+type = VarSet
+triggerall = !Var(55)
+triggerall = !Var(15); || Var(25) || Var(26) || Var(27) || Var(40))
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+triggerall = Var(19) != [8,9]
+triggerall = Var(20) != [9,10]
+trigger1 = (Var(18) = [1,9]) && ifElse(p2Dist X < 0, command = "back", command = "parry")
+var(55) = 4
+[State 10371, BB Init]
+type = VarSet
+triggerall = !Var(56)
+triggerall = !Var(15); || Var(25) || Var(26) || Var(27) || Var(40))
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+triggerall = Var(18) != [8,9]
+triggerall = Var(20) != [9,10]
+trigger1 = (Var(19) = [1,9]) && ifElse(p2Dist X < 0, command = "parry", command = "back")
+var(56) = 4
+
+
+;----------------------------[COMMAND BUFFER]----------------------------------;
+;This is where ONLY THE NECESSARY commands are buffered. The buffer requires
+;both the regular command and its reversed equivalent.
+;
+;ALL COMMANDS SET HERE MUST ALSO BE PUT IN [Commands] UNDER [Buffer Decrease]
+;
+;One last thing, just like the CMD file, put the complicated commands on top.
+;Command checklist:
+;
+;var(21)  = Charge Back Counter
+;var(22)  = Charge Down Counter
+;var(23)  = Charge Back
+;var(24)  = Charge Down
+;var(25)  = CB,F
+;var(26)  = CB,DF
+;var(27)  = CD,U
+;var(40)  = CB,F,B,F
+
+;-----------------[SUPERS]-----------------
+[State 10371, CB,F,B,F Init]
+type = VarSet
+triggerall = cond(!fvar(30), (Var(23) = [1,21]), 1)
+trigger1 = p2dist X >= 0 && command = "BFBF"
+trigger2 = p2dist X < 0  && command = "FBFB"
+var(40) = 8
+
+;----------------[SPECIALS]----------------
+[State 10380, CB,DF Init]
+type = VarSet
+triggerall = cond(!fvar(30), (Var(23) = [14,21]), 1)
+trigger1 = p2dist X >= 0 && command = "B_DF"
+trigger2 = p2dist X < 0  && command = "F_DB"
+var(26) = 8
+
+[State 10380, CB,F Init]
+type = VarSet
+triggerall = cond(!fvar(30), (Var(23) = [14,21]), 1) 
+triggerall = command != "holddown"
+trigger1 = p2dist X >= 0 && command = "B_F"
+trigger2 = p2dist X < 0  && command = "F_B"
+var(25) = 8
+
+[State 10380, CD,U Init]
+type = VarSet
+triggerall = command = "D_U"
+trigger1 = !fvar(30) && (Var(24) = [1,8])
+trigger2 = fvar(30)
+var(27) = 8
+
+[State 10380, Charge Back]
+type = VarAdd
+triggerall = var(21) < 48
+
+trigger1 = !root, AILevel
+trigger1 = p2dist X >= 0
+trigger1 = command = "back" || command = "holdback"
+
+trigger2 = !root, AILevel
+trigger2 = p2dist X < 0
+trigger2 = command = "parry" || command = "holdfwd"
+
+trigger3 = root, AILevel
+trigger3 = root, Anim != 0 && root, Anim != 20
+trigger3 = root, Var(28) > 0 || (root, StateNo = [10,52]) || root, StateNo = 100 || (root, StateNo = [105,106])
+
+trigger4 = root, AILevel
+trigger4 = root, Anim != 0 && root, Anim != 20
+trigger4 = (root, StateNo = [120,155]) || (root, StateNo = [300,330]) || (root, StateNo = [900,960]) || root, MoveType = H
+
+trigger5 = root, AILevel
+trigger5 = RoundState < 2
+var(21) = 1
+[State 10380, Charge Down]
+type = VarAdd
+triggerall = var(22) < 48
+
+trigger1 = !root, AILevel
+trigger1 = command = "parry2" || command = "holddown"
+
+trigger2 = root, AILevel
+trigger2 = root, Var(28) > 0 || (root, StateNo = [10,52]) || (root, StateNo = 100 && AnimElemTime(2) >= 0)
+
+trigger3 = root, AILevel
+trigger3 = ((root, StateNo = [120,155]) && StateType = C) || (root, StateNo = [300,330]) || (root, StateNo = [900,960]) || root, MoveType = H
+
+trigger4 = root, AILevel
+trigger4 = RoundState < 2
+var(22) = 1
+
+[State 10380, Charge Back Buffer]
+type = VarSet
+trigger1 = var(21) >= 48
+var(23) = 21
+[State 10380, Charge Down Buffer]
+type = VarSet
+trigger1 = var(22) >= 48
+var(24) = 8
+
+[State 10380, Charge Back Reset]
+type = VarSet
+triggerall = var(21)
+
+trigger1 = !root, AILevel
+trigger1 = p2dist X >= 0
+trigger1 = !(command = "back" || command = "holdback")
+
+trigger2 = !root, AILevel
+trigger2 = p2dist X < 0
+trigger2 = !(command = "parry" || command = "holdfwd")
+
+trigger3 = root, AILevel
+trigger3 = root, Anim = 0 || root, Anim = 20
+
+trigger4 = root, AILevel
+trigger4 = !(root, Var(28) > 0 || (root, StateNo = [10,52]) || root, StateNo = 100 || (root, StateNo = [105,106]))
+trigger4 = !((root, StateNo = [120,155]) || (root, StateNo = [300,330]) || (root, StateNo = [900,960]) || root, MoveType = H)
+var(21) = 0
+[State 10380, Charge Down Reset]
+type = VarSet
+triggerall = var(22)
+
+trigger1 = !root, AILevel
+trigger1 = command != "parry2" && command != "holddown"
+
+trigger2 = root, AILevel
+trigger2 = !(root, Var(28) > 0 || (root, StateNo = [10,52]) || (root, StateNo = 100 && AnimElemTime(2) >= 0))
+trigger2 = !(((root, StateNo = [120,155]) && StateType = C) || (root, StateNo = [300,330]) || (root, StateNo = [900,960]) || root, MoveType = H)
+var(22) = 0
+
+
+[State 10371, Charge Back Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+triggerall = var(21) < 48
+trigger1 = var(23)
+var(23) = -1
+[State 10371, Charge Down Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPauseTime = 1
+triggerall = var(22) < 48
+trigger1 = var(24)
+var(24) = -1

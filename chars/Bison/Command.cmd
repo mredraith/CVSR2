@@ -1,0 +1,2247 @@
+;#ADD004BASIC PIEs#
+;==============================================================================================
+;=======================================<COMMAND FILE>=========================================
+;==============================================================================================
+
+;====================<BUTTON REMAPPING>====================
+
+[Remap]
+x = x
+y = y
+z = z
+a = a
+b = b
+c = c
+s = s
+
+;====================<DEFAULT VALUES>====================
+
+[Defaults]
+command.time = 15
+command.buffer.time = 1
+
+;====================<SINGLE BUTTON>====================
+
+[Command]
+name = "a"
+command = a
+time = 1
+
+[Command]
+name = "b"
+command = b
+time = 1
+
+[Command]
+name = "c"
+command = c
+time = 1
+
+[Command]
+name = "x"
+command = x
+time = 1
+
+[Command]
+name = "y"
+command = y
+time = 1
+
+[Command]
+name = "z"
+command = z
+time = 1
+
+[Command]
+name = "start"
+command = s
+time = 1
+
+;==================<HOLD DIRECTION>==================
+
+[Command]
+name = "holdfwd"
+command=/$F
+time=1
+
+[Command]
+name = "holdback"
+command = /$B
+time = 1
+
+[Command]
+name = "holdup"
+command = /$U
+time=1
+
+[Command]
+name = "holddown"
+command = /$D
+time = 1
+
+;====================<HOLD BUTTON>====================
+
+[Command]
+name = "hold_a"
+command = /a
+time = 1
+
+[Command]
+name = "hold_b"
+command = /b
+time = 1
+
+[Command]
+name = "hold_c"
+command = /c
+time = 1
+
+[Command]
+name = "hold_x"
+command = /x
+time = 1
+
+[Command]
+name = "hold_y"
+command = /y
+time = 1
+
+[Command]
+name = "hold_z"
+command = /z
+time = 1
+
+[Command]
+name = "hold_start"
+command = /s
+time = 1
+
+;====================<DIRECTION>====================
+
+[Command]
+name = "fwd"
+command = F
+time = 1
+
+[Command]
+name = "back"
+command = B
+time = 1
+
+[Command]
+name = "up"
+command = U
+time = 1
+
+[Command]
+name = "down"
+command = D
+time = 1
+
+;====================<RELEASE DIR>====================
+
+[Command]
+name = "rlsfwd"
+command = ~$F
+time = 1
+
+[Command]
+name = "rlsback"
+command = ~$B
+time = 1
+
+[Command]
+name = "rlsup"
+command = ~$U
+time = 1
+
+[Command]
+name = "rlsdown"
+command = ~$D
+time = 1
+
+;====================<RELEASE BUTTON>====================
+
+[Command]
+name = "rlsx"
+command = ~x
+time = 1
+
+[Command]
+name = "rlsy"
+command = ~y
+time = 1
+
+[Command]
+name = "rlsz"
+command = ~z
+time = 1
+
+[Command]
+name = "rlsa"
+command = ~a
+time = 1
+
+[Command]
+name = "rlsb"
+command = ~b
+time = 1
+
+[Command]
+name = "rlsc"
+command = ~c
+time = 1
+
+;====================<SUPER MOTIONS>====================
+
+[Command]
+name = "PsychoBreakSmasher"
+command = ~$B, F, B, F, x
+time = 32
+
+[Command]
+name = "PsychoBreakSmasher"
+command = ~$B, F, B, F, y
+time = 32
+
+[Command]
+name = "PsychoBreakSmasher"
+command = ~$B, F, B, F, z
+time = 32
+
+
+[Command]
+name = "PsychoBreakSmasher"
+command = ~$B, F, B, F, ~x
+time = 32
+
+[Command]
+name = "PsychoBreakSmasher"
+command = ~$B, F, B, F, ~y
+time = 32
+
+[Command]
+name = "PsychoBreakSmasher"
+command = ~$B, F, B, F, ~z
+time = 32
+
+
+[Command]
+name = "FinalPsychoBreakSmasher"
+command = ~$B, F, B, F, x+y
+time = 32
+
+[Command]
+name = "FinalPsychoBreakSmasher"
+command = ~$B, F, B, F, y+z
+time = 32
+
+[Command]
+name = "FinalPsychoBreakSmasher"
+command = ~$B, F, B, F, z+x
+time = 32
+
+
+[Command]
+name = "KneePressNightmare"
+command = ~$B, F, B, F, a
+time = 32
+
+[Command]
+name = "KneePressNightmare"
+command = ~$B, F, B, F, b
+time = 32
+
+[Command]
+name = "KneePressNightmare"
+command = ~$B, F, B, F, c
+time = 32
+
+
+[Command]
+name = "KneePressNightmare"
+command = ~$B, F, B, F, ~a
+time = 32
+
+[Command]
+name = "KneePressNightmare"
+command = ~$B, F, B, F, ~b
+time = 32
+
+[Command]
+name = "KneePressNightmare"
+command = ~$B, F, B, F, ~c
+time = 32
+
+
+[Command]
+name = "MAXKneePressNightmare"
+command = ~$B, F, B, F, a+b
+time = 32
+
+[Command]
+name = "MAXKneePressNightmare"
+command = ~$B, F, B, F, b+c
+time = 32
+
+[Command]
+name = "MAXKneePressNightmare"
+command = ~$B, F, B, F, c+a
+time = 32
+
+
+[Command]
+name = "HeartbreakDespair"
+command = ~D, DF, F, D, DF, F, x
+time = 32
+
+[Command]
+name = "HeartbreakDespair"
+command = ~D, DF, F, D, DF, F, y
+time = 32
+
+[Command]
+name = "HeartbreakDespair"
+command = ~D, DF, F, D, DF, F, z
+time = 32
+
+[Command]
+name = "HeartbreakDespair"
+command = ~D, DF, F, D, DF, F, ~x
+time = 32
+
+[Command]
+name = "HeartbreakDespair"
+command = ~D, DF, F, D, DF, F, ~y
+time = 32
+
+[Command]
+name = "HeartbreakDespair"
+command = ~D, DF, F, D, DF, F, ~z
+time = 32
+
+
+[Command]
+name = "MAXHeartbreakDespair"
+command = ~D, DF, F, D, DF, F, x+y
+time = 32
+
+[Command]
+name = "MAXHeartbreakDespair"
+command = ~D, DF, F, D, DF, F, y+z
+time = 32
+
+[Command]
+name = "MAXHeartbreakDespair"
+command = ~D, DF, F, D, DF, F, x+z
+time = 32
+
+
+[Command]
+name = "PsychoCannon"
+command = ~D, DB, B, D, DB, B, x
+time = 32
+
+[Command]
+name = "PsychoCannon"
+command = ~D, DB, B, D, DB, B, y
+time = 32
+
+[Command]
+name = "PsychoCannon"
+command = ~D, DB, B, D, DB, B, z
+time = 32
+
+[Command]
+name = "PsychoCannon"
+command = ~D, DB, B, D, DB, B, ~x
+time = 32
+
+[Command]
+name = "PsychoCannon"
+command = ~D, DB, B, D, DB, B, ~y
+time = 32
+
+[Command]
+name = "PsychoCannon"
+command = ~D, DB, B, D, DB, B, ~z
+time = 32
+
+
+[Command]
+name = "MAXPsychoCannon"
+command = ~D, DB, B, D, DB, B, x+y
+time = 32
+
+[Command]
+name = "MAXPsychoCannon"
+command = ~D, DB, B, D, DB, B, y+z
+time = 32
+
+[Command]
+name = "MAXPsychoCannon"
+command = ~D, DB, B, D, DB, B, x+z
+time = 32
+
+
+[Command]
+name = "PsychoPunisher"
+command = ~$F, B, F, B, x+y
+time = 32
+
+[Command]
+name = "PsychoPunisher"
+command = ~$F, B, F, B, y+z
+time = 32
+
+[Command]
+name = "PsychoPunisher"
+command = ~$F, B, F, B, x+z
+time = 32
+
+
+[Command]
+name = "PsychoExplosion"
+command = ~$F, B, F, B, x+y
+time = 32
+
+[Command]
+name = "PsychoExplosion"
+command = ~$F, B, F, B, y+z
+time = 32
+
+[Command]
+name = "PsychoExplosion"
+command = ~$F, B, F, B, x+z
+time = 32
+
+;====================<SPECIAL MOTIONS>====================
+
+[Command]
+name = "PsychoCrusher"
+command = ~$B, F, x
+time = 16
+
+[Command]
+name = "PsychoCrusher"
+command = ~$B, F, y
+time = 16
+
+[Command]
+name = "PsychoCrusher"
+command = ~$B, F, z
+time = 16
+
+[Command]
+name = "PsychoCrusher"
+command = ~$B, F, ~x
+time = 16
+
+[Command]
+name = "PsychoCrusher"
+command = ~$B, F, ~y
+time = 16
+
+[Command]
+name = "PsychoCrusher"
+command = ~$B, F, ~z
+time = 16
+
+
+[Command]
+name = "EXPsychoCrusher"
+command = ~$B, F, x+y
+time = 16
+
+[Command]
+name = "EXPsychoCrusher"
+command = ~$B, F, y+z
+time = 16
+
+[Command]
+name = "EXPsychoCrusher"
+command = ~$B, F, z+x
+time = 16
+
+
+[Command]
+name = "DoubleKneePress"
+command = ~$B, F, a
+time = 16
+
+[Command]
+name = "DoubleKneePress"
+command = ~$B, F, b
+time = 16
+
+[Command]
+name = "DoubleKneePress"
+command = ~$B, F, c
+time = 16
+
+[Command]
+name = "DoubleKneePress"
+command = ~$B, F, ~a
+time = 16
+
+[Command]
+name = "DoubleKneePress"
+command = ~$B, F, ~b
+time = 16
+
+[Command]
+name = "DoubleKneePress"
+command = ~$B, F, ~c
+time = 16
+
+
+[Command]
+name = "EXDoubleKneePress"
+command = ~$B, F, a+b
+time = 16
+
+[Command]
+name = "EXDoubleKneePress"
+command = ~$B, F, b+c
+time = 16
+
+[Command]
+name = "EXDoubleKneePress"
+command = ~$B, F, c+a
+time = 16
+
+
+[Command]
+name = "HeadPress"
+command = ~$D, U, a
+time = 16
+
+[Command]
+name = "HeadPress"
+command = ~$D, U, b
+time = 16
+
+[Command]
+name = "HeadPress"
+command = ~$D, U, c
+time = 16
+
+[Command]
+name = "HeadPress"
+command = ~$D, U, ~a
+time = 16
+
+[Command]
+name = "HeadPress"
+command = ~$D, U, ~b
+time = 16
+
+[Command]
+name = "HeadPress"
+command =~$D, U, ~c
+time = 16
+
+
+[Command]
+name = "EXHeadPress"
+command = ~$D, U, a+b
+time = 16
+
+[Command]
+name = "EXHeadPress"
+command = ~$D, U, b+c
+time = 16
+
+[Command]
+name = "EXHeadPress"
+command = ~$D, U, c+a
+time = 16
+
+
+[Command]
+name = "DevilReverse"
+command = ~$D, U, x
+time = 16
+
+[Command]
+name = "DevilReverse"
+command = ~$D, U, y
+time = 16
+
+[Command]
+name = "DevilReverse"
+command = ~$D, U, z
+time = 16
+
+[Command]
+name = "DevilReverse"
+command = ~$D, U, ~x
+time = 16
+
+[Command]
+name = "DevilReverse"
+command = ~$D, U, ~y
+time = 16
+
+[Command]
+name = "DevilReverse"
+command = ~$D, U, ~z
+time = 16
+
+
+[Command]
+name = "EXDevilReverse"
+command = ~$D, U, x+y
+time = 16
+
+[Command]
+name = "EXDevilReverse"
+command = ~$D, U, y+z
+time = 16
+
+[Command]
+name = "EXDevilReverse"
+command = ~$D, U, z+x
+time = 16
+
+
+[Command]
+name = "PsychoBanisher"
+command = ~F, D, DF, x
+time = 16
+
+[Command]
+name = "PsychoBanisher"
+command = ~F, D, DF, y
+time = 16
+
+[Command]
+name = "PsychoBanisher"
+command = ~F, D, DF, z
+time = 16
+
+[Command]
+name = "PsychoBanisher"
+command = ~F, D, DF, ~x
+time = 16
+
+[Command]
+name = "PsychoBanisher"
+command = ~F, D, DF, ~y
+time = 16
+
+[Command]
+name = "PsychoBanisher"
+command = ~F, D, DF, ~z
+time = 16
+
+
+[Command]
+name = "VegaWarpFront_P"
+command = ~F, D, DF, x+y
+time = 25
+
+[Command]
+name = "VegaWarpFront_P"
+command = ~F, D, DF, x+z
+time = 25
+
+[Command]
+name = "VegaWarpFront_P"
+command = ~F, D, DF, y+z
+time = 25
+
+
+[Command]
+name = "VegaWarpFront_3P"
+command = ~F, D, DF, x+y+z
+time = 25
+
+
+[Command]
+name = "VegaWarpBack_P"
+command = ~B, D, DB, x+y
+time = 25
+
+[Command]
+name = "VegaWarpBack_P"
+command = ~B, D, DB, x+z
+time = 25
+
+[Command]
+name = "VegaWarpBack_P"
+command = ~B, D, DB, y+z
+time = 25
+
+
+[Command]
+name = "VegaWarpBack_3P"
+command = ~B, D, DB, x+y+z
+time = 25
+
+
+[Command]
+name = "VegaWarpFront_K"
+command = ~F, D, DF, a+b
+time = 25
+
+[Command]
+name = "VegaWarpFront_K"
+command = ~F, D, DF, a+c
+time = 25
+
+[Command]
+name = "VegaWarpFront_K"
+command = ~F, D, DF, b+c
+time = 25
+
+
+[Command]
+name = "VegaWarpFront_3K"
+command = ~F, D, DF, a+b+c
+time = 25
+
+
+[Command]
+name = "VegaWarpBack_K"
+command = ~B, D, DB, a+b
+time = 25
+
+[Command]
+name = "VegaWarpBack_K"
+command = ~B, D, DB, a+c
+time = 25
+
+[Command]
+name = "VegaWarpBack_K"
+command = ~B, D, DB, b+c
+time = 25
+
+
+[Command]
+name = "VegaWarpBack_3K"
+command = ~B, D, DB, b+c
+time = 25
+
+
+[Command]
+name = "PsychoField"
+command = ~F, DF, D, DB, B, x
+time = 30
+
+[Command]
+name = "PsychoField"
+command = ~F, DF, D, DB, B, y
+time = 30
+
+[Command]
+name = "PsychoField"
+command = ~F, DF, D, DB, B, z
+time = 30
+
+[Command]
+name = "PsychoField"
+command = ~F, DF, D, DB, B, ~x
+time = 30
+
+[Command]
+name = "PsychoField"
+command = ~F, DF, D, DB, B, ~y
+time = 30
+
+[Command]
+name = "PsychoField"
+command = ~F, DF, D, DB, B, ~z
+time = 30
+
+
+[Command]
+name = "EXPsychoField"
+command = ~F, DF, D, DB, B, x+y
+time = 30
+
+[Command]
+name = "EXPsychoField"
+command = ~F, DF, D, DB, B, y+z
+time = 30
+
+[Command]
+name = "EXPsychoField"
+command = ~F, DF, D, DB, B, z+x
+time = 30
+
+
+[Command]
+name = "PsychoImpact"
+command = ~B, DB, D, DF, F, x
+time = 30
+
+[Command]
+name = "PsychoImpact"
+command = ~B, DB, D, DF, F, y
+time = 30
+
+[Command]
+name = "PsychoImpact"
+command = ~B, DB, D, DF, F, z
+time = 30
+
+[Command]
+name = "PsychoImpact"
+command = ~B, DB, D, DF, F, ~x
+time = 30
+
+[Command]
+name = "PsychoImpact"
+command = ~B, DB, D, DF, F, ~y
+time = 30
+
+[Command]
+name = "PsychoImpact"
+command = ~B, DB, D, DF, F, ~z
+time = 30
+
+
+[Command]
+name = "EXPsychoImpact"
+command = ~B, DB, D, DF, F, x+z
+time = 30
+
+[Command]
+name = "EXPsychoImpact"
+command = ~B, DB, D, DF, F, y+x
+time = 30
+
+[Command]
+name = "EXPsychoImpact"
+command = ~B, DB, D, DF, F, z+y
+time = 30
+
+
+[Command]
+name = "PsychoSever"
+command = ~B, DB, D, DF, F, a
+time = 30
+
+[Command]
+name = "PsychoSever"
+command = ~B, DB, D, DF, F, b
+time = 30
+
+[Command]
+name = "PsychoSever"
+command = ~B, DB, D, DF, F, c
+time = 30
+
+[Command]
+name = "PsychoSever"
+command = ~B, DB, D, DF, F, ~a
+time = 30
+
+[Command]
+name = "PsychoSever"
+command = ~B, DB, D, DF, F, ~b
+time = 30
+
+[Command]
+name = "PsychoSever"
+command = ~B, DB, D, DF, F, ~c
+time = 30
+
+
+[Command]
+name = "EXPsychoSever"
+command = ~B, DB, D, DF, F, a+c
+time = 30
+
+[Command]
+name = "EXPsychoSever"
+command = ~B, DB, D, DF, F, b+a
+time = 30
+
+[Command]
+name = "EXPsychoSever"
+command = ~B, DB, D, DF, F, c+b
+time = 30
+
+[Command]
+name = "412p"
+command = ~B, DB, D, x
+time = 16
+
+[Command]
+name = "412p"
+command = ~B, DB, D, y
+time = 16
+
+[Command]
+name = "412p"
+command = ~B, DB, D, z
+time = 16
+
+[Command]
+name = "412p"
+command = ~B, DB, D, ~x
+time = 16
+
+[Command]
+name = "412p"
+command = ~B, DB, D, ~y
+time = 16
+
+[Command]
+name = "412p"
+command = ~B, DB, D, ~z
+time = 16
+
+
+[Command]
+name = "412k"
+command = ~B, DB, D, a
+time = 16
+
+[Command]
+name = "412k"
+command = ~B, DB, D, b
+time = 16
+
+[Command]
+name=  "412k"
+command = ~B, DB, D, c
+time = 16
+
+[Command]
+name = "412k"
+command = ~B, DB, D, ~a
+time = 16
+
+[Command]
+name = "412k"
+command = ~B, DB, D, ~b
+time = 16
+
+[Command]
+name = "412k"
+command = ~B, DB, D, ~c
+time = 16
+
+;====================<OTHER>====================
+
+[Command]
+name = "highjump"
+command = $D, $U
+time = 15
+
+;====================<DOUBLE TAP>====================
+
+[Command]
+name = "FF"
+command = F, F
+time = 10
+
+[Command]
+name = "BB"
+command = B, B
+time = 10
+
+;====================<2/3 BUTTON COMBINATION>====================
+
+[Command]
+name = "recovery"
+command = x+y
+time = 1
+
+[Command]
+name = "recovery"
+command = x+z
+time = 1
+
+[Command]
+name = "recovery"
+command = y+z
+time = 1
+
+[Command]
+name = "recovery"
+command = a+x
+time = 1
+
+
+[Command]
+name = "pp"
+command = x+y
+time = 1
+
+[Command]
+name = "pp"
+command = x+z
+time = 1
+
+[Command]
+name = "pp"
+command = y+z
+time = 1
+
+
+[Command]
+name = "kk"
+command = a+b
+time = 1
+
+[Command]
+name = "kk"
+command = a+c
+time = 1
+
+[Command]
+name = "kk"
+command = b+c
+time = 1
+
+
+[Command]
+name = "a+x"
+command = a+x
+time=1
+
+[Command]
+name = "b+y"
+command = b+y
+time = 1
+
+[Command]
+name = "c+z"
+command = c+z
+time = 1
+
+;==============================================================================================
+;========================================<-1 STATES>===========================================
+;==============================================================================================
+[StateDef -1]
+
+;//==========================
+;// add004-1-sctrls-start
+;//==========================
+;--- partner_standby
+[state 0]
+	type=selfstate
+	value=190190
+	ctrl=0
+	trigger1=ctrl && numpartner && !ishelper && roundstate=2 && pos y=0
+	trigger1=(sysfvar(4)>0) && (sysfvar(0)>0) && playeridexist(floor(sysfvar(0)))
+	trigger1=(playerid(floor(sysfvar(0))),var(0)=90900) && (playerid(floor(sysfvar(0))),var(22)=4)
+	ignorehitpause=1
+;##Add.List01##
+;//==========================
+;// add004-1-sctrls-end
+;//==========================
+
+
+
+
+[State -1, Tick Fix]
+type = CtrlSet
+triggerAll = !ctrl
+trigger1 = (StateNo = 52 || StateNo = 101 || StateNo = 5120) && !AnimTime
+trigger2 = (StateNo = [200,499]) && !AnimTime
+trigger3 = ((StateNo = [760,762]) || (StateNo = [700,715]) || (StateNo = [900,905])) && !AnimTime
+trigger4 = StateNo = 820 && !AnimTime
+trigger5 = (StateNo = 5001 || StateNo = 5011 || StateNo = 151 || StateNo = 153) && HitOver
+value = 1
+
+[State -1, Psycho Explosion]
+type = ChangeState
+value = 3700
+TriggerAll = var(40)
+triggerAll = !AILevel
+triggerAll = command = "PsychoExplosion" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(46) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 3000 && !var(20)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7)
+
+[State -1, Final Psycho Break Smasher]
+type = ChangeState
+value = 3550
+TriggerAll = var(40)
+triggerAll = !AILevel
+triggerAll = command = "FinalPsychoBreakSmasher" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(54) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 3000 && !var(20)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7)
+
+[State -1, Final Psycho Break Smasher]
+type = ChangeState
+value = 3500
+TriggerAll = var(40)
+triggerAll = !AILevel
+triggerAll = command = "PsychoBreakSmasher" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(54) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 2000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7) || var(8)
+
+[State -1, MAX Psycho Cannon]
+type = ChangeState
+value = 3450
+TriggerAll = var(40)
+triggerAll = !AILevel
+triggerAll = command = "MAXPsychoCannon"
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 2000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7) || var(8)
+
+[State -1, Psycho Cannon]
+type = ChangeState
+value = 3400
+TriggerAll = var(40)
+triggerAll = !NumHelper(3405)
+triggerAll = !AILevel
+triggerAll = command = "PsychoCannon"
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 1000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7)
+
+[State -1, Psycho Punisher]
+type = ChangeState
+value = 3300
+TriggerAll = !var(40)
+triggerAll = !AILevel
+triggerAll = command = "PsychoPunisher" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(46) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 3000 && !var(20)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7)
+
+[State -1, MAX Heartbreak Despair]
+type = ChangeState
+value = 3250
+triggerAll = !AILevel
+triggerAll = command = "MAXHeartbreakDespair"
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 2000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7) || var(8)
+
+[State -1, Heartbreak Despair]
+type = ChangeState
+value = 3200
+triggerAll = !AILevel
+triggerAll = command = "HeartbreakDespair"
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 1000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7)
+
+[State -1, MAX Knee Press Nightmare]
+type = ChangeState
+value = 3150 + var(40) * 500
+triggerAll = !AILevel
+triggerAll = command = "MAXKneePressNightmare" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(54) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 2000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7) || var(8)
+
+[State -1, Knee Press Nightmare]
+type = ChangeState
+value = 3100 + var(40) * 500
+triggerAll = !AILevel
+triggerAll = command = "KneePressNightmare" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(54) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 1000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7)
+
+[State -1, Super Psycho Break Smasher]
+type = ChangeState
+value = 3500
+TriggerAll = !var(40)
+triggerAll = !AILevel
+triggerAll = command = "FinalPsychoBreakSmasher" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(54) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 3000  && !var(20)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7)
+
+[State -1, Psycho Break Smasher]
+type = ChangeState
+value = 3000
+TriggerAll = !var(40)
+triggerAll = !AILevel
+triggerAll = command = "PsychoBreakSmasher" && ifElse(var(20) > 0 || (StateNo = [1000,4999]), 1, var(54) > 0)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = Power >= 2000 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(7) || var(8)
+
+;[State -1, EX Psycho Sever]
+;type = ChangeState
+;value = 1950
+;TriggerAll = !var(40)
+;triggerAll = !AILevel
+;triggerAll = command = "EXPsychoSever"
+;triggerAll = power >= 500 && var(20) <= 60
+;triggerAll = RoundState = 2 && StateType != A
+;trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+;trigger2 = var(6)
+
+;[State -1, Psycho Sever]
+;type = ChangeState
+;value = 1900
+;triggerAll = !AILevel
+;triggerAll = command = "PsychoSever"
+;triggerAll = RoundState = 2 && StateType != A
+;trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+;trigger2 = var(6)
+
+[State -1, Psycho Shot]
+type = ChangeState
+value = 1800
+TriggerAll = var(40)
+triggerAll = !AILevel
+triggerAll = command = "PsychoCrusher" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(54) > 16)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = !var(39)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Vega Warp]
+type = ChangeState
+value = 1500
+triggerAll = !AILevel
+triggerAll = command = "VegaWarpFront_3P" || command = "VegaWarpBack_3P" || command = "VegaWarpFront_3K" || command = "VegaWarpBack_3K"
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, EX Psycho Impact]
+type = ChangeState
+value = 1750
+TriggerAll = !var(40)
+triggerAll = !AILevel
+triggerAll = command = "EXPsychoImpact"
+triggerAll = power >= 500 && var(20) <= 60
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Psycho Impact]
+type = ChangeState
+value = 1700
+triggerAll = !AILevel
+triggerAll = command = "PsychoImpact"
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, EX Psycho Field]
+type = ChangeState
+value = 1650
+TriggerAll = !var(40)
+triggerAll = !AILevel
+TriggerAll = !NumHelper(1605)
+triggerAll = command = "EXPsychoField"
+triggerAll = power >= 500 && var(20) <= 60
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = !var(39)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Psycho Field]
+type = ChangeState
+value = 1600
+triggerAll = !AILevel
+TriggerAll = !NumHelper(1605)
+triggerAll = command = "PsychoField"
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = !var(39)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Psycho Banisher]
+type = ChangeState
+value = 1400
+triggerAll = !AILevel
+triggerAll = command = "PsychoBanisher"
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, EX Devil Reverse]
+type = ChangeState
+value = 1350
+TriggerAll = !var(40)
+triggerAll = !AILevel
+triggerAll = command = "EXDevilReverse" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(56) > 16)
+triggerAll = power >= 500 && var(20) <= 60
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Devil Reverse]
+type = ChangeState
+value = 1300
+triggerAll = !AILevel
+triggerAll = command = "DevilReverse" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(56) > 16)
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, EX Head Press]
+type = ChangeState
+value = 1250
+TriggerAll = !var(40)
+triggerAll = !AILevel
+triggerAll = command = "EXHeadPress" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(56) > 16)
+triggerAll = power >= 500 && var(20) <= 60
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Head Press]
+type = ChangeState
+value = 1200
+triggerAll = !AILevel
+triggerAll = command = "HeadPress" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(56) > 16)
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, EX Double Knee Press]
+type = ChangeState
+value = 1150
+TriggerAll = !var(40)
+triggerAll = command = "EXDoubleKneePress" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(54) > 16)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = power >= 500 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Double Knee Press]
+type = ChangeState
+value = 1100
+triggerAll = !AILevel
+triggerAll = command = "DoubleKneePress" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(54) > 16)
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, EX Psycho Crusher]
+type = ChangeState
+value = 1050
+TriggerAll = !var(40)
+triggerAll = command = "EXPsychoCrusher" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(54) > 16)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = power >= 500 && var(20) <= 60
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Psycho Crusher]
+type = ChangeState
+value = 1000
+triggerAll = !AILevel
+triggerAll = command = "PsychoCrusher" && ifElse(var(20) > 0 || (StateNo = [1000, 4999]), 1, var(54) > 16)
+triggerAll = RoundState = 2 && StateType != A
+triggerAll = !var(39)
+trigger1 = ctrl || StateNo = 40 || StateNo = 52 || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Custom Combo]
+type = ChangeState
+value = ifElse(StateType = A, 905, 900)
+triggerAll = !AILevel
+trigger1 = command = "c+z"
+trigger1 = RoundState = 2
+trigger1 = power >= 1000 && !var(20)
+trigger1 = ctrl || StateNo = 52 || (StateNo = [100,101])
+trigger1 = !var(41)
+
+[State -1, Throw]
+type = ChangeState
+value = 800
+triggerAll = !AILevel
+trigger1 = (command = "holdfwd" || command = "holdback") && (command = "pp" || command = "kk")
+trigger1 = RoundState = 2 && StateType = S
+trigger1 = ctrl
+
+[State -1, Zero Counter]
+type = ChangeState
+value = 750
+triggerAll = !AILevel
+trigger1 = StateNo = 150 || StateNo = 152
+trigger1 = command = "412p" || command = "412k"
+trigger1 = RoundState = 2 && StateType != A
+trigger1 = power >= 1000 && !var(20)
+
+[State -1, Power Charge]
+type = ChangeState
+value = 730
+triggerAll = !AILevel
+trigger1 = command = "hold_b" && command = "hold_y"
+trigger1 = RoundState = 2 && StateType != A
+trigger1 = power < const(data.power) && power < PowerMax && !var(20)
+trigger1 = ctrl || (StateNo = [100,101])
+
+[State -1, Roll Backward]
+type = ChangeState
+value = 715
+triggerAll = !AILevel
+triggerAll = command = "a+x"
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = (ctrl || (StateNo = [100,101])) && command = "holdback"
+
+[State -1, Roll Forward]
+type = ChangeState
+value = 710
+triggerAll = !AILevel
+triggerAll = command = "a+x"
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = (ctrl || (StateNo = [100,101])) && command = "holdfwd"
+trigger2 = var(20) && var(4)
+
+[State -1, Dodge]
+type = ChangeState
+value = 700
+triggerAll = !AILevel
+triggerAll = command = "a+x"
+triggerAll = RoundState = 2 && StateType != A
+trigger1 = (ctrl || (StateNo = [100,101]))
+
+[State -1, Angled Jumping Heavy Kick]
+type = ChangeState
+value = 655
+triggerAll = !AILevel
+triggerAll = command = "c"
+triggerAll = StateType = A
+triggerAll = vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Neutral Jumping Heavy Kick]
+type = ChangeState
+value = 650
+triggerAll = !AILevel
+triggerAll = command = "c"
+triggerAll = StateType = A
+triggerAll = !vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Jumping Medium Kick]
+type = ChangeState
+value = 645
+triggerAll = !AILevel
+triggerAll = command = "b"
+triggerAll = StateType = A
+triggerAll = vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Jumping Medium Kick]
+type = ChangeState
+value = 640
+triggerAll = !AILevel
+triggerAll = command = "b"
+triggerAll = StateType = A
+triggerAll = !vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Angled Jumping Light Kick]
+type = ChangeState
+value = 635
+triggerAll = !AILevel
+triggerAll = command = "a"
+triggerAll = StateType = A
+triggerAll = vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Neutral Jumping Light Kick]
+type = ChangeState
+value = 630
+triggerAll = !AILevel
+triggerAll = command = "a"
+triggerAll = StateType = A
+triggerAll = !vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Angled Jumping Heavy Punch]
+type = ChangeState
+value = 625
+triggerAll = !AILevel
+triggerAll = command = "z"
+triggerAll = StateType = A
+triggerAll = vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Jumping Heavy Punch]
+type = ChangeState
+value = 620
+triggerAll = !AILevel
+triggerAll = command = "z"
+triggerAll = StateType = A
+triggerAll = !vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Hell Attack: 2nd Hit]
+type = ChangeState
+value = 620
+triggerAll = !AILevel
+triggerAll = command = "y"
+triggerAll = StateType = A
+triggerAll = vel x
+trigger1 = StateNo = 615 && AnimElemTime(3) >= 0
+trigger2 = var(4)
+
+[State -1, Hell Attack: 1st Hit]
+type = ChangeState
+value = 615
+triggerAll = !AILevel
+triggerAll = command = "y"
+triggerAll = StateType = A
+triggerAll = vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Jumping Medium Punch]
+type = ChangeState
+value = 610 
+triggerAll = !AILevel
+triggerAll = command = "y"
+triggerAll = StateType = A
+triggerAll = !vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Angled Jumping Light Punch]
+type = ChangeState
+value = 605
+triggerAll = !AILevel
+triggerAll = command = "x"
+triggerAll = StateType = A
+triggerAll = vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Neutral Jumping Light Punch]
+type = ChangeState
+value = 600
+triggerAll = !AILevel
+triggerAll = command = "x"
+triggerAll = StateType = A
+triggerAll = !vel x
+trigger1 = ctrl
+trigger2 = var(4)
+
+[State -1, Crouching Heavy Kick]
+type = ChangeState
+value = 450
+triggerAll = !AILevel
+triggerAll = command = "holddown" && command = "c"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Crouching Medium Kick]
+type = ChangeState
+value = 440
+triggerAll = !AILevel
+triggerAll = command = "holddown" && command = "b"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Crouching Light Kick]
+type = ChangeState
+value = 430
+triggerAll = !AILevel
+triggerAll = command = "holddown" && command = "a"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+trigger3 = StateNo = 400 && Time < 4 && MoveContact
+
+[State -1, Crouching Heavy Punch]
+type = ChangeState
+value = 420
+triggerAll = !AILevel
+triggerAll = command = "holddown" && command = "z"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Crouching Medium Punch]
+type = ChangeState
+value = 410
+triggerAll = !AILevel
+triggerAll = command  ="holddown" && command = "y"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Crouching Light Punch]
+type = ChangeState
+value = 400
+triggerAll = !AILevel
+triggerAll = command = "holddown" && command = "x"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Standing Far/Close Heavy Kick]
+type = ChangeState
+value = 250
+triggerAll = !AILevel
+triggerAll = command != "holddown" && command = "c"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Standing Far/Close Medium Kick]
+type = ChangeState
+value = 240
+triggerAll = !AILevel
+triggerAll = command != "holddown" && command = "b"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Standing Far/Close Light Kick]
+type = ChangeState
+value = 230
+triggerAll = !AILevel
+triggerAll = command != "holddown" && command = "a"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Standing Heavy Punch]
+type = ChangeState
+value = 220
+triggerAll = !AILevel
+triggerAll = command != "holddown" && command = "z"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Standing Far/Close Medium Punch]
+type = ChangeState
+value = 210
+triggerAll = !AILevel
+triggerAll = command != "holddown" && command = "y"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Standing Far/Close Light Punch]
+type = ChangeState
+value = 200
+triggerAll = !AILevel
+triggerAll = command != "holddown" && command = "x"
+triggerAll = StateType != A
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(4)
+
+[State -1, Taunt]
+type = ChangeState
+value = 195
+triggerAll = !AILevel
+triggerAll = command = "start"
+triggerAll = StateType != A
+triggerAll = StateNo != [200,699]
+trigger1 = ctrl || (StateNo = [100,101])
+trigger2 = var(6)
+
+[State -1, Dash Forward/Run]
+type = ChangeState
+value = 110
+triggerAll = !AILevel
+trigger1 = command = "FF"
+trigger1 = roundstate = 2 && StateType = S
+trigger1 = ctrl
+
+[State -1, Dash Backward]
+type = ChangeState
+value = 105
+triggerAll = !AILevel
+trigger1 = command = "BB"
+trigger1 = RoundState = 2 && StateType = S
+trigger1 = ctrl
+
+;==============================================================================================
+;===========================================< A.I >============================================
+;==============================================================================================
+;All Credits goes to P.O.T.S and Killer Kong (a.k.a EvilHomer) for the A.I
+
+[State -1, Fall Recovery (Air)]
+type = ChangeState
+value = 5210
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && Alive
+trigger1 = StateNo = 5050 && CanRecover
+trigger1 = vel y > 0 && pos y < -20
+trigger1 = Random < (50 * (AILevel ** 2 / 64.0))
+
+[State -1, Fall Recovery (Ground)]
+type = ChangeState
+value = 5200
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && Alive
+trigger1 = StateNo = 5050 && GetHitVar(fall.recover)
+trigger1 = vel y > 0 && pos y >= -20
+trigger1 = Random < (125 * (AILevel ** 2 / 64.0))
+
+[State -1, Jump]
+type = ChangeState
+value = 40
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && StateType != A && ctrl
+trigger1 = EnemyNear, MoveType = A && P2BodyDist x < 160 && EnemyNear, HitDefAttr = SC, AT
+
+[State -1, Roll Forward]
+type = ChangeState
+value = 710
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && StateType != A
+trigger1 = Random < (150 * (AILevel ** 2 / 64.0))
+trigger1 = (ctrl || (StateNo = [100,101])) && var(20) <= 164 && !var(26)
+trigger1 = (EnemyNear, MoveType = A) && !(EnemyNear, HitDefAttr = SCA, AT) && (P2BodyDist x = [92,122])
+
+[State -1, Dodge]
+type = ChangeState
+value = 700
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && StateType != A
+trigger1 = Random < (200 * (AIlevel ** 2 / 64.0))
+trigger1 = (ctrl || (StateNo = [100,101])) && var(20) <= 164 && !var(26)
+trigger1 = (EnemyNear, MoveType = A) && !(EnemyNear, HitDefAttr = SCA, AT) && (P2BodyDist x = [0,60])
+
+[State -1, Dash Backward]
+type = ChangeState
+value = 105
+triggerAll = AILevel && NumEnemy
+triggerAll = RoundState = 2 && StateType = S
+triggerAll = ctrl && (StateNo != [100,106]) && var(20) <= 150 && !var(26)
+trigger1 = (EnemyNear, MoveType = A) && BackEdgeDist >= 80 && (P2BodyDist x = [80,120]) && (EnemyNear, vel x)
+trigger1 = Random < (ifElse((EnemyNear, HitDefAttr = SC, AT), 150, 50) * (AILevel ** 2 / 64.0))
+trigger2 = (P2BodyDist x = [0,80]) && BackEdgeBodyDist >= 80
+trigger2 = EnemyNear, StateNo = 5120 && EnemyNear, AnimTime = -4 && Random < (750 * (AILevel ** 2 / 64.0))
+
+[State -1, Guard]
+type = ChangeState
+value = 120
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && InGuardDist
+trigger1 = ctrl && (StateNo != [120, 155]) && !var(20)
+trigger1 = !var(26) || P2BodyDist x >= 40
+trigger1 = !(EnemyNear, HitDefAttr = SCA, AT) && (EnemyNear, Time < 120)
+trigger1 = StateType != A || P2StateType = A
+trigger1 = ifElse(StateType = A, ((var(3) != [1, 2]) || StateNo = 5210), 1)
+trigger1 = Random < (ifElse((P2StateNo = [200, 699]), 200, ifElse((P2StateNo = [1000,2999]), 750, 1000)) * (AILevel ** 2 / 64.0))
+
+[State -1, Zero Counter]
+type = ChangeState
+value = 750
+trigger1 = AILevel && NumEnemy
+trigger1 = StateNo = 150 || StateNo = 152
+trigger1 = RoundState = 2 && StateType != A
+trigger1 = Power >= 1000 && var(20) <= 60
+trigger1 = Random < (450 * (AILevel ** 2 / 64.0))
+trigger1 = (P2BodyDist x = [0,50]) && (Life < 0.5 * LifeMax)
+
+[State -1, Power Charge]
+type = ChangeState
+value = 730
+triggerAll = AILevel && NumEnemy
+trigger1 = RoundState = 2 && StateType != A
+trigger1 = Power < const(data.power) && !var(20)
+trigger1 = ctrl && Power < const(data.power) && Power < PowerMax && !var(20)
+trigger1 = !InGuardDist && P2BodyDist x >= 180 && Random < (250 * (AILevel ** 2 / 64.0))
+
+[State -1, Custom Combo]
+type = ChangeState
+value = ifElse(StateType = A, 905, 900)
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && (StateType != A || (vel x > 0 && vel y >= 0))
+trigger1 = Power >= 1000 && !var(20)
+trigger1 = (ctrl || StateNo = 52 || (StateNo = [100, 101]))
+trigger1 = (EnemyNear, MoveType = A) && (P2BodyDist x = [0,40]) && (P2Dist y = [-60,60]) && (EnemyNear, vel y >= 0)
+trigger1 = (EnemyNear, StateNo = [200,699]) && Random < (50 * (AILevel ** 2 / 64.0))
+
+[State -1, Run]
+type = ChangeState
+value = 100
+trigger1 = AILevel && NumEnemy
+trigger1 = RoundState = 2 && StateType = S
+trigger1 = ctrl && (StateNo != [100,106])
+trigger1 = (EnemyNear, MoveType != A) && P2BodyDist x >= 160 && Random < (100 * (AILevel ** 2 / 64.0))
+
+[State -1, Taunt]
+type = ChangeState
+value = 195
+trigger1 = AIlevel && NumEnemy
+trigger1 = roundstate = 2 && Statetype != A
+trigger1 = life >= 500 && life >= (enemynear, life)
+trigger1 = p2dist x > 200 && (enemynear, vel y > 0) && ctrl && random < (100 * (AIlevel ** 2 / 64.0))
+trigger1 = !(enemynear, ctrl) && (enemynear, movetype = H)
+
+[State -1, Throw]
+type = ChangeState
+value = 800
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype = S && stateno != 100 && ctrl
+triggerall = p2statetype != A && p2statetype != L && p2movetype != H
+trigger1 = (p2dist x = [0, 64]) && (p2dist y = [ -25, 25]) && random < (250 * (AIlevel ** 2 / 64.0))
+trigger2 = (p2stateno = [120, 155]) && (p2dist x = [0, 64]) && (p2dist y = [ -25, 25]) && random < (75 * (AIlevel ** 2 / 64.0))
+
+[State -1, Standing Light Punch]
+type = ChangeState
+value = 200
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 25]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Standing Medium Punch]
+type = changestate
+value = 210
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 50]) && (p2dist y = [ -50, 50]) && p2statetype = S && !(enemynear, hitfall)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Standing Heavy Punch]
+type = changestate
+value = 220
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 75]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = stateno = 205 && anim = 206 && animelemtime(4) >= 0 && (movehit = [1, 16])
+
+[State -1, Standing Light Kick]
+type = ChangeState
+value = 230
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 25]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype != A && !(enemynear, hitfall)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Standing Medium Kick]
+type = ChangeState
+value = 240
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 50]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype != C && !(enemynear, hitfall)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Standing Heavy Kick]
+type = ChangeState
+value = 250
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 75]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype != C && !(enemynear, hitfall)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Crouching Light Punch]
+type = ChangeState
+value = 400
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 20]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype != A && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Crouching Medium Punch]
+type = ChangeState
+value = 410
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 40]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype != A && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Crouching Heavy Punch]
+type = ChangeState
+value = 420
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 60]) && (p2dist y = [ -50, 50]) && p2statetype != L
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Crouching Light Kick]
+type = ChangeState
+value = 430
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 20]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype = S && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Crouching Medium Kick]
+type = ChangeState
+value = 440
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 40]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype = S && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Crouching Heavy Kick]
+type = ChangeState
+value = 450
+triggerall = AIlevel && numenemy
+triggerall = statetype != A && roundstate = 2
+triggerall = (p2bodydist x = [0, 60]) && (p2dist y = [ -50, 50]) && p2statetype != L && p2statetype = S && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (p2stateno = [120, 155]) && (p2dist x = [0, 64]) && (p2dist y = [ -25, 25]) && random < (125 * (AIlevel ** 2 / 64.0))
+
+[State -1, Aerial Light Punch]
+type = ChangeState
+value = 600
+triggerall = AIlevel && numenemy
+triggerall = statetype = A && roundstate = 2
+triggerall = (p2bodydist x = [0, 25]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Hell Attack]
+type = ChangeState
+value = 615
+trigger1 = AIlevel && numenemy
+trigger1 = StateType = A && roundstate = 2 && vel x
+trigger1 = StateNo = 610 && AnimElemTime(4) >= 0
+
+[State -1, Aerial Medium Punch]
+type = ChangeState
+value = 610
+triggerall = AIlevel && numenemy
+triggerall = statetype = A && roundstate = 2
+triggerall = (p2bodydist x = [0, 50]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+trigger1 = ctrl && random < (ifelse(p2statetype = A, 250, 50) * (AIlevel ** 2 / 64.0))
+
+[State -1, Aerial Heavy Punch]
+type = ChangeState
+value = 620
+triggerall = AIlevel && numenemy
+triggerall = statetype = A && roundstate = 2
+triggerall = (p2bodydist x = [0, 75]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Aerial Light Kick]
+type = ChangeState
+value = 630
+triggerall = AIlevel && numenemy
+triggerall = statetype = A && roundstate = 2
+triggerall = (p2bodydist x = [0, 25]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Aerial Medium Kick]
+type = ChangeState
+value = 640
+triggerall = AIlevel && numenemy
+triggerall = statetype = A && roundstate = 2
+triggerall = (p2bodydist x = [0, 50]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Aerial Heavy Kick]
+type = ChangeState
+value = 650
+triggerall = AIlevel && numenemy
+triggerall = statetype = A && roundstate = 2
+triggerall = (p2bodydist x = [ -50, 75]) && (p2dist y = [ -50, 50]) && p2statetype != L && !(enemynear, hitfall)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Crusher]
+type = ChangeState
+value = ifElse(Power >= 500 && Random < 200, 1050, 1000)
+TriggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A
+triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [160, 320]) && (p2dist y >= -120) && (enemynear, vel y > -2)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Double Knee Press]
+type = changestate
+value = 1100
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A
+triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 160]) && (p2dist y >= -120) && (enemynear, vel y > -2)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Double Knee Press]
+type = ChangeState
+value = 1150
+TriggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60
+triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 80]) && (p2dist y >= -120) && (enemynear, vel y > -2)
+trigger1 = ctrl && random < (75 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Head Press]
+type = changestate
+value = 1200
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A
+triggerall = (p2stateno != [120, 155])
+triggerall = (p2dist y >= -160) && (enemynear, vel y <= 0)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+
+[State -1, Head Press]
+type = changestate
+value = 1200
+TriggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60
+triggerall = (p2stateno != [120, 155])
+triggerall = (p2dist y >= -160) && (enemynear, vel y <= 0)
+trigger1 = ctrl && random < (200 * (AIlevel ** 2 / 64.0))
+
+[State -1, Devil Reverse]
+type = ChangeState
+value = 1300
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && !(enemynear, hitfall)
+triggerall = (p2stateno != [120, 155]) && p2statetype != L
+triggerall = (p2dist y >= -160) && (enemynear, vel y <= 0)
+trigger1 = ctrl && random < (15 * (AIlevel ** 2 / 64.0))
+
+[State -1, Devil Reverse]
+type = ChangeState
+value = 1350
+TriggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60 && !(enemynear, hitfall)
+triggerall = (p2stateno != [120, 155]) && p2statetype != L
+triggerall = (p2dist y >= -160) && (enemynear, vel y <= 0)
+trigger1 = ctrl && random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Banish]
+type = changestate
+value = 1400
+triggerall = AIlevel && Numenemy
+triggerall = roundstate = 2 && statetype != A
+triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 40]) && (p2dist y >= -60) && (enemynear, vel y > -2)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Banish]
+type = changestate
+value = 1450
+TriggerAll = !var(40)
+triggerall = AIlevel && Numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60
+triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 40]) && (p2dist y >= -60) && (enemynear, vel y > -2)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Field]
+type = changestate
+value = 1600
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A
+triggerall = ifelse(!var(20), !numhelper(1605), 1)
+triggerall = var(40) && ifelse(!var(20), !numhelper(1655), 1)
+triggerall = p2statetype != L && (enemynear, vel y <= 0)
+trigger1 = ctrl && p2dist x > 160 && random < (25 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Field]
+type = changestate
+value = 1650
+TriggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60
+triggerall = ifelse(!var(20), !numhelper(1605), 1)
+triggerall = var(40) && ifelse(!var(20), !numhelper(1655), 1)
+triggerall = p2statetype != L && (enemynear, vel y <= 0)
+trigger1 = ctrl && p2dist x > 160 && random < (25 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Impact]
+type = ChangeState
+value = 1700
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A
+triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 200]) && (p2dist y >= -120) && (enemynear, vel y > -2)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && Random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Impact]
+type = ChangeState
+value = 1750
+TriggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60
+triggerall = (p2stateno != [120, 155]) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 200]) && (p2dist y >= -120) && (enemynear, vel y > -2)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && Random < (150 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Break Smasher]
+type = ChangeState
+value = 3000
+triggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 2000 && !var(20)
+triggerall = frontedgedist >= 160
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A) && p2statetype != L
+triggerall = (p2bodydist x = [0, 90]) && (p2dist y >= -180) && (enemynear, vel y > -2) && (enemynear, vel x >= 0)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && random < (50 * (AIlevel ** 2 / 64.0))
+trigger3 = (stateno = 1000 || stateno = 1100 || stateno = 1700 || stateno = 1400) && (movehit = [1, 16]) && random < (75 * (AIlevel ** 2 / 64.0))
+trigger4 = (stateno = [1000, 4999])
+trigger4 = (StateNo != [3050, 3099]) || (StateNo != [3150, 3199]) || (StateNo != [3250, 3299])  || (StateNo != [3300, 3399])  || (StateNo != [3450, 3499])  || (StateNo != [3500, 3599])  || (StateNo != [3650, 3699])  || (StateNo != [3700, 3799])    
+trigger4 = NumHelper(1605) || NumHelper(1655)
+trigger5 = (stateno = 3100) && animelemtime(8) >= 0 && (movehit = [1, 16]) && random < (100 * (AIlevel ** 2 / 64.0))
+
+[State -1, Knee Press Nightmare]
+type = ChangeState
+value = 3100 + (Power >= 2000) * 50
+triggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 1000 && var(20) <= 60
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 90]) && (p2dist y >= -180) && (enemynear, vel y > -2) && (enemynear, vel x >= 0)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 240]) && (movehit = [1, 16]) && random < (50 * (AIlevel ** 2 / 64.0))
+trigger3 = (stateno = 1700 || stateno = 1400) && (movehit = [1, 16]) && random < (75 * (AIlevel ** 2 / 64.0))
+trigger4 = (stateno = [1000, 4999])
+trigger4 = (StateNo != [3050, 3099]) || (StateNo != [3150, 3199]) || (StateNo != [3250, 3299])  || (StateNo != [3300, 3399])  || (StateNo != [3450, 3499])  || (StateNo != [3500, 3599])  || (StateNo != [3650, 3699])  || (StateNo != [3700, 3799])    
+trigger4 = NumHelper(1605) || NumHelper(1655)
+
+[State -1, HeartBreak]
+type = ChangeState
+value = 3200 + (Power >= 2000) * 50
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 1000 && var(20) <= 60
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A) && p2statetype != L
+triggerall = (p2bodydist x = [0, 90]) && (p2dist y >= -180) && (enemynear, vel y > -2) && (enemynear, vel x >= 0)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (ifelse((enemynear, hitfall), 200, 50) * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 250]) && (movehit = [1, 16]) && random < (50 * (AIlevel ** 2 / 64.0))
+trigger3 = (stateno = 1000 || stateno = 1100 || stateno = 1700 || stateno = 1400) && (movehit = [1, 16]) && random < (50 * (AIlevel ** 2 / 64.0))
+trigger4 = (stateno = [1000, 4999])
+trigger4 = (StateNo != [3050, 3099]) || (StateNo != [3150, 3199]) || (StateNo != [3250, 3299])  || (StateNo != [3300, 3399])  || (StateNo != [3450, 3499])  || (StateNo != [3500, 3599])  || (StateNo != [3650, 3699])  || (StateNo != [3700, 3799])    
+trigger4 = NumHelper(1605) || NumHelper(1655)
+trigger5 = (stateno = 3100) && animelemtime(8) >= 0 && (movehit = [1, 16]) && random < (200 * (AIlevel ** 2 / 64.0))
+
+[State -1, Psycho Punisher]
+type = ChangeState
+value = 3300
+triggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 3000 && !var(20)
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A)
+triggerall = (p2statetype = A^^p2movetype = H) && p2statetype != L
+trigger1 = ctrl && numenemy && random < (275 * (AIlevel ** 2 / 64.0))
+trigger1 = (enemynear, animtime >= 20) || (enemynear, pos x <= 160)
+
+[State -1, Psycho Cannon]
+type = Changestate
+value = 3400 + (Power >= 2000) * 50
+triggerAll = var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 1000 && var(20) <= 60
+triggerall = !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A)
+triggerall = (p2bodydist x = [0, 100]) && p2statetype != L
+triggerall = (p2dist y = [ -100, 0]) && (enemynear, vel y = [ -7, 1]) && (enemynear, vel x > -2)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && (p2bodydist x = [15, 125]) && random < (50 * (AIlevel ** 2 / 64.0))
+trigger3 = (stateno = 1100 || stateno = 1400 || stateno = 1700) && (movehit = [1, 16]) && random < (50 * (AIlevel ** 2 / 64.0))
+trigger4 = (stateno = [1000, 4999])
+trigger4 = (StateNo != [3050, 3099]) || (StateNo != [3150, 3199]) || (StateNo != [3250, 3299])  || (StateNo != [3300, 3399])  || (StateNo != [3450, 3499])  || (StateNo != [3500, 3599])  || (StateNo != [3650, 3699])  || (StateNo != [3700, 3799])    
+trigger4 = NumHelper(1605) || NumHelper(1655)
+trigger5 = stateno = 52 && !animtime && (prevstateno = [1000, 2999]) && numtarget && random < (300 * (AIlevel ** 2 / 64.0))
+
+[State -1, Super Psycho Break Smasher]
+type = changestate
+value = 3500
+triggerAll = !var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 3000 && !var(20)
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A)
+triggerall = (p2statetype = A^^p2movetype = H) && p2statetype != L
+trigger1 = ctrl && numenemy && random < (200 * (AIlevel ** 2 / 64.0))
+trigger1 = (enemynear, animtime >= 20) || (enemynear, pos y <= -60)
+trigger2 = ctrl && numenemy && random < (350 * (AIlevel ** 2 / 64.0))
+trigger2 = (enemynear, animtime >= 20) || (enemynear, pos x >= 10)
+
+[State -1, Super Psycho Break Smasher]
+type = ChangeState
+value = 3500
+triggerAll = var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 2000 && !var(20)
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A)
+triggerall = (p2statetype = A^^p2movetype = H) && p2statetype != L
+trigger1 = ctrl && numenemy && random < (200 * (AIlevel ** 2 / 64.0))
+trigger1 = (enemynear, animtime >= 20) || (enemynear, pos y <= -60)
+trigger2 = ctrl && numenemy && random < (350 * (AIlevel ** 2 / 64.0))
+trigger2 = (enemynear, animtime >= 20) || (enemynear, pos x >= 10)
+
+[State -1, Final Psycho Break Smasher]
+type = ChangeState
+value = 3550
+triggerAll = var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 3000 && !var(20)
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A)
+triggerall = (p2statetype = A^^p2movetype = H) && p2statetype != L
+trigger1 = ctrl && numenemy && random < (300 * (AIlevel ** 2 / 64.0))
+trigger1 = (enemynear, animtime >= 20) || (enemynear, pos y <= -60)
+trigger2 = ctrl && numenemy && random < (400 * (AIlevel ** 2 / 64.0))
+trigger2 = (enemynear, animtime >= 20) || (enemynear, pos x >= 10)
+
+[State -1, Knee Press Nightmare]
+type = ChangeState
+value = 3600 + (Power >= 2000) * 50
+triggerAll = var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 1000 && var(20) <= 60
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A) && p2statetype != L && !(enemynear, hitfall)
+triggerall = (p2bodydist x = [0, 90]) && (p2dist y >= -180) && (enemynear, vel y > -2) && (enemynear, vel x >= 0)
+triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
+trigger1 = ctrl && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (stateno = [200, 240]) && (movehit = [1, 16]) && random < (50 * (AIlevel ** 2 / 64.0))
+trigger3 = (stateno = 1700 || stateno = 1400) && (movehit = [1, 16]) && random < (75 * (AIlevel ** 2 / 64.0))
+trigger4 = (stateno = [1000, 4999])
+trigger4 = (StateNo != [3050, 3099]) || (StateNo != [3150, 3199]) || (StateNo != [3250, 3299])  || (StateNo != [3300, 3399])  || (StateNo != [3450, 3499])  || (StateNo != [3500, 3599])  || (StateNo != [3650, 3699])  || (StateNo != [3700, 3799])    
+trigger4 = NumHelper(1605) || NumHelper(1655)
+
+[State -1, Psycho Explosion]
+type = ChangeState
+value = 3700
+triggerAll = var(40)
+triggerall = AIlevel && numenemy
+triggerall = roundstate = 2 && statetype != A && power >= 3000 && !var(20)
+triggerall = !(enemynear, ctrl) && ((p2stateno != [120, 155]) || p2statetype = A)
+triggerall = (p2statetype = A^^p2movetype = H) && p2statetype != L
+trigger1 = ctrl && numenemy && random < (250 * (AIlevel ** 2 / 64.0))
+trigger1 = (enemynear, animtime >= 20) || (enemynear, pos x >= 150)
+trigger2 = ctrl && numenemy && random < (50 * (AIlevel ** 2 / 64.0))
+trigger2 = (enemynear, animtime >= 20) || (enemynear, pos x <= 90)
+trigger3 = ctrl && numenemy && random < (150 * (AIlevel ** 2 / 64.0))
+trigger3 = (enemynear, pos x >= 90) || (enemynear, pos y <= -40)

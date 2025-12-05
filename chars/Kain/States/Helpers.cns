@@ -1,0 +1,5894 @@
+;--------------------------------------------------------------------------------------
+;Pal Select
+[Statedef 256]
+physics = N
+anim = 256
+velset=0,0
+sprpriority=99999
+ 
+[State 256, PosSet]
+type = PosSet
+trigger1 =!time 
+x = root,facing*-90
+y = 20
+ignorehitpause = 1
+
+[State 256, AS]
+type=assertspecial
+trigger1=1
+flag=intro
+flag2=noshadow
+[State 256, Reset]
+type=varset
+trigger1=!time
+var(29)=200
+[State 256, Pal]
+type=varset
+trigger1=!time
+var(26)=root,palno
+
+[State 256, Varset]
+type=varset
+trigger1=var(26)<1||var(26)>127
+var(26)=1+(var(26)<1)*126
+[State 256, PlaySnd]
+type = PlaySnd
+trigger1 =var(10)=2 
+value = S256,0
+volumescale = 50
+channel = 20
+[State 256, PlaySnd]
+type = PlaySnd
+triggerall=ishelper(256)
+trigger1=root,command="a"||root,command="b"||root,command="c"||root,command="x"||root,command="y"||root,command="z"||root,command="s"||roundstate=2
+trigger2=var(29)<=5
+value = S256,1
+volumescale = 50
+channel = 20
+persistent =0 
+
+[State 256, Countdown]
+type = VarAdd
+trigger1 =1 
+var(29)=-1
+[State 256, Countdown]
+type = VarAdd
+trigger1=!var(10)&&var(29)<150
+trigger1=root,command="holdup"||root,command="holddown"||root,command="holdback"||root,command="holdfwd"
+var(29)=25
+
+[State 256, Varadd]
+type=varadd
+trigger1=!var(10)
+trigger1=root,command="holdup"||root,command="holddown"||root,command="holdback"||root,command="holdfwd"
+var(26)=1-(root,command="holddown"||root,command="holdback"&&facing=1||root,command="holdfwd"&&facing=-1)*2
+
+[State 256, Varadd]
+type=varadd
+trigger1=(root,command="holdup"||root,command="holddown"||root,command="holdback"||root,command="holdfwd")&&!var(10)||var(10)
+var(10)=1
+
+[State 256, Varset]
+type=varset
+trigger1=!time||var(10)>=17
+var(10)=0
+
+[State 256, End]
+type=destroyself
+triggerall=ishelper(256)
+trigger1=root,command="a"||root,command="b"||root,command="c"||root,command="x"||root,command="y"||root,command="z"||root,command="s"||roundstate=2
+trigger2=var(29)<=0
+trigger3=root,AILevel
+;---------------------------------------------------------------------------
+;MP Energy
+[Statedef 211]
+physics  = N
+anim = 211
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 211, Countdown Var]
+type = VarAdd
+trigger1=animelemtime(6)>=1
+var(1)=1
+ignorehitpause =1
+
+[State 211, ChangeAnim]
+type = ChangeAnim
+triggerall=anim=211
+trigger1 =animelemtime(10)<0
+value = 211
+elem = Parent, AnimElemNo(0)
+[State 211, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-Ifelse(parent,movecontact,8,16)*var(1),256
+
+[State 211, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=210
+pos = 0,0
+ignorehitpause =1
+[State 211, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 211, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=210
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+trigger4 =animelemtime(14)>0
+;---------------------------------------------------------------------------
+;HP Energy
+[Statedef 222]
+physics  = N
+anim = parent, Anim+1
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 222, Countdown Var]
+type = VarAdd
+trigger1=animelemtime(7)>=1
+var(1)=1
+ignorehitpause =1
+
+[State 222, ChangeAnim]
+type = ChangeAnim
+triggerall =root,stateno=220||root,stateno=221
+trigger1 =Parent,anim=220 && animelemtime(9)<0
+trigger2 =Parent,anim=225 && animelemtime(13)<0 
+value = parent, Anim+1
+elem = Parent, AnimElemNo(0)
+[State 222, Trans]
+type = Trans
+trigger1 =Parent,anim=220
+trans = addalpha
+alpha = 192-8*time,256
+ignorehitpause =1
+[State 222, Trans]
+type = Trans
+trigger1 =Parent,anim=225
+trans = addalpha
+alpha = 256-8*var(1),256
+ignorehitpause =1
+
+[State 222, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=220||root,stateno=221
+pos = 0,0
+ignorehitpause =1
+[State 222, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 222, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=220&&root,stateno!=221
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+trigger4 =Parent,anim=220 && animelemtime(11)>=0
+trigger5 =Parent,anim=225 && animelemtime(17)>=0
+;---------------------------------------------------------------------
+;HK Energy
+[Statedef 251]
+physics=N
+anim=251
+ctrl=0
+velset=1, 0
+sprpriority=4
+
+[State 251, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha=256-8*time,256
+ignorehitpause =1
+[State 251, AssertSpecial]
+type = AssertSpecial
+trigger1 =1
+flag = noshadow
+ignorehitpause =1
+
+[State 251, End]
+type=destroyself
+trigger1=!animtime
+trigger2=root,Movetype=H
+trigger3=root,stateno!=250
+;------------------------------------------------------------------
+;Destroy
+[Statedef 252]
+type=A
+physics=N
+movetype=I
+velset=0, 0
+ctrl=0
+
+[State 251, AssertSpecial]
+type = AssertSpecial
+trigger1 =1
+flag = noshadow
+ignorehitpause =1
+
+[State 251, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 251, End]
+type=destroyself
+trigger1 = !animtime
+;---------------------------------------------------------------------------
+;CHP Energy
+[Statedef 421]
+physics  = N
+anim = 421
+ctrl = 0
+velset=2,0
+sprpriority=4
+
+[State 420, Trans]
+type = Trans
+trigger1 =Parent,anim=420
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+
+[State 421, BindToRoot]
+type = BindToRoot
+trigger1 =!time
+pos = 20,0
+ignorehitpause =1
+[State 421, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 421, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=420
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+;---------------------------------------------------------------------------
+;CHK Energy
+[Statedef 451]
+physics  = N
+anim = 451
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 451, Countdown Var]
+type = VarAdd
+trigger1=animelemtime(4)>=1
+var(1)=1
+ignorehitpause =1
+
+[State 451, ChangeAnim]
+type = ChangeAnim
+triggerall=anim=451
+trigger1 =animelemtime(8)<0
+value = 451
+elem = Parent, AnimElemNo(0)
+[State 451, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-Ifelse(parent,movecontact,8,16)*var(1),256
+
+[State 451, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=450
+pos = 15,0
+ignorehitpause =1
+[State 451, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 451, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=450
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+trigger4 =animelemtime(12)>0
+;---------------------------------------------------------------------------
+;AHP Energy
+[Statedef 621]
+physics  = N
+anim = 621
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 621, Countdown Var]
+type = VarAdd
+trigger1=animelemtime(7)>=1
+var(1)=1
+ignorehitpause =1
+
+[State 621, ChangeAnim]
+type = ChangeAnim
+triggerall=anim=621
+trigger1 =animelemtime(11)<0
+value = 621
+elem = Parent, AnimElemNo(0)
+[State 621, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-Ifelse(parent,movecontact,8,16)*var(1),256
+
+[State 621, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=620
+pos = 0,0
+ignorehitpause =1
+[State 621, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 621, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=620
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+trigger4 =animelemtime(15)>0
+;---------------------------------------------------------------------------
+;AHK Energy
+[Statedef 651]
+physics  = N
+anim = 651
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 651, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-Ifelse(parent,movecontact,8,16)*time,256
+
+[State 651, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=650
+pos = 0,0
+ignorehitpause =1
+[State 651, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 651, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=650
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+trigger4 =root,animelemtime(8)>0
+;---------------------------------------------------------------------------
+;Fire
+[Statedef 812]
+physics  = N
+anim = 812
+ctrl = 0
+velset=0,0
+sprpriority=4
+
+[State 812, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+
+[State 812, BindToRoot]
+type = BindToRoot
+trigger1 =Parent,anim=810
+pos = 0,0
+ignorehitpause =1
+[State 812, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 812, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=810
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+;---------------------------------------------------------------------------
+;Fire
+[Statedef 865]
+physics  = N
+anim = 7182
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 865, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 0+16*time,256
+ignorehitpause =1
+[State 865, flames]
+type=explod
+trigger1=random<500
+anim=7182
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,.035,Ifelse(random<400,-.125,-.25))
+pos= 0,0
+random=20,20
+scale=Ifelse(random<500,0.1,.15),Ifelse(random<500,0.1,.15)
+ownpal=0
+removeongethit = 1
+trans=addalpha
+alpha=0+16*time,256
+[State 865, BindToRoot]
+type = BindToRoot
+trigger1 =Parent,anim=5140
+pos = 62,-70
+ignorehitpause =1
+[State 865, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 865, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=5150
+trigger2 =root,anim!=5140
+[State 865, End]
+type=changestate
+trigger1=root,anim=5140&&root,animelemtime(14)>0
+value=866
+;---------------------------------------------------------------------------
+;Fire
+[Statedef 866]
+physics  = N
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 866, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-16*time,256
+ignorehitpause =1
+[State 866, flames]
+type=explod
+trigger1=random<500
+anim=7182
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,.3,Ifelse(random<400,-.125,-.25))
+pos= 0,0
+random=20,20
+scale=Ifelse(random<500,0.1,.15),Ifelse(random<500,0.1,.15)
+ownpal=0
+removeongethit = 1
+trans=addalpha
+alpha=256-16*time,256
+[State 866, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 866, Destroyself]
+type = destroyself
+trigger1 =time>14
+;---------------------------------------------------------------------
+;Schwarze Flamme
+[Statedef 1005]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=5
+
+[State 1005, flames]
+type=explod
+trigger1=random<500
+anim=7182
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=Ifelse(random<500,0.1,.15),Ifelse(random<500,0.1,.15)
+ownpal=0
+removeongethit = 1
+[State 1005, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(10)=3&&var(8)<2,1005,1006)
+ignorehitpause=1
+[State 1005, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 1005, Strength]
+type=varset
+trigger1=!time&&!prevstateno
+var(10)=root, var(10)
+[State 1005, Strength]
+type=varset
+trigger1=!time&&!prevstateno
+var(12)=root, var(12)
+
+[State 1005, Angle]
+type=varset
+trigger1=!time && !prevstateno && !var(12)
+var(21)=Ifelse(var(10)=2,45,Ifelse(var(10)=1,22,0))
+[State 1005, Angle]
+type=varset
+trigger1=!time && !prevstateno && var(12)
+var(21)=Ifelse(var(10)=2||var(10)=3,-30,Ifelse(var(10)=1,-15,0))
+
+[State 1005, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=1005
+
+[State 1005, AngleSet]
+type = Angledraw
+trigger1 =1
+value =var(21)
+ignorehitpause =1
+
+[State 1005, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 1005, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 1005, Vel]
+type=velset
+trigger1=!time && !var(12)
+x=Ifelse(var(10)=3,7-4*(var(2)>1),Ifelse(var(10)=2,4.5,Ifelse(var(10)=1,5,5)))
+y=Ifelse(var(10)=2,-4,Ifelse(var(10)=1,-2.5,0))
+[State 1005, Vel]
+type=velset
+trigger1=!time && var(12)
+x=Ifelse(var(10)=3,6,5)
+y=Ifelse(var(10)=3,7,Ifelse(var(10)=2,6,Ifelse(var(10)=1,4,0)))
+
+[State 1005, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 1005, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256, 256
+ignorehitpause=1
+[State 1005, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 1005, High]
+type=hitdef
+trigger1=!var(12)
+priority=4, Hit
+attr=A, SP
+damage=floor(Ifelse(root,var(20),60,Ifelse(var(10)=3,60,Ifelse(var(10)=3,60,76+6*var(10))))*root,fvar(10)),10
+animtype=Hard
+hitflag=MAF
+guardflag=MA
+pausetime=3*(var(10)=3),12/((root,var(20)>0)+1)
+sparkNo=-1
+guard.sparkNo=-1
+sparkXY=-1
+guardsound=s130,1
+ground.type=High
+ground.slidetime=6
+ground.hittime=12
+ground.velocity=Ifelse(root,var(20),-5,-10),Ifelse(var(10)=3,-4,0)
+ground.cornerpush.veloff=Ifelse(root,var(20),0,-5)
+air.velocity=Ifelse(root,var(20),-2,-4), -4
+down.velocity=0,0
+air.fall=1
+fall=var(10)=3
+fall.recover=0
+getpower=Ifelse(var(10)=3,0,ifelse(p2movetype=H,72,144)*!(root,var(20))),Ifelse(var(10)=3,0,36*!(root,var(20)))
+givepower=36, 36
+envshake.time=12
+envshake.ampl=5
+sprpriority=5
+yaccel=.5
+airguard.ctrltime=12
+airguard.velocity=ifelse((root,var(20)),-4,-8),-3
+forcestand=1
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+
+[State 1005, High]
+type=hitdef
+trigger1=var(12)
+priority=4, Hit
+attr=A, SP
+damage=floor(Ifelse(root,var(20),60,Ifelse(var(10)=3,60,Ifelse(var(10)=3,60,76+6*var(10))))*root,fvar(10)),10
+animtype=Hard
+hitflag=MAFD
+guardflag=MA
+pausetime=3*(var(10)=3),12/((root,var(20)>0)+1)
+sparkNo=-1
+guard.sparkNo=-1
+sparkXY=-1
+guardsound=s130,1
+ground.type=High
+ground.slidetime=6
+ground.hittime=12
+ground.velocity=Ifelse(root,var(20),-5,-10),Ifelse(var(10)=3,-4,0)
+ground.cornerpush.veloff=Ifelse(root,var(20),0,-5)
+air.velocity=Ifelse(root,var(20),-2,-4), -4
+down.velocity=0,0
+air.fall=1
+fall=var(10)=3
+fall.recover=0
+getpower=Ifelse(var(10)=3,0,ifelse(p2movetype=H,72,144)*!(root,var(20))),Ifelse(var(10)=3,0,36*!(root,var(20)))
+givepower=36, 36
+envshake.time=12
+envshake.ampl=5
+sprpriority=5
+yaccel=.5
+airguard.ctrltime=12
+airguard.velocity=ifelse((root,var(20)),-4,-8),-3
+forcestand=1
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+
+[State 1005, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), 0
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 1005, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 1005, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&(enemynear,stateno=[5000,5050])
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 1005, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 1005, Projhit]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(47)=1
+ignorehitpause=1
+persistent=0
+[State 1005, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 1005, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 1005, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+trigger1=Root, StateNo=[1000,1030]
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 1005, End]
+type=changestate
+trigger1=movecontact
+trigger2=pos y > -vel y
+value=Ifelse(var(10)=3&&var(8)<2,1005,1006)
+ignorehitpause=1
+[State 1005, End]
+type=destroyself
+trigger1=pos x != [ -220, 220]
+;------------------------------------------------------------------
+;Schwarze Flamme Remove
+[Statedef 1006]
+type=A
+physics=N
+movetype=I
+anim=1009
+velset=0, 0
+ctrl=0
+sprpriority=4
+
+[State 1006, flames]
+type=explod
+trigger1=random<500&&pos y>=0
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,-10
+random=0,40
+scale=Ifelse(random<500,0.15,.2),Ifelse(random<500,0.15,.2)
+ownpal=0
+removeongethit = 1
+
+[State 1006, PlaySnd]
+type = PlaySnd
+trigger1=!time
+value = s1006,0
+channel=8
+ignorehitpause=1
+[State 1006, PosFreeze]
+type=Posadd
+trigger1=!time&&!var(12)
+x=20
+y=40
+[State 1006, Posset]
+type=Posset
+trigger1=var(12)&&pos y>0
+y=0
+[State 1006, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 1006, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 1006, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256-8*time, 256
+ignorehitpause=1
+[State 1006, AngleSet]
+type = Angledraw
+trigger1 =1
+value =var(21)
+ignorehitpause =1
+
+[State 1006, End]
+type=destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------------
+;Schwarze Flamme FX
+[Statedef 1008]
+physics  = N
+anim = 1008
+ctrl = 0
+velset=0,0
+sprpriority=4
+
+[State 1008, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+[State 1008, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 1008, Destroyself]
+type = destroyself
+trigger1 =!animtime
+;---------------------------------------------------------------------
+;Schwarze Lanze (Projectile)
+[Statedef 1105]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=5
+
+[State 1105, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+
+[State 1105, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(10)=3&&var(8)<2,1105,1106)
+ignorehitpause=1
+[State 1105, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 1105, Strength]
+type=varset
+trigger1=!time&&!prevstateno
+var(10)=root, var(10)
+
+[State 1105, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=1105
+
+[State 1105, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 1105, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 1105, Vel]
+type=velset
+trigger1=!time 
+x=6+var(10)
+y=6+var(10)
+
+[State 1105, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 1105, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256, 256
+ignorehitpause=1
+[State 1105, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 1105, High]
+type=hitdef
+trigger1=!time
+priority=4, Hit
+attr=A, SP
+damage=floor(Ifelse(root,var(20),40,Ifelse(var(10)=3,40,26+6*var(10)))*root,fvar(10)),10
+animtype=Hard
+hitflag=MAF
+guardflag=MA
+pausetime=4*(var(10)=3),12/((root,var(20)>0)+1)
+sparkNo=-1
+guard.sparkNo=-1
+sparkXY=-1
+guardsound=s130,1
+ground.type=High
+ground.slidetime=6
+ground.hittime=12
+ground.velocity=Ifelse(root,var(20),-5,-10),Ifelse(var(10)=3,-2,0)
+ground.cornerpush.veloff=Ifelse(root,var(20),0,-5)
+air.velocity=Ifelse(root,var(20),-2,-4), 5
+air.fall=1
+fall=var(10)=3
+fall.recover=0
+getpower=Ifelse(var(10)=3,0,ifelse(p2movetype=H,36,72)*!(root,var(20))),Ifelse(var(10)=3,0,36*!(root,var(20)))
+givepower=36, 36
+envshake.time=12
+envshake.ampl=5
+sprpriority=5
+yaccel=.5
+airguard.ctrltime=12
+airguard.velocity=ifelse((root,var(20)),-4,-8),-3
+forcestand=1
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+
+[State 1105, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), 0
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 1105, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 1105, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&(enemynear,stateno=[5000,5050])
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 1105, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 1105, Projhit]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(47)=1
+ignorehitpause=1
+persistent=0
+[State 1105, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 1105, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 1105, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+trigger1=Root, StateNo=[1100,1150]
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 1105, End]
+type=changestate
+trigger1=movecontact
+trigger2=pos y > -vel y
+value=Ifelse(var(10)=3&&var(8)<2,1105,1106)
+ignorehitpause=1
+;------------------------------------------------------------------
+;Schwarze Lanze Remove
+[Statedef 1106]
+type=A
+physics=N
+movetype=I
+anim=7181
+velset=0, 0
+ctrl=0
+sprpriority=4
+
+[State 1106, flames]
+type=explod
+trigger1=1
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.25,Ifelse(random<250,-.125,-.2)),Ifelse(random<=300,.1,Ifelse(random<400,-.125,.125))
+pos= -5,-20
+random=0,40
+scale=Ifelse(random<500,0.4,0.25),Ifelse(random<500,0.4,0.25)
+ownpal=0
+[State 1106, PlaySnd]
+type = PlaySnd
+trigger1=!time
+value = s1006,0
+channel=4
+[State 1106, Posset]
+type=Posset
+trigger1=!time&&pos y>=0
+y=0
+[State 1106, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 1106, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 1106, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256-8*time, 256
+ignorehitpause=1
+
+[State 1106, End]
+type=destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------------
+;Schwarze Lanze FX
+[Statedef 1107]
+physics  = N
+anim = 1009
+ctrl = 0
+velset=3,0
+sprpriority=4
+
+[State 1107, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+[State 1107, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 1107, Destroyself]
+type = destroyself
+trigger1 =!animtime
+;---------------------------------------------------------------------------
+;Schwarzer Panzer FX
+[Statedef 1205]
+physics  = N
+anim = 1205
+ctrl = 0
+velset=-3,0
+sprpriority=4
+
+[State 1205, flames]
+type=explod
+trigger1=random<200
+anim=7182
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.25,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,-.35))
+pos= -5,-60
+random=40,20
+scale=Ifelse(random<500,0.1,.15),Ifelse(random<500,0.1,.15)
+ownpal=0
+removeongethit = 1
+[State 1205, BindToRoot]
+type = BindToRoot
+trigger1 =!time 
+time = 1
+pos = 12,14
+ignorehitpause =1
+[State 1205, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-16*time,256
+ignorehitpause =1
+[State 1205, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 1205, Destroyself]
+type = destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------------
+;Schwarzer Panzer FX
+[Statedef 1206]
+physics  = N
+anim = 1206
+ctrl = 0
+velset=-3,0
+sprpriority=5
+
+[State 1206, flames]
+type=explod
+trigger1=random<200
+anim=7182
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.25,-.2)),Ifelse(random<=300,-1,Ifelse(random<400,-.45,-.5))
+pos= -5,-60
+random=40,20
+scale=Ifelse(random<500,0.1,.15),Ifelse(random<500,0.1,.15)
+ownpal=0
+removeongethit = 1
+[State 1206, BindToRoot]
+type = BindToRoot
+trigger1 =!time 
+time = 1
+pos = 15,14
+ignorehitpause =1
+[State 1205, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+[State 1206, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 1206, Destroyself]
+type = destroyself
+trigger1=root,Movetype=H
+trigger2=root,stateno!=1200&&root,stateno!=1250
+;---------------------------------------------------------------------------
+;Schwarzer Panzer FX
+[Statedef 1207]
+physics  = N
+anim = 1207
+ctrl = 0
+velset=0,0
+sprpriority=4
+
+[State 1207, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+[State 1207, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 1207, Destroyself]
+type = destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------
+;Projtile Eater
+[Statedef 1210]
+type=A
+physics=N
+movetype=I
+ctrl=0
+velset=0, 0
+sprpriority=-5
+
+[State 1210, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=1210
+ignorehitpause=1
+[State 1210, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, AA, AP
+ignorehitpause=1
+
+[State 1210, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=1210
+[State 1210, BindToRoot]
+type = BindToRoot
+trigger1=root,stateno=1200|root,stateno=1250||root,stateno=3250 
+time = 1
+pos = 0,0
+ignorehitpause = 1
+
+[State 1005, Strength]
+type=varset
+trigger1=!time&&!prevstateno
+var(10)=root, var(10)
+
+[State 1210, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 1210, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+[State 1210, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2= invisible
+ignorehitpause = 1
+
+[State 1210, End]
+type=changestate
+trigger1=movecontact
+value=1210
+ignorehitpause=1
+[State 1210, End]
+type=destroyself
+trigger1=root,Movetype=H
+trigger2=root,stateno!=1200&&root,stateno!=1250&&root,stateno!=3250
+trigger3=root,stateno=1250&&var(8)>3
+trigger4=root,stateno=1200&&var(8)=2
+trigger5=root,stateno=3250&&var(8)>5
+trigger6=root,stateno=3250&&animelemtime(18)>0
+;---------------------------------------------------------------------------
+;Schwarzer Stob FX
+[Statedef 1305]
+physics  = N
+anim = 1305
+ctrl = 0
+velset=0.5,0.1
+sprpriority=3
+
+[State 1305, BindToRoot]
+type = BindToRoot
+trigger1 =!time 
+time = 1
+pos = 15,-14
+ignorehitpause =1
+[State 1305, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+[State 1305, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 1305, Destroyself]
+type = destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------------
+;Schwarzer Stob FX
+[Statedef 1306]
+physics  = N
+anim = 1306
+ctrl = 0
+velset=0,0
+sprpriority=3
+
+[State 1306, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,-55
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+[State 1306, BindToRoot]
+type = BindToRoot
+trigger1 =1
+pos = 0,0
+ignorehitpause =1
+[State 1306, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-4*time,256
+ignorehitpause =1
+[State 1306, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 1306, Destroyself]
+type = destroyself
+trigger1=!animtime
+trigger2=root,Movetype=H
+trigger3=root,stateno!=1300&&root,stateno!=1350
+;--------------------------------------------------------------------------------------
+;Win Flame 1
+[Statedef 1981]
+physics = N
+anim = 1981
+velset=0,0
+sprpriority=4
+
+[State 1981, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=181 
+time = 1
+pos = 0,0
+
+[State 1981, Assert]
+type=assertspecial
+trigger1=1
+flag=noshadow
+[State 1981, PlaySnd]
+type = PlaySnd
+trigger1 =!time 
+value = S1981,0
+channel = 4
+
+[State 1981, End]
+type=destroyself
+trigger1=root,stateno!=181
+trigger2=!animtime
+;--------------------------------------------------------------------------------------
+;Win Flame 2
+[Statedef 1982]
+physics = N
+anim = 1982
+velset=0,0
+sprpriority=4
+
+[State 1982, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=182 
+time = 1
+pos = 0,0
+
+[State 1982, Assert]
+type=assertspecial
+trigger1=1
+flag=noshadow
+[State 1982, PlaySnd]
+type = PlaySnd
+trigger1 =!time 
+value = S1990,0
+channel = 4
+
+[State 1982, End]
+type=destroyself
+trigger1=root,stateno!=182
+;--------------------------------------------------------------------------------------
+;Intro Flame
+[Statedef 1990]
+physics = N
+anim = 1990
+velset=0,0
+sprpriority=4
+
+[State 1990, BindToRoot]
+type = BindToRoot
+trigger1 =root,stateno=190||root,stateno=192 
+time = 1
+pos = 0,0
+
+[State 1990, Assert]
+type=assertspecial
+trigger1=1
+flag=noshadow
+
+[State 1990, End]
+type=destroyself
+trigger1=root,stateno!=190&&root,stateno!=192
+trigger2=!animtime
+;---------------------------------------------------------------------
+;Himmlischer Atem (Projectile)
+[Statedef 3005]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=5
+
+[State 3005, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(8)<5,3005,3006)
+ignorehitpause=1
+[State 3005, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 3005, Strength]
+type=varset
+trigger1=!time&&!prevstateno
+var(10)=Ifelse(parent,stateno=3000,1,0)
+
+[State 3005, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=3005
+
+[State 3005, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 3105, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 3005, Vel]
+type=velset
+trigger1=1
+x=0
+y=12
+
+[State 3005, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3005, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256, 256
+ignorehitpause=1
+
+[State 3005, High]
+type=hitdef
+trigger1=!time
+priority=4, Hit
+attr=A, HP
+damage=floor(Ifelse(var(10),210,100)*root,fvar(10)),35
+animtype=Hard
+hitflag=MAFD
+guardflag=M
+pausetime=0,8
+sparkNo=-1
+guard.sparkNo=-1
+sparkXY=-1
+guardsound=s130,1
+ground.type=High
+ground.slidetime=0
+ground.hittime=32
+ground.velocity=-9,-5
+ground.cornerpush.veloff=0
+air.velocity=-9,-3
+down.velocity=-9,-6
+airguard.velocity=-9,-3
+fall=1
+fall.recover=0
+getpower=0,0
+givepower=72, 36
+envshake.time=12
+envshake.ampl=5
+sprpriority=5
+yaccel=.4
+airguard.ctrltime=12
+forcestand=1
+palFX.time=12 * var(9)
+palFX.add=255,255,255
+palFX.sinAdd= -255,-255,-255,48
+
+[State 3005, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), 0
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3005, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3005, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3005, Projhit]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(47)=1
+ignorehitpause=1
+persistent=0
+[State 3005, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 3005, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 3005, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+trigger1=Root, StateNo=[3000,3050]
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 3005, End]
+type=changestate
+trigger1=movecontact
+trigger2=pos y > -vel y
+value=3006
+ignorehitpause=1
+;------------------------------------------------------------------
+;Schwarze Lanze Remove
+[Statedef 3006]
+type=A
+physics=N
+movetype=I
+anim=3006
+velset=0, 0
+ctrl=0
+sprpriority=4
+
+[State 3006, PlaySnd]
+type = PlaySnd
+trigger1=!time
+value = s2,6
+[State 3006, Posset]
+type=Posset
+trigger1=!time&&pos y>=0
+y=0
+[State 3006, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3006, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 3006, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256-16*time, 256
+ignorehitpause=1
+
+[State 3006, End]
+type=destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------
+;Himmlische Seele (Projectile)
+[Statedef 3105]
+type = S
+physics = N
+movetype = A
+ctrl = 0
+velset = 0, 0
+sprpriority = 4
+
+[State 3105, HitOverride]
+type = hitoverride
+trigger1 = 1
+time = -1
+attr = SCA, AA, AP, AT
+stateno = ifelse(var(8) < 7, 3105, 3106)
+ignorehitpause = 1
+[State 3105, hitby]
+type = hitby
+trigger1 = 1
+time = -1
+value = SCA, NP, SP, HP
+ignorehitpause = 1
+
+[State 3105, Anim]
+type = changeanim
+trigger1 = !time && anim!=3105
+value = 3104
+[State 3105, Anim]
+type = changeanim
+trigger1 = anim!=3105 && time>10 
+trigger2 = anim!=3105 && root,animelemtime(14)>=1
+value = 3105
+
+[State 3105, hitvar]
+type = varadd
+trigger1 = !time
+var(8) = 1
+[State 3105, movehitvar]
+type = varset
+trigger1 = movecontact && numtarget
+trigger1 = !(target, ishelper)
+var(3) = 1
+ignorehitpause = 1
+[State 3105, Vel]
+type = velset
+trigger1 = 1
+x = ifelse((time < 2 && var(8) > 1), 1, 2)
+y = 0
+
+[State 3105, Assert]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+ignorehitpause = 1
+
+[State 3105, HitSound]
+type = playsnd
+trigger1 = movehit && numtarget
+trigger1 = target, time = 0 && target, movetype = H
+value = 2, 6
+channel = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3105, Hit]
+type = hitdef
+trigger1 = 1
+priority = 4, Hit
+attr = S, HP
+damage=floor(30*root,fvar(10)),9
+animtype = Hard
+fall.animtype = Hard
+air.animtype = Hard
+hitflag = MAF
+guardflag = MA
+pausetime = 4 * (var(8) < 7), 8
+sparkno = -1
+guard.sparkno = -1
+sparkxy = -10, 0
+guardsound = s130, 1
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 16
+ground.velocity = ifelse(var(8) < 7, -0.5, -6.5), ifelse(var(8) < 7, -5, -4)
+guard.velocity = -0.5
+ground.cornerpush.veloff = 0
+air.velocity = ifelse(var(8) < 7, -0.5, -6.5), -4
+p2facing = 1
+fall = 1
+air.fall = 1
+fall.recover = 0
+getpower = 0
+givepower = 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 5
+palFX.time=12 * var(9)
+palFX.add=255,255,255
+palFX.sinAdd= -255,-255,-255,48
+sprpriority = 4
+yaccel = 0.5
+forcestand = 1
+
+[State 3105, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), 0
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3105, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3105, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3105, Self Hit Count]
+type = VarAdd
+trigger1 = MoveContact && NumTarget
+var(13) = 1
+[State 3105, Juggle Points]
+type = ParentVarAdd
+trigger1 = MoveContact && NumTarget
+var(15) = 1
+
+[State 3105, End]
+type = changestate
+trigger1 = movecontact
+value = ifelse(var(8) < 7, 3105, 3106)
+[State 3105, End]
+type = destroyself
+trigger1 = pos x != [ -240, 240]
+trigger2 = anim=3104&&root,Movetype=H
+;------------------------------------------------------------------
+;Himmlische Seele Remove
+[Statedef 3106]
+type=S
+physics=N
+movetype=I
+anim=3106
+velset=0, 0
+ctrl=0
+sprpriority=4
+
+[State 3106, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3106, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 3106, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256-16*time, 256
+ignorehitpause=1
+
+[State 3106, End]
+type=destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------
+[Statedef 3155]
+type = S
+physics = N
+movetype = A
+ctrl = 0
+velset = 0, 0
+sprpriority = 4
+
+[State 3155, HitOverride]
+type = hitoverride
+trigger1 = 1
+time = -1
+attr = SCA, AA, AP, AT
+stateno = ifelse(var(8) < 10, 3155, 3156)
+ignorehitpause = 1
+[State 3155, hitby]
+type = hitby
+trigger1 = 1
+time = -1
+value = SCA, NP, SP, HP
+ignorehitpause = 1
+
+[State 3155, Anim]
+type = changeanim
+trigger1 = !time && anim!=3155
+value = 3154
+[State 3155, Anim]
+type = changeanim
+trigger1 = anim!=3155 && time>10 
+trigger2 = anim!=3155 && root,animelemtime(14)>=1
+value = 3155
+
+[State 3155, hitvar]
+type = varadd
+trigger1 = !time
+var(8) = 1
+[State 3155, movehitvar]
+type = varset
+trigger1 = movecontact && numtarget
+trigger1 = !(target, ishelper)
+var(3) = 1
+ignorehitpause = 1
+[State 3155, VarAdd]
+type=VarAdd
+trigger1 =anim=3155
+var(11)=1
+
+[state 3155, Velset]
+type = velset
+trigger1 = anim=3155
+x = 2
+Y = -2*cos(var(11)/12.0)
+ignorehitpause=1
+
+[State 3155, Assert]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+ignorehitpause = 1
+
+[State 3155, HitSound]
+type = playsnd
+trigger1 = movehit && numtarget
+trigger1 = target, time = 0 && target, movetype = H
+value = 2, 6
+channel = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3155, Hit]
+type = hitdef
+trigger1 = 1
+priority = 4, Hit
+attr = S, HP
+damage=floor(32*root,fvar(10)),12
+animtype = Hard
+fall.animtype = Hard
+air.animtype = Hard
+hitflag = MAF
+guardflag = MA
+pausetime = 4 * (var(8) < 10), 8
+sparkno = -1
+guard.sparkno = -1
+sparkxy = -10, 0
+guardsound = s130, 1
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 16
+ground.velocity = ifelse(var(8) < 10, -0.5, -6.5), ifelse(var(8) < 10, -5, -4)
+guard.velocity = -0.5
+ground.cornerpush.veloff = 0
+air.velocity = ifelse(var(8) < 10, -0.5, -6.5), -4
+p2facing = 1
+fall = 1
+air.fall = 1
+fall.recover = 0
+getpower = 0
+givepower = 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 5
+palFX.time=12 * var(9)
+palFX.add=255,255,255
+palFX.sinAdd= -255,-255,-255,48
+sprpriority = 4
+yaccel = 0.5
+forcestand = 1
+
+[State 3155, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), 0
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3155, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3155, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3155, Self Hit Count]
+type = VarAdd
+trigger1 = MoveContact && NumTarget
+var(13) = 1
+[State 3155, Juggle Points]
+type = ParentVarAdd
+trigger1 = MoveContact && NumTarget
+var(15) = 1
+
+[State 3155, End]
+type = changestate
+trigger1 = movecontact
+value = ifelse(var(8) < 10, 3155, 3156)
+[State 3155, End]
+type = destroyself
+trigger1 = pos x != [ -240, 240]
+trigger2 = anim=3154&&root,Movetype=H
+;------------------------------------------------------------------
+;Max Himmlische Seele Remove
+[Statedef 3156]
+type=S
+physics=N
+movetype=I
+anim=3156
+velset=0, 0
+ctrl=0
+sprpriority=4
+
+[State 3156, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3156, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 3156, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256-16*time, 256
+ignorehitpause=1
+
+[State 3156, End]
+type=destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------------
+;Fire
+[Statedef 3201]
+physics  = N
+anim = 3201
+ctrl = 0
+velset=0,0
+sprpriority=4
+
+[State 3201, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+[State 3201, Fire SND]
+type = PlaySnd
+trigger1 =!time
+value = s1100,1
+channel=10
+[State 3201, BindToRoot]
+type = BindToRoot
+trigger1 =Parent,anim=3200||Parent,anim=3250
+pos = 0,0
+ignorehitpause =1
+[State 3201, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 3201, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=3200&&root,stateno!=3250
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+;---------------------------------------------------------------------------
+;Fire
+[Statedef 3202]
+physics  = N
+anim = 3202
+ctrl = 0
+velset=0,0
+sprpriority=4
+
+[State 3202, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256-8*time,256
+ignorehitpause =1
+[State 3202, Fire SND]
+type = PlaySnd
+trigger1 =!time
+value = s810,0
+channel=10
+[State 3202, BindToRoot]
+type = BindToRoot
+trigger1 =Parent,anim=3200||Parent,anim=3250
+pos = 0,0
+ignorehitpause =1
+[State 3202, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 3202, Destroyself]
+type = destroyself
+trigger1 =root,stateno!=3200&&root,stateno!=3250
+trigger2 =root,Movetype=H
+trigger3 =!animtime
+;---------------------------------------------------------------------
+;Schwarze Lanze (Projectile)
+[Statedef 3205]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=5
+
+[State 3205, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,-20
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+
+[State 3205, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(8)<3,3205,1106)
+ignorehitpause=1
+[State 3205, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 3205, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=1105
+
+[State 3205, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 3205, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 3205, Vel]
+type=velset
+trigger1=1
+x=8
+y=8
+[State 3205, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3205, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256, 256
+ignorehitpause=1
+[State 3205, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 3205, High]
+type=hitdef
+triggerall=numenemy
+trigger1=1
+priority=4, Hit
+attr=A, SP
+damage=floor(Ifelse(enemynear,Movetype=H,20,42)*root,fvar(10)),6
+animtype=Hard
+hitflag=MAFD
+guardflag=MA
+pausetime=3,12
+sparkNo=-1
+guard.sparkNo=-1
+sparkXY=-1
+guardsound=s130,1
+ground.type=High
+ground.slidetime=8
+ground.hittime=12
+ground.velocity=-2,-2
+ground.cornerpush.veloff=0
+air.velocity=-4, 2
+air.fall=1
+fall=var(10)=3
+fall.recover=0
+getpower=0,0
+givepower=36, 36
+envshake.time=12
+envshake.ampl=5
+sprpriority=5
+yaccel=.5
+airguard.ctrltime=12
+airguard.velocity=-4,-3
+forcestand=1
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+
+[State 3205, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), 0
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3205, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3205, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&(enemynear,stateno=[5000,5050])
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 3205, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3205, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 3205, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 3205, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+trigger1=Root, StateNo=3200
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 3205, End]
+type=changestate
+trigger1=movecontact
+trigger2=pos y > -vel y
+value=Ifelse(var(8)<3,3205,1106)
+ignorehitpause=1
+;---------------------------------------------------------------------------
+;Himmlische Brennen FX
+[Statedef 3302]
+physics  = N
+anim = 1205
+ctrl = 0
+velset=0,0
+sprpriority=4
+
+[State 3302, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256,256
+ignorehitpause =1
+[State 3302, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 3302, Destroyself]
+type = destroyself
+trigger1=root,stateno!=3301
+trigger2=root,animelemtime(62)>=0
+;---------------------------------------------------------------------------
+;Himmlische Brennen FX
+[Statedef 3303]
+physics  = N
+anim = 1206
+ctrl = 0
+velset=0,0
+sprpriority=4
+
+[State 3303, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 256,256
+ignorehitpause =1
+[State 3303, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 3303, Destroyself]
+type = destroyself
+trigger1=root,stateno!=3301
+trigger2=root,animelemtime(62)>=0
+;---------------------------------------------------------------------------
+;Himmlische Brennen FX
+[Statedef 3305]
+physics  = N
+anim = 3305
+ctrl = 0
+velset=0,0
+sprpriority=5
+
+[State 3305, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 160,256
+ignorehitpause =1
+[State 3305, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 3305, Destroyself]
+type = destroyself
+trigger1=root,stateno!=3301
+[State 3305, End]
+type=changestate
+trigger1=root,stateno=3301&&root,animelemtime(59)>=0
+value=3306
+ignorehitpause=1
+;---------------------------------------------------------------------------
+;Himmlische Brennen FX
+[Statedef 3306]
+physics  = N
+anim = 3306
+ctrl = 0
+velset=0,0
+sprpriority=5
+
+[State 3306, Trans]
+type = Trans
+trigger1 =1
+trans = addalpha
+alpha = 160-8*time,256
+ignorehitpause =1
+[State 3306, Assert]
+type = AssertSpecial
+Trigger1 = 1
+flag = noshadow
+ignorehitpause =1
+[State 3306, Destroyself]
+type = destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------
+;Himmlischer Heilige Licht (Projectile)
+[Statedef 3405]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=4
+
+[State 3405, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+
+[State 3405, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(8)<3,3405,3406)
+ignorehitpause=1
+[State 3405, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 3405, SprPriority]
+type = SprPriority
+trigger1 =1 
+value = Ifelse((rootdist x!= [-20,20])&&(pos y<root,pos y-70),0,5)
+ignorehitpause = 1
+
+[State 3405, varset]
+type = VarSet
+trigger1 = 1
+fv = 0
+value = parent, fvar(1)
+
+[State 3405, turn]
+type = Turn
+trigger1 = Facing != parent, Facing
+
+[State 3405, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=3405
+
+[State 3405, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 3405, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 3405, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = 1
+fvar(1)= fvar(0) + (Pi / 2)
+[State 3405, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = -1
+fvar(1)= fvar(0) - (Pi / 2)
+
+[State 3405, counter]
+type = VarAdd
+trigger1 = 1
+fvar(0)=1
+[State 3405, Bind]
+type = BindToParent
+trigger1 = 1
+pos = floor(55 * Ifelse(facing=1,(sin(fvar(0))),(cos(fvar(0))))), floor(55 * Ifelse(facing=1,(cos(fvar(0))),(sin(fvar(0))))) - 58
+time = 1
+ignorehitpause=1
+
+[State 3405, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 3405, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3405, Assert]
+type=trans
+trigger1=time<16
+trans=addalpha
+alpha=0+16*time, 256
+ignorehitpause=1
+
+[State 3405, Hit]
+type = hitdef
+trigger1 = 1
+priority = 4, Hit
+attr = A, HP
+damage=floor(80*root,fvar(10)),30
+animtype = Hard
+fall.animtype = Hard
+air.animtype = Hard
+hitflag = MAFD
+guardflag = MA
+pausetime = 4 * (var(8) < 10), 8
+sparkno = -1
+guard.sparkno = -1
+sparkxy = -10, 0
+guardsound = s130, 1
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 16
+ground.velocity=-1,-8
+guard.velocity=-6
+ground.cornerpush.veloff=0
+air.velocity=-1,-6
+down.velocity=-1,-8
+airguard.velocity=-4,-5
+p2facing = 1
+fall = 1
+air.fall = 1
+fall.recover = 0
+getpower = 0
+givepower = 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 5
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+sprpriority = 4
+yaccel = 0.5
+forcestand = 1
+
+[State 3405, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), (target,const(size.mid.pos.y) + 10)
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3405, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3405, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&((enemynear,stateno=[5000,5050])||(enemynear,stateno=1130))
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 3405, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3405, HitCount]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(11)=1
+ignorehitpause=1
+persistent=0
+[State 3405, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 3405, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 3405, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 3405, End]
+type=changestate
+trigger1=movecontact
+trigger2=roundstate!=2
+trigger3=!(root,alive)
+value=3406
+ignorehitpause=1
+;------------------------------------------------------------------
+;Schwarze Lanze Remove
+[Statedef 3406]
+type=A
+physics=N
+movetype=I
+anim=3406
+velset=0, 0
+ctrl=0
+sprpriority=4
+
+[State 3406, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+[State 3406, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3406, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 3406, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256-16*time, 256
+ignorehitpause=1
+[State 3406, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+scale =1.0+0.025*time,1.0+0.025*time
+ignorehitpause = 1 
+
+[State 3406, End]
+type=destroyself
+trigger1=!animtime
+;---------------------------------------------------------------------
+;Himmlischer Heilige Licht (Projectile)
+[Statedef 3415]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=4
+
+[State 3415, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+
+[State 3415, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(8)<3,3415,3406)
+ignorehitpause=1
+[State 3415, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 3415, SprPriority]
+type = SprPriority
+trigger1 =1 
+value = Ifelse((rootdist x!= [-20,20])&&(pos y<root,pos y-70),0,5)
+ignorehitpause = 1
+
+[State 3415, varset]
+type = VarSet
+trigger1 = 1
+fv = 0
+value = parent, fvar(2)
+
+[State 3415, turn]
+type = Turn
+trigger1 = Facing != parent, Facing
+
+[State 3415, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=3405
+
+[State 3415, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 3415, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 3415, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = 1
+fvar(2)= fvar(0) + (Pi / 2)
+[State 3415, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = -1
+fvar(2)= fvar(0) - (Pi / 2)
+
+[State 3415, counter]
+type = VarAdd
+trigger1 = 1
+fvar(0)=1
+[State 3415, Bind]
+type = BindToParent
+trigger1 = 1
+pos = floor(55 * Ifelse(facing=1,(sin(fvar(0))),(cos(fvar(0))))), floor(55 * Ifelse(facing=1,(cos(fvar(0))),(sin(fvar(0))))) - 58
+time = 1
+ignorehitpause=1
+
+[State 3415, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 3415, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3415, Assert]
+type=trans
+trigger1=time<16
+trans=addalpha
+alpha=0+16*time, 256
+ignorehitpause=1
+
+[State 3415, Hit]
+type = hitdef
+trigger1 = 1
+priority = 4, Hit
+attr = A, HP
+damage=floor(80*root,fvar(10)),30
+animtype = Hard
+fall.animtype = Hard
+air.animtype = Hard
+hitflag = MAFD
+guardflag = MA
+pausetime = 4 * (var(8) < 10), 8
+sparkno = -1
+guard.sparkno = -1
+sparkxy = -10, 0
+guardsound = s130, 1
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 16
+ground.velocity=-1,-8
+guard.velocity=-6
+ground.cornerpush.veloff=0
+air.velocity=-1,-6
+down.velocity=-1,-8
+airguard.velocity=-4,-5
+p2facing = 1
+fall = 1
+air.fall = 1
+fall.recover = 0
+getpower = 0
+givepower = 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 5
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+sprpriority = 4
+yaccel = 0.5
+forcestand = 1
+
+[State 3415, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), (target,const(size.mid.pos.y) + 10)
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3415, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3415, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&((enemynear,stateno=[5000,5050])||(enemynear,stateno=1130))
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 3415, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3415, HitCount]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(11)=1
+ignorehitpause=1
+persistent=0
+[State 3415, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 3415, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 3415, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 3415, End]
+type=changestate
+trigger1=movecontact
+trigger2=roundstate!=2
+trigger3=!(root,alive)
+value=3406
+ignorehitpause=1
+;---------------------------------------------------------------------
+;Himmlischer Heilige Licht (Projectile)
+[Statedef 3425]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=4
+
+[State 3425, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+
+[State 3425, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(8)<3,3425,3406)
+ignorehitpause=1
+[State 3425, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 3425, SprPriority]
+type = SprPriority
+trigger1 =1 
+value = Ifelse((rootdist x!= [-20,20])&&(pos y<root,pos y-70),0,5)
+ignorehitpause = 1
+
+[State 3425, varset]
+type = VarSet
+trigger1 = 1
+fv = 0
+value = parent, fvar(3)
+
+[State 3425, turn]
+type = Turn
+trigger1 = Facing != parent, Facing
+
+[State 3425, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=3405
+
+[State 3425, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 3425, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 3425, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = 1
+fvar(3)= fvar(0) + (Pi / 2)
+[State 3425, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = -1
+fvar(3)= fvar(0) - (Pi / 2)
+
+[State 3425, counter]
+type = VarAdd
+trigger1 = 1
+fvar(0)=-0.75
+[State 3425, Bind]
+type = BindToParent
+trigger1 = 1
+pos = floor(55 * Ifelse(facing=1,(sin(fvar(0))),(cos(fvar(0))))), floor(55 * Ifelse(facing=1,(cos(fvar(0))),(sin(fvar(0))))) - 58
+time = 1
+ignorehitpause=1
+
+[State 3425, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 3425, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3425, Assert]
+type=trans
+trigger1=time<16
+trans=addalpha
+alpha=0+16*time, 256
+ignorehitpause=1
+
+[State 3425, Hit]
+type = hitdef
+trigger1 = 1
+priority = 4, Hit
+attr = A, HP
+damage=floor(80*root,fvar(10)),30
+animtype = Hard
+fall.animtype = Hard
+air.animtype = Hard
+hitflag = MAFD
+guardflag = MA
+pausetime = 4 * (var(8) < 10), 8
+sparkno = -1
+guard.sparkno = -1
+sparkxy = -10, 0
+guardsound = s130, 1
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 16
+ground.velocity=-1,-8
+guard.velocity=-6
+ground.cornerpush.veloff=0
+air.velocity=-1,-6
+down.velocity=-1,-8
+airguard.velocity=-4,-5
+p2facing = 1
+fall = 1
+air.fall = 1
+fall.recover = 0
+getpower = 0
+givepower = 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 5
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+sprpriority = 4
+yaccel = 0.5
+forcestand = 1
+
+[State 3425, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), (target,const(size.mid.pos.y) + 10)
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3425, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3425, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&((enemynear,stateno=[5000,5050])||(enemynear,stateno=1130))
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 3425, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3425, HitCount]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(11)=1
+ignorehitpause=1
+persistent=0
+[State 3425, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 3425, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 3425, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 3425, End]
+type=changestate
+trigger1=movecontact
+trigger2=roundstate!=2
+trigger3=!(root,alive)
+value=3406
+ignorehitpause=1
+;---------------------------------------------------------------------
+;Himmlischer Heilige Licht (Projectile)
+[Statedef 3435]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=4
+
+[State 3435, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+
+[State 3435, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=Ifelse(var(8)<3,3435,3406)
+ignorehitpause=1
+[State 3435, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 3435, SprPriority]
+type = SprPriority
+trigger1 =1 
+value = Ifelse((rootdist x!= [-20,20])&&(pos y<root,pos y-70),0,5)
+ignorehitpause = 1
+
+[State 3435, varset]
+type = VarSet
+trigger1 = 1
+fv = 0
+value = parent, fvar(4)
+
+[State 3435, turn]
+type = Turn
+trigger1 = Facing != parent, Facing
+
+[State 3435, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=3405
+
+[State 3435, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 3435, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 3435, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = 1
+fvar(4)= fvar(0) + (Pi / 2)
+[State 3435, ParentVarSet]
+type = ParentVarSet
+trigger1 = Facing != Parent, Facing
+trigger1 = Facing = -1
+fvar(4)= fvar(0) - (Pi / 2)
+
+[State 3435, counter]
+type = VarAdd
+trigger1 = 1
+fvar(0)=-0.75
+[State 3435, Bind]
+type = BindToParent
+trigger1 = 1
+pos = floor(55 * Ifelse(facing=1,(sin(fvar(0))),(cos(fvar(0))))), floor(55 * Ifelse(facing=1,(cos(fvar(0))),(sin(fvar(0))))) - 58
+time = 1
+ignorehitpause=1
+
+[State 3435, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 3435, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3435, Assert]
+type=trans
+trigger1=time<16
+trans=addalpha
+alpha=0+16*time, 256
+ignorehitpause=1
+
+[State 3435, Hit]
+type = hitdef
+trigger1 = 1
+priority = 4, Hit
+attr = A, HP
+damage=floor(80*root,fvar(10)),30
+animtype = Hard
+fall.animtype = Hard
+air.animtype = Hard
+hitflag = MAFD
+guardflag = MA
+pausetime = 4 * (var(8) < 10), 8
+sparkno = -1
+guard.sparkno = -1
+sparkxy = -10, 0
+guardsound = s130, 1
+ground.type = Low
+ground.slidetime = 16
+ground.hittime = 16
+ground.velocity=-1,-8
+guard.velocity=-6
+ground.cornerpush.veloff=0
+air.velocity=-1,-6
+down.velocity=-1,-8
+airguard.velocity=-4,-5
+p2facing = 1
+fall = 1
+air.fall = 1
+fall.recover = 0
+getpower = 0
+givepower = 36, 36
+envshake.time = 12
+envshake.freq = 120
+envshake.ampl = 5
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+sprpriority = 4
+yaccel = 0.5
+forcestand = 1
+
+[State 3435, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), (target,const(size.mid.pos.y) + 10)
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3435, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3435, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&((enemynear,stateno=[5000,5050])||(enemynear,stateno=1130))
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 3435, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3435, HitCount]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(11)=1
+ignorehitpause=1
+persistent=0
+[State 3435, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 3435, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 3435, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 3435, End]
+type=changestate
+trigger1=movecontact
+trigger2=roundstate!=2
+trigger3=!(root,alive)
+value=3406
+ignorehitpause=1
+;---------------------------------------------------------------------
+;Himmlischer Heilige Licht (Cloak)
+[Statedef 3450]
+type=A
+physics=N
+movetype=A
+ctrl=0
+velset=0, 0
+sprpriority=3
+
+[State 3450, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+
+[State 3450, HitOverride]
+type=hitoverride
+trigger1=1
+time=-1
+attr=SCA, AA, AP, AT
+stateno=3450
+ignorehitpause=1
+[State 3450, HB]
+type=hitby
+trigger1=1
+time=-1
+value=SCA, NP, SP, HP
+ignorehitpause=1
+
+[State 3450, ChangeAnim]
+type=ChangeAnim
+trigger1 =!time&&!prevstateno
+value=3450
+
+[State 3450, movehitvar]
+type=varset
+trigger1=movecontact && numtarget
+trigger1=!(target, ishelper)
+var(3)=1
+ignorehitpause=1
+[State 3450, VarAdd]
+type=VarAdd
+trigger1 =!time
+var(8)=1
+
+[State 3450, Bind]
+type = BindToParent
+trigger1 = 1
+pos = 0,0
+time = 1
+ignorehitpause=1
+
+[State 3450, HitSound]
+type=playsnd
+trigger1=movehit && numtarget
+trigger1=target, time=0 && target, movetype=H
+value=2, 6
+persistent=0
+ignorehitpause=1
+
+[State 3450, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 3450, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256, 256
+ignorehitpause=1
+
+[State 3450, High]
+type=hitdef
+trigger1=1
+priority=4, Hit
+attr=A, HP
+damage=floor(5*root,fvar(10)),1
+animtype=Hard
+hitflag=MAFD
+guardflag=M
+pausetime=3,12
+sparkNo=-1
+guard.sparkNo=-1
+sparkXY=-1
+guardsound=s130,1
+ground.type=High
+ground.slidetime=8
+ground.hittime=12
+ground.velocity=0,-5
+guard.velocity=-1
+ground.cornerpush.veloff=0
+air.velocity=0,-3
+down.velocity=-1,-6
+airguard.velocity=-1,-3
+fall=1
+fall.recover=0
+getpower=0,0
+givepower=36, 36
+envshake.time=12
+envshake.ampl=5
+sprpriority=4
+yaccel=.4
+airguard.ctrltime=12
+forcestand=1
+palFX.time = 30
+palFX.mul = 128, 128, 128
+palFX.sinAdd = 96, 96, 96, 4
+p2stateno=1130
+
+[State 3450, HitSpark]
+type=Helper
+trigger1=movecontact=1 && numtarget
+trigger1=(enemynear, movetype=H) && !(target, time)
+helperType=Normal
+stateNo=ifElse(MoveGuarded, 8001, 8005)
+ID=8000
+name="Spark"
+pos = (target, const(size.ground.front) -10), (target,const(size.mid.pos.y) + 10)
+facing=-1
+ownPal=0
+size.xScale=1.0
+size.yScale=1.0
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+persistent=0
+
+[State 3450, Counter FX]
+type=Helper
+trigger1=MoveContact=1 && NumTarget && var(9)
+trigger1=!(Target, HitShakeOver)
+helperType=Normal
+stateNo=8290
+ID=8290
+name="Counter FX"
+posType=P1
+pos=ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < 20, ceil(P2Dist x), 20)), 0
+ownPal=1
+pauseMoveTime=65535
+superMoveTime=65535
+ignoreHitPause=1
+
+[State 3450, flames]
+type = helper
+trigger1 = movehit && numtarget && !numhelper(7180)
+trigger1 = !(target, time) && (target, movetype = H)&&(enemynear,stateno=[5000,5050])
+helpertype = normal
+stateno = 7180
+ID = 7180
+name = "flames"
+postype = p2
+ownpal = 1
+facing = -1
+ignorehitpause = 1
+pauseMoveTime=255
+
+[State 3450, HitCount]
+type=ParentVarAdd
+trigger1=Movehit=1 && NumTarget
+var(13)=1
+ignorehitpause=1
+persistent=0
+[State 3450, HitCount]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(11)=1
+ignorehitpause=1
+persistent=0
+[State 3450, Juggle Points]
+type=ParentVarAdd
+trigger1=MoveContact=1 && NumTarget
+var(15)=1
+ignorehitpause=1
+persistent=0
+[State 3450, ProjContact]
+type=VarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+[State 3450, ProjContact]
+type=ParentVarSet
+trigger1=MoveContact=1 && NumTarget
+var(18)=1
+ignorehitpause=1
+persistent=0
+
+[State 3450, End]
+type=changestate
+trigger1=root,stateno=3400&&root,animelemtime(32)>=0
+value=3451
+ignorehitpause=1
+[State 3450, End]
+type=changestate
+trigger1=movecontact
+value=3450
+ignorehitpause=1
+[State 3450, Destroyself]
+type = destroyself
+trigger1=root,stateno!=3400
+trigger2=root,Movetype=H
+;------------------------------------------------------------------
+;Himmlischer Heilige Licht (Cloak) Remove
+[Statedef 3451]
+type=A
+physics=N
+movetype=I
+velset=0, 0
+ctrl=0
+sprpriority=3
+
+[State 3451, flames]
+type=explod
+trigger1=random<500
+anim=Ifelse(random<300,7181,7182)
+ID=7182
+sprpriority=Ifelse(random<500,-1,5)
+vel=0,0
+accel=Ifelse(random<=500,-.075,Ifelse(random<250,-.05,-.1)),Ifelse(random<=300,0,Ifelse(random<400,-.125,.125))
+pos= -5,0
+random=0,40
+scale=.1,.1
+ownpal=0
+removeongethit = 1
+[State 3451, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+ignorehitpause = 1
+[State 34451, NotHitBy]
+type=NotHitBy
+trigger1 =1
+value=SCA
+ignorehitpause =1
+[State 3451, Assert]
+type=trans
+trigger1=1
+trans=addalpha
+alpha=256-16*time, 256
+ignorehitpause=1
+[State 3451, AngleDraw]
+type = AngleDraw
+trigger1 = 1
+scale =1.0-0.0125*time,1.0+0.025*time
+ignorehitpause = 1 
+
+[State 3451, End]
+type=destroyself
+trigger1=time>14
+;---------------------------------------------------------------------------
+;CAMERA FOCUS
+[Statedef 6001]
+type = S
+physics  = S
+anim = 0
+ctrl = 0
+
+[state 6001,TURN]
+type=turn
+trigger1=ishelper(6001)
+trigger1=facing!=root,facing
+ignorehitpause=1
+
+[State 6001,vel]
+type = VelSet
+trigger1 = parent,pos X > 0
+x = ifelse(facing = 1,4,-4)
+[State 6001,vel]
+type = VelSet
+trigger1 = parent,pos X < 0
+x = ifelse(facing = 1,-4,4)
+[State 6001,vel]
+type = VelSet
+trigger1 = parent,pos X = [-5,5]
+x = 0
+
+[State 6001, WIDTH]
+type = Width
+trigger1 = 1
+value = 1,1
+
+[State 6001, NHB]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 6001,AS]
+type = AssertSpecial
+Trigger1 = 1
+flag = invisible
+flag2 = noshadow
+
+[State 6001,Bound]
+type = ScreenBound
+trigger1 =1
+value =1
+movecamera = 320,0
+[State 6001,push]
+type = PlayerPush
+trigger1 =1
+value = 0
+
+[State 6001, Destroyself]
+type = destroyself
+trigger1 = Time = 50
+trigger1 = enemy, Life >= 1
+trigger2=numhelper(6001)>=2
+;------------------------------------------------------------------------------------------
+;Fire
+[Statedef 7180]
+physics=N
+velset=0,0
+anim=9999
+sprpriority=4
+[State 7180, Assert]
+type=assertspecial
+trigger1= 1
+flag=noshadow
+ignorehitpause=1
+[State 7180, flames]
+type=explod
+trigger1= random%200
+anim=7181
+ID=7182
+sprpriority=3
+postype=p2
+vel=-.2,-.75
+pos= (enemynear,const(size.mid.pos.x)), Ifelse((enemynear,statetype=L), 0, (enemynear,const(size.mid.pos.y) + 10))
+random=40,40
+scale=.25,.25
+ownpal=1
+[State 7180, flames]
+type=explod
+trigger1= random%650
+anim=7182
+ID=7182
+sprpriority=3
+postype=p2
+vel=-.2,-.75
+pos= (enemynear,const(size.mid.pos.x)), Ifelse((enemynear,statetype=L), 0, (enemynear,const(size.mid.pos.y) + 10))
+random=40,40
+scale=.5,.5
+ownpal=1
+[State 7180, Pos]
+type=posadd
+trigger1= 1
+x=ceil(p2dist x)
+y=ceil(p2dist y)
+[State End]
+type=destroyself
+triggerall= numenemy
+trigger1= enemynear,ctrl
+trigger2= enemynear,movetype!=H || enemynear,stateno=5300
+trigger3= enemynear,statetype=L && (enemynear,stateno!=[5080,5081])
+[State End]
+type=destroyself
+trigger1= !numenemy || time>=120
+;========================<SPARKS>=============================
+;Guard Spark (Normal)
+[StateDef 8000]
+type = A
+physics = N
+moveType = I
+anim = 8000
+velset = 0,0
+sprPriority = 5
+
+[State 8000, Assert: No Shadow]
+type = AssertSpecial
+trigger1= 1
+flag = NoShadow
+
+[State 8000, Scale]
+type = AngleDraw
+trigger1 = 1
+scale = 0.125 + (0.046875 * Time), 0.125 + (0.046875 * Time)
+
+[State 8000, Transparency]
+type = Trans
+trigger1 = Time < 4
+trans = AddAlpha
+alpha = 256, 256
+
+[State 8000, Transparency]
+type = Trans
+trigger1 = Time >= 4
+trans = AddAlpha
+alpha = 256 - 64 * (Time - 4), 256
+
+[State 8000, End]
+type = DestroySelf
+trigger1 = Time >= 8
+
+
+;Guard Spark (Special)
+[StateDef 8001]
+type = A
+physics = N
+moveType = I
+anim = 8001
+velSet = 0,0
+sprPriority = 5
+
+[State 8001, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8001, Scale]
+type = AngleDraw
+trigger1 = 1
+scale = 0.25 + (0.03125 * Time), 0.25 + (0.03125 * Time)
+
+[State 8001, Transparency]
+type = Trans
+trigger1 = time < 4
+trans = AddAlpha
+alpha = 256, 256
+
+[State 8001, Transparency]
+type = Trans
+trigger1 = Time >= 4
+trans = AddAlpha
+alpha = 256 - 64 * (Time - 4), 256
+
+[State 8001, End]
+type = DestroySelf
+trigger1 = Time >= 8
+
+
+;=========================================================================
+;HI Res Hitspark Coding 1.0
+;=========================================================================
+;Hit Spark for Helpers and Throws
+[StateDef 8005]
+physics = N
+anim = 8010
+velSet = 0,0
+sprPriority = Ifelse(root,stateno=3301,15,5)
+
+[State 8005, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8005, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=Ifelse((parent,stateno=[0,999]),8012,Ifelse((parent,stateno=[1000,2999]),8013,8014))
+[State 8005, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(18)=Ifelse(var(33)=8010,0.3,Ifelse(var(33)=8011,0.35,Ifelse(var(33)=8012,0.4,Ifelse(var(33)=8013,0.45,0.5))))
+[State 8005, RemapPal]
+type = RemapPal
+trigger1 =!time&&((root,var(43)=0)||(root,var(43)=2))
+source = 8010,1
+dest = 8010,Ifelse(var(33)=8014,3,Ifelse(var(33)=8013,2,1))
+
+[State 8005, AngleSet]
+type = AngleDraw
+trigger1 = 1
+value = 30 * (Random % 12)+30*time
+
+[State 8005, Scale]
+type = AngleDraw
+trigger1 = Time < 10
+scale = fvar(18) - (Time * fvar(18)*0.1), fvar(18) - (Time * fvar(18)*0.1)
+[State 8005, Scale]
+type = AngleDraw
+trigger1 = Time >= 10
+scale = 0,0
+
+[State 8005, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+
+[State 8005, Helper]
+type = Helper
+trigger1 =!time 
+helpertype = normal
+name ="Center" 
+ID =8011 
+stateno =8011
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8005, Helper]
+type = Helper
+trigger1 =!time 
+helpertype = normal
+name ="Streaks" 
+ID =8012
+stateno =8012
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8005, Helper]
+type = Helper
+trigger1 =!time&&(var(33)=[8012,8014])
+trigger1 =root,var(43)=0
+trigger2 =!time&&(var(33)=[8013,8014])
+trigger2 =root,var(43)
+helpertype = normal
+name ="Back" 
+ID =8013
+stateno =8013
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8005, Helper]
+type = Helper
+trigger1 =!time
+helpertype = normal
+name ="Impact" 
+ID =8014
+stateno =8014
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+
+[State 8005, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;-------------------------------------------------------------------------
+;Hit Spark
+[StateDef 8010]
+physics = N
+anim = 8010
+velSet = 0,0
+sprPriority = 5
+
+[State 8010, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8010, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=root,var(33)
+[State 8010, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(18)=Ifelse(var(33)=8010,0.3,Ifelse(var(33)=8011,0.35,Ifelse(var(33)=8012,0.4,Ifelse(var(33)=8013,0.45,0.5))))
+[State 8010, RemapPal]
+type = RemapPal
+trigger1 =!time&&((root,var(43)=0)||(root,var(43)=2))
+source = 8010,1
+dest = 8010,Ifelse(var(33)=8014,3,Ifelse(var(33)=8013,2,1))
+
+[State 8010, AngleSet]
+type = AngleDraw
+trigger1 = 1
+value = 30 * (Random % 12)+30*time
+
+[State 8010, Scale]
+type = AngleDraw
+trigger1 = Time < 10
+scale = fvar(18) - (Time * fvar(18)*0.1), fvar(18) - (Time * fvar(18)*0.1)
+[State 8010, Scale]
+type = AngleDraw
+trigger1 = Time >= 10
+scale = 0,0
+
+[State 8010, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+
+[State 8010, Helper]
+type = Helper
+trigger1 =!time 
+helpertype = normal
+name ="Center" 
+ID =8011 
+stateno =8011
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8010, Helper]
+type = Helper
+trigger1 =!time 
+helpertype = normal
+name ="Streaks" 
+ID =8012
+stateno =8012
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8010, Helper]
+type = Helper
+trigger1 =!time&&(var(33)=[8012,8014])
+trigger1 =root,var(43)=0
+trigger2 =!time&&(var(33)=[8013,8014])
+trigger2 =root,var(43)
+helpertype = normal
+name ="Back" 
+ID =8013
+stateno =8013
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1 
+[State 8010, Helper]
+type = Helper
+trigger1 =!time
+helpertype = normal
+name ="Impact" 
+ID =8014
+stateno =8014
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+
+[State 8010, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;-------------------------------------------------------------------------
+;Center Spark
+[StateDef 8011]
+physics = N
+anim = 8011
+velSet = 0,0
+sprPriority = Ifelse(root,stateno=3301,15,5)
+
+[State 8011, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8011, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=parent,var(33)
+[State 8011, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(17)=Ifelse(var(33)=8010,0.15,Ifelse(var(33)=8011,0.175,Ifelse(var(33)=8012,0.2,Ifelse(var(33)=8013,0.225,0.25))))
+[State 8011, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(18)=Ifelse(var(33)=8010,0.009375,Ifelse(var(33)=8011,0.0109375,Ifelse(var(33)=8012,0.0125,Ifelse(var(33)=8013,0.0140625,0.015625))))
+
+[State 8011, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = 90 * (Random % 4)
+
+[State 8011, Scale]
+type = AngleDraw
+trigger1 = 1
+scale =  fvar(17) + (fvar(18) * Time), fvar(17) + (fvar(18) * Time)
+
+[State 8011, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+
+[State 8011, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;-------------------------------------------------------------------------
+;Streaks Spark
+[StateDef 8012]
+physics = N
+anim = 8012
+velSet = 0,0
+sprPriority = Ifelse(root,stateno=3301,15,5)
+
+[State 8012, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8012, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=parent,var(33)
+[State 8012, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(17)=Ifelse(var(33)=8010,0.15,Ifelse(var(33)=8011,0.175,Ifelse(var(33)=8012,0.2,Ifelse(var(33)=8013,0.225,0.25))))
+[State 8012, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(18)=Ifelse(var(33)=8010,0.009375,Ifelse(var(33)=8011,0.0109375,Ifelse(var(33)=8012,0.0125,Ifelse(var(33)=8013,0.0140625,0.015625))))
+
+[State 8012, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = 90 * (Random % 4)
+
+[State 8012, Scale]
+type = AngleDraw
+trigger1 = 1
+scale =  fvar(17) + (fvar(18) * Time), fvar(17) + (fvar(18) * Time)
+
+[State 8012, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+
+[State 8012, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;-------------------------------------------------------------------------
+;Back Spark
+[StateDef 8013]
+physics = N
+anim = Ifelse(root,var(43),8016,8013)
+velSet = 0,0
+sprPriority =Ifelse(root,stateno=3301,11,-3)
+[State 8013, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8013, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=parent,var(33)
+[State 8013, VarSet]
+type = VarSet
+trigger1 =!time&&anim=8016 
+fvar(17)=Ifelse(var(33)=8013,0.4,0.5)
+[State 8013, VarSet]
+type = VarSet
+trigger1 =!time&&anim=8016 
+fvar(18)=Ifelse(var(33)=8013,0.4,0.5)
+[State 8013, VarSet]
+type = VarSet
+trigger1 =!time&&anim!=8016 
+fvar(17)=Ifelse(var(33)=8012,0.35,Ifelse(var(33)=8013,0.375,0.4))
+[State 8013, VarSet]
+type = VarSet
+trigger1 =!time&&anim!=8016 
+fvar(18)=0.0125
+
+[State 8013, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = Ifelse(random<=500,360,-360)
+
+[State 8013, Scale]
+type = AngleDraw
+trigger1 = anim=8016
+scale =  fvar(17), fvar(18)
+[State 8013, Scale]
+type = AngleDraw
+trigger1 = anim!=8016
+scale =  fvar(17) + (fvar(18) * Time), fvar(17) - (fvar(18) * Time)
+
+[State 8013, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (32 * Time),256
+
+[State 8013, End]
+type = DestroySelf
+trigger1 = Time >= 8
+;-------------------------------------------------------------------------
+;Impact Spark
+[StateDef 8014]
+physics = N
+anim = 8014
+velSet = 0,0
+sprPriority =Ifelse(root,stateno=3301,13,3)
+
+[State 8014, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8014, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=parent,var(33)
+
+[State 8014, VarSet]
+type = VarSet
+trigger1 =!time&&((parent,stateno=8005)||(parent,stateno=8010))
+fvar(17)=Ifelse(var(33)=8010,0.3,Ifelse(var(33)=8011,0.35,Ifelse(var(33)=8012,0.4,Ifelse(var(33)=8013,0.45,0.5))))
+[State 8014, VarSet]
+type = VarSet
+trigger1 =!time&&((parent,stateno=8005)||(parent,stateno=8010))
+fvar(18)=Ifelse(var(33)=8010,0.0375,Ifelse(var(33)=8011,0.04375,Ifelse(var(33)=8012,0.05,Ifelse(var(33)=8013,0.05625,0.0625))))
+[State 8014, VarSet]
+type = VarSet
+trigger1 =!time&&((parent,stateno=8015)||(parent,stateno=8020))
+fvar(17)=Ifelse(var(33)=8020,0.2,Ifelse(var(33)=8021,0.225,Ifelse(var(33)=8022,0.25,Ifelse(var(33)=8023,0.275,0.3))))
+[State 8014, VarSet]
+type = VarSet
+trigger1 =!time&&((parent,stateno=8015)||(parent,stateno=8020))
+fvar(18)=0.025
+
+[State 8014, VarSet]
+type = VarSet
+trigger1 =!time
+var(10)=Ifelse((var(33)=[8010,8012]),128,Ifelse(var(33)=8013,192,256))
+[State 8014, VarSet]
+type = VarSet
+trigger1 =!time
+var(11)=Ifelse(var(33)>=8020,64,Ifelse((var(33)=[8010,8012]),16,Ifelse(var(33)=8013,24,32)))
+
+[State 8014, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = 30 * (Random % 12)
+
+[State 8014, Scale]
+type = AngleDraw
+trigger1 = (parent,stateno=8005||parent,stateno=8010)
+scale =  fvar(17) - (fvar(18) * Time), fvar(17) - (fvar(18) * Time)
+[State 8014, Scale]
+type = AngleDraw
+trigger1 = (parent,stateno=8015||parent,stateno=8020)
+scale =  fvar(17) + (fvar(18) * Time), fvar(17) + (fvar(18) * Time)
+
+[State 8014, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = var(10) - (var(11) * Time),256
+
+[State 8014, End]
+type = DestroySelf
+trigger1 = Time >= 8
+;-------------------------------------------------------------------------
+;Slash Spark for Helpers and Throws
+[StateDef 8015]
+physics = N
+anim = 8040
+velSet = 0,0
+sprPriority = 5
+
+[State 8015, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8015, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=Ifelse((parent,stateno=[0,999]),8022,Ifelse((parent,stateno=[1000,2999]),8023,8024))
+[State 8015, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(17)=0.025
+[State 8015, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(18)=Ifelse(var(33)=8020,0.35,Ifelse(var(33)=8021,0.375,Ifelse(var(33)=8022,0.4,Ifelse(var(33)=8023,0.425,0.45))))
+[State 8015, RemapPal]
+type = RemapPal
+trigger1 =!time&&((root,var(43)=0)||(root,var(43)=2))
+source = 8010,1
+dest = 8010,Ifelse(var(33)=8024,3,Ifelse(var(33)=8023,2,1))
+
+[State 8015, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = 30 * (Random % 12)
+
+[State 8015, Scale]
+type = AngleDraw
+trigger1 = 1
+scale = fvar(18) + (Time * fvar(17)), fvar(18) - (Time * fvar(17))
+
+[State 8015, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+
+[State 8015, Helper]
+type = Helper
+trigger1 =!time 
+helpertype = normal
+name ="Center" 
+ID =8021 
+stateno =8021
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8015, Helper]
+type = Helper
+trigger1 =!time&&root,var(43)=0
+helpertype = normal
+name ="Streaks" 
+ID =8022
+stateno =8022
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8015, Helper]
+type = Helper
+trigger1 =!time&&root,var(43)=0&&(var(33)=[8022,8024])
+helpertype = normal
+name ="Back" 
+ID =8023
+stateno =8023
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8015, Helper]
+type = Helper
+trigger1 =!time&&root,var(43)=0
+helpertype = normal
+name ="Impact" 
+ID =8014
+stateno =8014
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8015, Helper]
+type = Helper
+trigger1 =time <= 4&&root,var(43)
+helpertype = normal
+name ="Particles" 
+ID =8024
+stateno =8024
+size.xscale =1 
+size.yscale =1
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+
+[State 8015, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;-------------------------------------------------------------------------
+;Slash Spark
+[StateDef 8020]
+physics = N
+anim = 8040
+velSet = 0,0
+sprPriority = 5
+
+[State 8020, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8020, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=root,var(33)
+[State 8020, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(17)=0.025
+[State 8020, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(18)=Ifelse(var(33)=8020,0.35,Ifelse(var(33)=8021,0.375,Ifelse(var(33)=8022,0.4,Ifelse(var(33)=8023,0.425,0.45))))
+[State 8020, RemapPal]
+type = RemapPal
+trigger1 =!time&&((root,var(43)=0)||(root,var(43)=2))
+source = 8010,1
+dest = 8010,Ifelse(var(33)=8024,3,Ifelse(var(33)=8023,2,1))
+
+[State 8020, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = 30 * (Random % 12)
+
+[State 8020, Scale]
+type = AngleDraw
+trigger1 = 1
+scale = fvar(18) + (Time * fvar(17)), fvar(18) - (Time * fvar(17))
+
+[State 8020, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+
+[State 8020, Helper]
+type = Helper
+trigger1 =!time 
+helpertype = normal
+name ="Center" 
+ID =8021 
+stateno =8021
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8020, Helper]
+type = Helper
+trigger1 =!time&&root,var(43)=0
+helpertype = normal
+name ="Streaks" 
+ID =8022
+stateno =8022
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8020, Helper]
+type = Helper
+trigger1 =!time&&root,var(43)=0&&(var(33)=[8022,8024])
+helpertype = normal
+name ="Back" 
+ID =8023
+stateno =8023
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8020, Helper]
+type = Helper
+trigger1 =!time&&root,var(43)=0
+helpertype = normal
+name ="Impact" 
+ID =8014
+stateno =8014
+facing = -1
+persistent=0
+size.xscale =1 
+size.yscale =1 
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1
+[State 8020, Helper]
+type = Helper
+trigger1 =time <= 4&&root,var(43)
+helpertype = normal
+name ="Particles" 
+ID =8024
+stateno =8024
+size.xscale =1 
+size.yscale =1
+ownpal=0
+pauseMoveTime = 65535
+superMoveTime = 65535
+ignoreHitPause = 1+
+[State 8020, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;-------------------------------------------------------------------------
+;Center Slash
+[StateDef 8021]
+physics = N
+anim = Ifelse(root,var(43),8044,8041)
+velSet = 0,0
+sprPriority = 5
+
+[State 8021, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8021, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=parent,var(33)
+[State 8021, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(17)=Ifelse(var(33)=8020,0.25,Ifelse(var(33)=8021,0.275,Ifelse(var(33)=8022,0.3,Ifelse(var(33)=8023,0.325,0.35))))
+
+[State 8021, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = 90 * (Random % 4)
+
+[State 8021, Scale]
+type = AngleDraw
+trigger1 =anim!=8044
+scale = fvar(17) - (0.0125 * time), fvar(17) - (0.0125 * time)
+[State 8021, Scale]
+type = AngleDraw
+trigger1 =anim=8044
+scale = (fvar(17) - 0.05) + (0.025 * time), (fvar(17) - 0.05) + (0.025 * time)
+
+[State 8021, Transparency]
+type = Trans
+trigger1 =root,var(43)=0
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+[State 8021, Transparency]
+type = Trans
+trigger1 =root,var(43)!=0
+trans = AddAlpha
+alpha = 256 - (32 * Time),256
+
+[State 8021, End]
+type = DestroySelf
+trigger1 = Ifelse(root,var(43)=0,Time >= 10,Time >= 16)
+;-------------------------------------------------------------------------
+;Streaks Slash
+[StateDef 8022]
+physics = N
+anim = 8042
+velSet = 0,0
+sprPriority = 5
+
+[State 8022, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8022, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=parent,var(33)
+[State 8022, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(17)=Ifelse(var(33)=8020,0.09,Ifelse(var(33)=8021,0.175,Ifelse(var(33)=8022,0.2,Ifelse(var(33)=8023,0.225,0.25))))
+
+[State 8022, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = 90 * (Random % 4)
+
+[State 8022, Scale]
+type = AngleDraw
+trigger1 = 1
+scale =  fvar(17) + (0.0125 * Time), fvar(17) + (0.0125 * Time)
+
+[State 8022, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (16 * Time),256
+
+[State 8022, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;-------------------------------------------------------------------------
+;Back Slash
+[StateDef 8023]
+physics = N
+anim = 8043
+velSet = 0,0
+sprPriority =-3
+[State 8023, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8023, VarSet]
+type = VarSet
+trigger1 =!time 
+var(33)=parent,var(33)
+[State 8023, VarSet]
+type = VarSet
+trigger1 =!time
+fvar(17)=Ifelse(var(33)=8022,0.2,Ifelse(var(33)=8022,0.225,0.25))
+[State 8023, VarSet]
+type = VarSet
+trigger1 =!time
+fvar(18)=0.025
+
+[State 8023, AngleSet]
+type = AngleDraw
+trigger1 = !time
+value = Ifelse(random<=500,360,-360)
+
+[State 8023, Scale]
+type = AngleDraw
+trigger1 = anim=8016
+scale =  fvar(17), fvar(18)
+[State 8023, Scale]
+type = AngleDraw
+trigger1 = anim!=8016
+scale =  fvar(17) + (fvar(18) * Time), fvar(17) + (fvar(18) * Time)
+
+[State 8023, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (32 * Time),256
+
+[State 8023, End]
+type = DestroySelf
+trigger1 = Time >= 8
+;-------------------------------------------------------------------------
+;Particles
+[StateDef 8024]
+physics = N
+anim = 8045
+velset = -10 + (random / 50.0), -10 + (random / 50.0)
+sprPriority = 5
+
+[State 8024, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+[State 8024, VarSet]
+type = VarSet
+trigger1 =!time 
+fvar(17)= 0.25 + (random / 5000.0)
+
+[State 8024, Scale]
+type = AngleDraw
+trigger1 = 1
+scale = fvar(17) , fvar(17)
+
+[State 8024, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256 - (32 * Time),256
+
+[State 8024, End]
+type = DestroySelf
+trigger1 = Time >= 16
+;======================<JUMP DUST>===========================
+[StateDef 8100]
+type = S
+anim = 1
+velSet = 0,0
+
+[State 8100, Bind]
+type = BindToRoot
+trigger1 = Time
+
+[State 8100, Floor Dust]
+type = Explod
+trigger1 = !Time
+anim = 8100
+sprPriority = 3
+posType = P1
+pos = 0, ceil(pos y)
+scale = Ifelse(root,prevstateno=123,0.75,0.5),Ifelse(root,prevstateno=123,0.75,0.5)
+pauseMoveTime = -1
+superMoveTime = -1
+ownpal = 1
+
+[State 8100, Player Dust]
+type = Explod
+trigger1 = !Time || Time = 2 || Time = 6
+anim = 8101
+sprPriority = 3
+posType = P1
+scale = Ifelse(root,prevstateno=123,0.75,0.5),Ifelse(root,prevstateno=123,0.75,0.5)
+pauseMoveTime = -1
+superMoveTime = -1
+ownpal = 1
+
+[State 8100, End]
+type = DestroySelf
+trigger1 = Time >= 7
+
+;======================<DASH DUST>===========================
+[StateDef 8103]
+type = A
+anim = 1
+velSet = 0,0
+sprPriority = 5
+
+[State 8103, posSet]
+type = PosSet
+trigger1 = !Time = 0
+y = 0
+
+[State 8103, Dash Dust]
+type = Explod
+trigger1 = Time = 0 || Time = 3 || Time = 6
+anim = 8103
+ID = ifElse((Time = 6), 3, ifElse((Time = 3), 2, 1))
+posType = P1
+pos = 0,-4
+random = 8,8
+vel = -3 - (Random / 1000.0), -2 - (Random / 2000.0)
+facing = ifElse(Random < 500,-1,1)
+vFacing = ifElse(Random < 500,-1,1)
+removeTime = 16
+sprPriority = 3
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8103, Scale Explod 1]
+type = ModifyExplod
+trigger1 = NumExplod(1)
+ID = 1
+scale = 0.1 + (0.025 * Time), 0.1 + (0.025 * Time)
+trans = AddAlpha
+alpha = 256 - (16 * Time), 256
+
+[State 8103, Scale Explod 2]
+type = ModifyExplod
+trigger1 = NumExplod(2)
+ID = 2
+scale = 0.1 + (0.025 * (Time - 3)), 0.1 + (0.025 * (Time - 3))
+trans = AddAlpha
+alpha = 256 - (16 * (Time - 3)), 256
+
+[State 8103, Scale Explod 3]
+type = ModifyExplod
+trigger1 = NumExplod(3)
+ID = 3
+scale = 0.1 + (0.025 * (Time - 6)), 0.1 + (0.025 * (Time - 6))
+trans = AddAlpha
+alpha = 256 - (16 * (Time - 6)), 256
+
+[State 8103, Remove Explods]
+type = RemoveExplod
+trigger1 = Time >= 22
+
+[State 8103, End]
+type = DestroySelf
+trigger1 = !NumExplod
+
+;======================<IMPACT DUST>===========================
+[StateDef 8110]
+type = A
+anim = 1
+velSet = 0,0
+sprPriority = 5
+
+[State 8110, Impact Dust Explod 1]
+type = Explod
+trigger1 = !Time
+anim = 8110
+ID = ifElse(Time = 8, 3, ifElse(Time = 4, 2, 1))
+posType = P1
+removeTime = 8
+sprPriority = -4
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8110, Impact Dust Explod 2]
+type = Explod
+trigger1 = !Time
+anim = 8120
+ID = 2
+posType = P1
+removeTime = 8
+sprPriority = -4
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8110, Scale]
+type = ModifyExplod
+trigger1 = 1
+scale = 0.25 + (0.03125 * Time), 0.25 + (0.03125 * Time)
+trans = AddAlpha
+alpha = ifElse(Time < 4, 256, 256 - (64 * (Time - 4))), 256
+
+[State 8110, Remove Explods]
+type = RemoveExplod
+trigger1 = Time >= 8
+
+[State 8110, End]
+type = DestroySelf
+trigger1 = !NumExplod
+
+;======================<WALL IMPACT DUST>===========================
+[StateDef 8111]
+type = A
+anim = 1
+velSet = 0,0
+sprPriority = 5
+
+[State 8111, Impact Dust Explod 1]
+type = Explod
+trigger1 = !Time
+anim = 8111
+ID = ifElse(Time = 8, 3, ifElse(Time = 4, 2, 1))
+posType = P1
+removeTime = 8
+sprPriority = -4
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8111, Impact Dust Explod 2]
+type = Explod
+trigger1 = !Time
+anim = 8121
+ID = 2
+posType = P1
+removeTime = 8
+sprPriority = -4
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8111, Scale]
+type = ModifyExplod
+trigger1 = 1
+scale = 0.25 + (0.03125 * Time), 0.25 + (0.03125 * Time)
+trans = AddAlpha
+alpha = ifElse(Time < 4, 256, 256 - (64 * (Time - 4))), 256
+
+[State 8111, Remove Explods]
+type = RemoveExplod
+trigger1 = Time >= 8
+
+[State 8111, End]
+type = DestroySelf
+trigger1 = !NumExplod
+
+;========================<RECOVER FX>=============================
+[StateDef 8200]
+type = A
+velSet = 0,0
+anim = 8200
+sprPriority = 5
+
+[State 8200, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8200, Scale]
+type = AngleDraw
+trigger1 = 1
+scale = 0.25 + (0.017 * Time), 0.25 + (0.017 * Time)
+
+[State 8200, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = ceil(256 - 17.1 * Time), 256
+
+[State 8200, End]
+type = DestroySelf
+trigger1 = Time >= 15
+
+;========================<COUNTER FX>=============================
+[StateDef 8290]
+type = A
+physics = N
+velSet = 0,0
+anim = 1
+
+[State 8290, "Counter!" Text Explod]
+type = Explod
+trigger1 = !NumExplod(8290)
+anim = 8290
+ID = 8290
+sprPriority = 64
+posType = P1
+facing = Facing
+removeTime = 32
+pauseMoveTime = -1
+superMoveTime = -1
+ownPal = 1
+
+[State 8290, Scale]
+type = ModifyExplod
+trigger1 = Time < 8
+ID = 8290
+scale = 0.5, .5
+trans = AddAlpha
+alpha = 256,0
+
+[State 8290, Scale]
+type = ModifyExplod
+trigger1 = Time >= 8
+ID = 8290
+scale = 0.5 + 0.0625 * (Time - 8), 0.5 + 0.0625 * (Time - 8)
+trans = AddAlpha
+alpha = 256 - 32 * (Time - 8), 32 * (Time - 8)
+
+[State 8290, Safety]
+type = RemoveExplod
+trigger1 = Time >= 16
+
+[State 8290, End]
+type = DestroySelf
+trigger1 = Time >= 16
+
+;==================<POWER CHARGE FX>==================
+;Aura and Dust
+[StateDef 8330]
+type = A
+physics = N
+moveType = I
+anim = 1
+ctrl = 0
+velset = 0,0
+
+[State 8330, BindToRoot]
+type = BindToRoot
+trigger1 = (Root, StateNo = 730)
+pos = 0,2
+
+[State 8330, Charging Sound]
+type = PlaySnd
+trigger1 = !Time
+value = 730,0
+channel = 0
+
+[State 8330, Power Charge Aura]
+type = Explod
+trigger1 = !NumExplod(8330)
+ID = 8330
+anim = 8330
+sprPriority = 3
+posType = P1
+bindTime = -1
+removeTime = -1
+scale = 0.5,0.5
+pauseMoveTime = -1
+superMoveTime = -1
+ownPal = 1
+
+[State 8330, Power Charge Dust]
+type = Explod
+trigger1 = !(Time % 6)
+anim = 8105
+sprPriority = -3
+posType = P1
+pos = 0, -ceil(pos y)
+scale = 0.5,0.5
+pauseMoveTime = -1
+superMoveTime = -1
+ownPal = 1
+
+[State 8330, Modify Aura 1]
+type = ModifyExplod
+trigger1 = Numexplod(8330) && Root, Power < 3000
+ID = 8330
+scale = 0.5, 0.1 + 0.4 * (Root, Power / 3000.0)
+
+[State 8330, Modify Aura 2]
+type = ModifyExplod
+trigger1 = NumExplod(8330) && Root, Power >= 3000
+ID = 8330
+scale = 0.5, 0.5
+
+[State 8330, StopSnd]
+type = StopSnd
+trigger1 = Root, StateNo != 730
+channel = 0
+
+[State 8330, RemoveExplod]
+type = RemoveExplod
+trigger1 = Root, StateNo != 730
+
+[State 8330, End]
+type = DestroySelf
+trigger1 = Root, StateNo != 730
+
+
+;Particles
+[StateDef 8331]
+type = A
+physics = N
+moveType = I
+anim = 1
+ctrl = 0
+velSet = 0,0
+
+[State 8331, BindToRoot]
+type = BindToRoot
+trigger1 = !(Time % 8)
+pos = ceil(-201 + (Random / 3.125)), ceil(98 - (Random / 3.125))
+
+[State 8331, Particle]
+type = Explod
+trigger1 = (Time % 8) = 1
+anim = 8331
+sprPriority = ifElse(Random < 750, 5, -1)
+posType = P1
+vel = ((RootDist x + 5) / 32.0), ((RootDist y - 75) / 32.0);values to adjust
+scale = ifElse(Random < 500, 0.5, -0.5), ifElse(Random < 500, 0.5, -0.5)
+pauseMoveTime = -1
+superMoveTime = -1
+ownpal = 1
+
+[State 8331, RemoveExplod]
+type = RemoveExplod
+trigger1 = Root, StateNo != 730
+
+[State 8331, End]
+type = DestroySelf
+trigger1 = Root, StateNo != 730
+
+;==================<ZERO COUNTER FX>==================
+[StateDef 8350]
+type = A
+physics = N
+moveType = I
+anim = 1
+ctrl = 0
+velSet = 0,0
+
+[State 8350, bgPalFX]
+type = bgPalFX
+trigger1 = 1
+time = 1
+color = 16 * Time
+mul = 16 * Time, 16 * Time, 16 * Time
+
+[State 8350, Circle Explod]
+type = Explod
+trigger1 = !Time
+anim = 8350
+ID = 1
+sprPriority = 3
+posType = P1
+removeTime = 16
+superMoveTime = -1
+ownPal = 1
+
+[State 8350, Scale]
+type = ModifyExplod
+trigger1 = NumExplod(1)
+ID = 1
+scale = (0.0625 * Time), (0.0625 * Time)
+trans = AddAlpha
+alpha = 256 - (16 * Time), 256
+
+[State 8350, Lightning Explod]
+type = Explod
+trigger1 = !Time
+anim = 8351
+ID = 2
+sprPriority = -2
+posType = P1
+pos = 0, -ceil(pos y)
+superMoveTime = -1
+ownPal = 1
+
+[State 8350, End]
+type = DestroySelf
+trigger1 = Time >= 16
+
+;========================<CUSTOM COMBO>=============================
+[StateDef 8400]
+type = A
+physics = N
+moveType = I
+anim = 8400
+ctrl = 0
+velSet = 0,0
+sprPriority = 5
+
+[State 8400, NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+ignoreHitPause = 1
+
+[State 8400, BGpalFX]
+type = BGpalFX
+trigger1 = Time < 25
+time = 1
+mul = 128,128,128
+
+[State 8400, Rotate]
+type = AngleSet
+trigger1 = !Time
+value = 6 * (Random % 60)
+
+[State 8400, Rotate]
+type = AngleAdd
+trigger1 = 1
+value = -6
+
+[State 8400, Scale]
+type = AngleDraw
+trigger1 = Time < 8
+scale = (0.0625 * Time), (0.0625 * Time)
+ignoreHitPause = 1
+
+[State 8400, Scale]
+type = AngleDraw
+trigger1 = Time >= 8
+scale = 0.5, 0.5
+ignoreHitPause = 1
+
+[State 8400, Transparency]
+type = Trans
+trigger1 = Time < 16
+trans = AddAlpha
+alpha = 256, 256
+ignoreHitPause = 1
+
+[State 8400, Transparency]
+type = Trans
+trigger1 = Time >= 16
+trans = AddAlpha
+alpha = ceil(256 - 25.6 * (Time - 16)), 256
+ignoreHitPause = 1
+
+[State 8400, Lines Explod]
+type = Explod
+trigger1 = !Time
+anim = 8401
+ID = 1
+sprPriority = 5
+posType = P1
+facing = ifElse(Random < 500, -1, 1)
+vFacing = ifElse(Random < 500, -1, 1)
+removeTime = 16
+superMoveTime = -1
+
+[State 8400, Scale Lines Explod]
+type = ModifyExplod
+trigger1 = NumExplod(1)
+ID = 1
+scale = 2 - (0.125 * Time), 2 - (0.125 * Time)
+trans = AddAlpha
+alpha = ifElse(Time < 4, 64 * Time, 256), 256
+
+[State 8400, Circle Explod]
+type = Explod
+trigger1 = Time = 16
+anim = 8402
+ID = 2
+sprPriority = 5
+posType = P1
+removeTime = 32
+superMoveTime = -1
+
+[State 8400, Scale Circle Explod]
+type = ModifyExplod
+trigger1 = NumExplod(2)
+ID = 2
+scale = (0.1 * (Time - 16)), (0.1 * (Time - 16))
+trans = AddAlpha
+alpha = ceil(256 - 25.6 * (Time - 16)), 256
+
+[State 8400, Remove Explods]
+type = RemoveExplod
+trigger1 = Time >= 26
+
+[State 8400, End]
+type = DestroySelf
+trigger1 = Time >= 26
+
+;========================<SUPER PAUSE FX>=============================
+;Level 1 Super FX
+[StateDef 8500]
+type = A
+velSet = 0,0
+anim = 8500
+sprPriority = 5
+
+[State 8500, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8500, BGpalFX]
+type = BGpalFX
+trigger1 = Time < 39
+time = 1
+color = 0
+mul = 0,0,256
+
+[State 8500, Rotate]
+type = AngleSet
+trigger1 = !Time
+value = 6 * (Random % 60)
+
+[State 8500, Rotate]
+type = AngleAdd
+trigger1 = 1
+value = -6
+
+[State 8500, Scale]
+type = AngleDraw
+trigger1 = Time < 16
+scale = (0.03125 * Time), (0.03125 * Time)
+
+[State 8500, Scale]
+type = AngleDraw
+trigger1 = Time >= 16
+scale = 0.5,0.5
+
+[State 8500, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256,256
+
+[State 8500, Lines Explod]
+type = Explod
+trigger1 = Time = 0 || Time = 8 || Time = 16 || Time = 24
+anim = 8501
+ID = ifElse(Time = 24, 4, ifElse(Time = 16, 3, ifElse(Time = 8, 2, 1)))
+sprPriority = 5
+posType = P1
+facing = ifElse(Random < 500, -1, 1)
+vFacing = ifElse(Random < 500, -1, 1)
+removeTime = 16
+superMoveTime = -1
+
+[State 8500, Scale Lines Explod 1]
+type = ModifyExplod
+trigger1 = NumExplod(1)
+ID = 1
+scale = 1 - (0.0625 * Time), 1 - (0.0625 * Time)
+trans = AddAlpha
+alpha = ifElse(Time < 4, 64 * Time, 256), 256
+
+[State 8500, Scale Lines Explod 2]
+type = ModifyExplod
+trigger1 = NumExplod(2)
+ID = 2
+scale = 1 - (0.0625 * (Time - 8)), 1 - (0.0625 * (Time - 8))
+trans = AddAlpha
+alpha = ifElse((Time - 8) < 4, 64 * (Time - 8), 256), 256
+
+[State 8500, Scale Lines Explod 3]
+type = ModifyExplod
+trigger1 = NumExplod(3)
+ID = 3
+scale = 1 - (0.0625 * (Time - 16)), 1 - (0.0625 * (Time - 16))
+trans = AddAlpha
+alpha = ifElse((Time - 16) < 4, 64 * (Time - 16), 256), 256
+
+[State 8500, Scale Lines Explod 3]
+type = ModifyExplod
+trigger1 = NumExplod(4)
+ID = 4
+scale = 1 - (0.0625 * (Time - 24)), 1 - (0.0625 * (Time - 24))
+trans = AddAlpha
+alpha = ifElse((Time - 24) < 4, 64 * (Time - 24), 256), 256
+
+[State 8500, Circle Explod]
+type = Explod
+trigger1 = Time = 24
+anim = 8502
+ID = 10
+sprPriority = 5
+posType = P1
+facing = ifElse(Random < 500, -1, 1)
+vFacing = ifElse(Random < 500, -1, 1)
+removeTime = 32
+superMoveTime = -1
+
+[State 8500, Scale Circle Explod]
+type = ModifyExplod
+trigger1 = NumExplod(10)
+ID = 10
+scale = 2 - (0.125 * (Time - 24)), 2 - (0.125 * (Time - 24))
+trans = AddAlpha
+alpha = ifElse((Time - 24) < 4, 64 * (Time - 24), 256), 256
+
+[State 8500, Remove Explods]
+type = RemoveExplod
+trigger1 = Time >= 40
+
+[State 8500, End]
+type = DestroySelf
+trigger1 = Time >= 40
+
+
+;Level 2 Super FX
+[StateDef 8510]
+type = A
+velSet = 0,0
+anim = 8510
+sprPriority = 5
+
+[State 8510, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+
+[State 8510, BGpalFX]
+type = BGpalFX
+trigger1 = Time < 39
+time = 1
+color = 0
+mul = 192,0,256
+
+[State 8510, Rotate]
+type = AngleSet
+trigger1 = !Time
+value =6 * (Random % 60)
+
+[State 8510, Rotate]
+type = AngleAdd
+trigger1 = 1
+value = -6
+
+[State 8510, Scale]
+type = AngleDraw
+trigger1 = Time < 16
+scale = (0.03125 * Time), (0.03125 * Time)
+
+[State 8510, Scale]
+type = AngleDraw
+trigger1 = Time >= 16
+scale = 0.5, 0.5
+
+[State 8510, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256,256
+
+[State 8510, Lines Explod]
+type = Explod
+trigger1 = Time = 0 || Time = 8 || Time = 16 || Time = 24
+anim = 8511
+ID = ifElse(Time = 24, 4, ifElse(Time = 16, 3, ifElse(Time = 8, 2, 1)))
+sprPriority = 5
+posType = P1
+facing = ifElse(Random < 500, -1, 1)
+vFacing = ifElse(Random < 500, -1, 1)
+removeTime = 16
+superMoveTime = -1
+
+[State 8510, Scale Lines Explod 1]
+type = ModifyExplod
+trigger1 = NumExplod(1)
+ID = 1
+scale = 1 - (0.0625 * Time), 1 - (0.0625 * Time)
+trans = AddAlpha
+alpha = ifElse(Time < 4, 64 * Time, 256), 256
+
+[State 8510, Scale Lines Explod 2]
+type = ModifyExplod
+trigger1 = NumExplod(2)
+ID = 2
+scale = 1 - (0.0625 * (Time - 8)), 1 - (0.0625 * (Time - 8))
+trans = AddAlpha
+alpha = ifElse((Time - 8) < 4, 64 * (Time - 8), 256), 256
+
+[State 8510, Scale Lines Explod 3]
+type = ModifyExplod
+trigger1 = NumExplod(3)
+ID = 3
+scale = 1 - (0.0625 * (Time - 16)), 1 - (0.0625 * (Time - 16))
+trans = AddAlpha
+alpha = ifElse((Time - 16) < 4, 64 * (Time - 16), 256), 256
+
+[State 8510, Scale Lines Explod 4]
+type = ModifyExplod
+trigger1 = NumExplod(4)
+ID = 4
+scale = 1 -(0.0625 * (Time - 24)), 1 - (0.0625 * (Time - 24))
+trans = AddAlpha
+alpha = ifElse((Time - 24) < 4, 64 * (Time - 24), 256), 256
+
+[State 8510, Circle Explod]
+type = Explod
+trigger1 = Time = 24
+anim = 8512
+ID = 10
+sprPriority = 5
+posType = P1
+facing = ifElse(Random < 500,-1,1)
+vFacing = ifElse(Random < 500,-1,1)
+removeTime = 32
+superMoveTime = -1
+
+[State 8510, Scale]
+type = ModifyExplod
+trigger1 = NumExplod(10)
+ID = 10
+scale = 2 - (0.125 * (Time - 24)), 2 - (0.125 * (Time - 24))
+trans = AddAlpha
+alpha = ifElse((Time - 24)<4, 64 * (Time - 24), 256), 256
+
+[State 8510, Remove Explods]
+type = RemoveExplod
+trigger1 = Time >= 40
+
+[State 8510, End]
+type = DestroySelf
+trigger1 = Time >= 40
+
+
+;Level 3 Super FX
+[StateDef 8520]
+type = A
+velset = 0,0
+anim = 8520
+sprPriority = 5
+
+[State 8520, Assert: NoShadow]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+ignoreHitPause = 1
+
+[State 8520, Assert: NoBarDisplay, NoBG, NoFG]
+type = AssertSpecial
+trigger1 = Time < 40
+flag = NoBarDisplay
+flag2 = NoBG
+flag3 = NoFG
+
+[State 8520, Rotate]
+type = AngleSet
+trigger1 = !Time
+value = 6 * (Random % 60)
+
+[State 8520, Rotate]
+type = AngleAdd
+trigger1 = 1
+value = -6
+
+[State 8520, Scale]
+type = AngleDraw
+trigger1 = Time < 16
+scale = (0.03125 * Time), (0.03125 * Time)
+ignoreHitPause = 1
+
+[State 8520, Scale]
+type = AngleDraw
+trigger1 = Time >= 16
+scale = 0.5, 0.5
+ignoreHitPause = 1
+
+[State 8520, Transparency]
+type = Trans
+trigger1 = 1
+trans = AddAlpha
+alpha = 256,256
+ignoreHitPause = 1
+
+[State 8520, Portrait 1]
+type = Explod
+trigger1 = !Time
+anim = 8525 + Root, var(40)
+ID = 20
+sprPriority = -16
+posType = Back
+removeTime = 40
+superMoveTime = -1
+
+[State 8520, Portrait 2]
+type = Explod
+trigger1 = !Time
+anim = 8525 + Root, var(40)
+ID = 21
+sprPriority = -16
+posType = Back
+removeTime = 40
+superMoveTime = -1
+
+[State 8520, Scale Portrait 1a]
+type = ModifyExplod
+trigger1 = NumExplod(20) && Time < 16
+ID = 20
+posType = Back
+pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 1 - (0.03125 * Time), 1 - (0.03125 * Time)
+trans = AddAlpha
+alpha = (8 * Time), 256
+
+[State 8520, Scale Portrait 2a]
+type = ModifyExplod
+trigger1 = NumExplod(21) && Time < 16
+ID = 21
+posType = Back
+pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 2 - (0.09375 * Time), 2 - (0.09375 * Time)
+trans = AddAlpha
+alpha = (8 * Time), 256
+
+[State 8520, Scale Portrait 1b]
+type = ModifyExplod
+trigger1 = NumExplod(20) && (Time = [16,32])
+ID = 20
+posType = Back
+pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 0.5, 0.5
+trans = AddAlpha
+alpha = 256, 256
+
+[State 8520, Scale Portrait 2b]
+type = ModifyExplod
+trigger1 = NumExplod(21) && (Time = [16,32])
+ID = 21
+scale = 0,0
+
+[State 8520, Scale Portrait 1c]
+type = ModifyExplod
+trigger1 = NumExplod(20) && Time >= 32
+ID = 20
+posType = Back
+pos = 160 + (8 * (Time - 32)), floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 0.5, 0.5
+trans = AddAlpha
+alpha = 128 - 16 * (Time - 32), 256
+
+[State 8520, Scale Portrait 2c]
+type = ModifyExplod
+trigger1 = NumExplod(21) && Time >= 32
+ID = 21
+posType = Back
+pos = 160 - (8 * (Time - 32)), floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 0.5, 0.5
+trans = AddAlpha
+alpha = 128 - 16 * (Time - 32), 256
+
+[State 8520, Lines Explod]
+type = explod
+trigger1 = Time = 0 || Time = 8 || Time = 16 || Time = 24
+anim = 8521
+ID = ifElse(Time = 24, 4, ifElse(Time = 16, 3, ifElse(Time = 8, 2, 1)))
+sprPriority = 5
+posType = P1
+facing = ifElse(Random < 500, -1, 1)
+vFacing = ifElse(Random < 500, -1, 1)
+removeTime = 16
+superMoveTime = -1
+
+[State 8520, Scale Lines Explod 1]
+type = ModifyExplod
+trigger1 = NumExplod(1)
+ID = 1
+scale = 1 - (0.0625 * Time), 1 - (0.0625 * Time)
+trans = AddAlpha
+alpha = ifElse(Time < 4, 64 * Time, 256), 256
+
+[State 8520, Scale Lines Explod 2]
+type = ModifyExplod
+trigger1 = NumExplod(2)
+ID = 2
+scale = 1-(0.0625 * (Time - 8)), 1 - (0.0625 * (Time - 8))
+trans = AddAlpha
+alpha = ifElse((Time - 8) < 4, 64 * (Time - 8), 256), 256
+
+[State 8520, Scale Lines Explod 3]
+type = ModifyExplod
+trigger1 = NumExplod(3)
+ID = 3
+scale = 1 - (0.0625 * (Time - 16)), 1 - (0.0625 * (Time - 16))
+trans = AddAlpha
+alpha = ifElse((Time - 16) < 4, 64 * (Time - 16), 256), 256
+
+[State 8520, Scale Lines Explod 4]
+type = ModifyExplod
+trigger1 = NumExplod(4)
+ID = 4
+scale = 1 - (0.0625 * (Time - 24)), 1 - (0.0625 * (Time - 24))
+trans = AddAlpha
+alpha = ifElse((Time - 24) < 4, 64 * (Time - 24), 256), 256
+
+[State 8520, Circle Explod]
+type = Explod
+trigger1 = Time = 24
+anim = 8522
+ID = 10
+sprPriority = 5
+posType = P1
+facing = ifElse(Random < 500, -1 ,1)
+vFacing = ifElse(Random < 500, -1, 1)
+removeTime = 32
+superMoveTime = -1
+
+[State 8520, Scale Circle Explod]
+type = ModifyExplod
+trigger1 = NumExplod(10)
+ID = 10
+scale = 2 - (0.125 * (Time - 24)), 2 - (0.125 * (Time - 24))
+trans = AddAlpha
+alpha = ifElse((Time - 24) < 4, 64 * (Time - 24), 256), 256
+
+[State 8520, Remove Explods]
+type = RemoveExplod
+trigger1 = Time >= 40
+
+[State 8520, End]
+type = DestroySelf
+trigger1 = Time >= 40
+;========================= SPECIAL FINISH =================
+[Statedef 8600]
+ctrl = 0
+anim = 9999
+sprpriority = -10
+
+[State 8600, Assert]
+type = AssertSpecial
+trigger1 = 1
+flag = NoMusic
+flag2 = nobardisplay
+flag3 = nofg
+ignorehitpause=1
+
+[State 8600, PlaySnd]
+type = PlaySnd
+trigger1 = !time
+value = S8600,0
+volume = 255
+channel = 0
+persistent=0
+
+[State 8600, Explod]
+type = Explod
+trigger1 = time = 0
+anim =8550
+ID = 8600
+pos = 0,0
+postype = back
+facing = 1
+vfacing = 1
+bindtime = -1
+vel = 0,0
+accel = 0,0
+random = 0,0
+removetime =30
+supermovetime = 9999
+pausemovetime = 9999
+scale = 1.2,1.2
+sprpriority = -990
+ontop = 0
+shadow = 0,0,0
+ownpal = 0
+removeongethit = 1
+ignorehitpause = 1
+;persistent =
+
+[State 8600, ModifyExplod]
+type = ModifyExplod
+trigger1 = time>=1
+ID = 8600
+trans = addalpha
+alpha=256-((time)*10),256
+
+[State 8600, End]
+type=removeexplod
+trigger1= time>=120
+trigger2= roundstate<3
+[State 8600, End]
+type=destroyself
+trigger1= roundstate!=3
+;========================<SUPER FINISH>=============================
+[StateDef 8605]
+type = A
+velSet = 0,0
+anim = 1
+
+[State 8605, Super Finish Sound]
+type = PlaySnd
+trigger1 = !Time
+value = 8600,1
+channel = 0
+
+[State 8605, BG PalFX]
+type = BGpalFX
+trigger1 = Time < 16
+time = 1
+mul = 0, 0, 0
+
+[State 8605, BG PalFX]
+type = BGpalFX
+trigger1 = Time = [16,24)
+time = 1
+mul = 32 * (Time - 16), 32 * (Time - 16), 32 * (Time - 16)
+
+[State 8605, Move Name: Custom Combo]
+type = VarSet
+trigger1= !Time && Root, var(23) = 900
+var(0) = 1
+
+[State 8605, Move Name: Himmlischer Atem]
+type = VarSet
+trigger1 = !Time && (Root, var(23) = [3000,3099])
+var(0) = 2
+
+[State 8605, Move Name: Himmlische Seele]
+type = VarSet
+trigger1 = !Time && (Root, var(23) = [3100,3199])
+var(0) = 3
+
+[State 8605, Move Name: Himmlische Uberqueren]
+type = VarSet
+trigger1 = !Time && (Root, var(23) = [3200,3299])
+var(0) = 4
+
+[State 8605, Move Name: Himmlische Brennen]
+type = VarSet
+trigger1= !Time && (Root, var(23) = [3300,3399])
+var(0) = 5
+
+[State 8605, Move Name: Himmlischer Heilige Lichts]
+type = VarSet
+trigger1= !Time && Root, var(23) = [3400,3499]
+var(0) = 6
+
+[State 8605, Super Finish Explod]
+type = Explod
+trigger1 = !Time
+anim = 8600
+ID = 8600
+ontop = 1
+postype = Left
+pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 0.5, 0.5 * (1.3333333 * GameHeight / GameWidth)
+bindTime = -1
+removeTime = 32
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8605, Super Finish Explod Fade]
+type = ModifyExplod
+trigger1 = NumExplod(8600)
+ID = 8600
+trans = AddAlpha
+alpha = ifElse(Time < 16, 256, 256 - 32 * (Time - 16)), 256
+
+[State 8605, Text 1]
+type = Explod
+trigger1 = !Time && var(0)
+anim = 8610 + var(0)
+ID = 10
+onTop = 1
+posType = Left
+pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 0.5, 0.5 * (1.3333333 * GameHeight / GameWidth)
+bindTime = -1
+removeTime = 32
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8605, Text 2]
+type = Explod
+trigger1 = !Time && var(0)
+anim = 8610 + var(0)
+ID = 11
+onTop = 1
+posType = left
+pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+scale = 0.5, 0.5 * (1.3333333 * GameHeight / GameWidth)
+bindTime = -1
+removeTime = 8
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8605, Text 1 Fade]
+type = ModifyExplod
+trigger1 = NumExplod(10)
+ID = 10
+trans = AddAlpha
+alpha = ifElse(Time < 16, 256, 256 - 32 * (Time - 16)), ifElse(Time < 16, 0, 32 * (Time - 16))
+
+[State 8605, Text 2 Fade]
+type = ModifyExplod
+trigger1 = NumExplod(11)
+ID = 11
+scale = 0.5 + (0.0625 * Time), 0.5 + (0.0625 * Time)
+trans = AddAlpha
+alpha = 256 - (32 * Time), 32 * Time
+
+[State 8605, Circle Explod]
+type = Explod
+trigger1 = !Time
+anim = 8601
+ID = 8601
+under = 1
+posType = Left
+pos = 160, floor((1.3333333 * GameHeight / GameWidth) * 120)
+bindTime = -1
+removeTime = 16
+pauseMoveTime = -1
+superMoveTime = -1
+
+[State 8605, Circle Fade]
+type = ModifyExplod
+trigger1 = NumExplod(8601)
+ID = 8601
+scale = (0.25 * time) * (1.3333333 * GameHeight / GameWidth), (0.25 * time) * (1.3333333 * GameHeight / GameWidth)
+trans = AddAlpha
+alpha = 256 - (16 * Time), 256
+
+[State 8605, Assert: NoFG]
+type = AssertSpecial
+trigger1 = Time < 16
+flag = NoFG
+
+[State 8605, Assert: NoBarDisplay]
+type = AssertSpecial
+trigger1 = Time < 24
+flag = NoBarDisplay
+
+[State 8605, End]
+type=removeexplod
+trigger1= time>=24
+trigger2= roundstate<3
+[State 8605, End]
+type=destroyself
+trigger1= roundstate!=3
+
+;========================<CAMERA CONTROL>=============================
+[StateDef 8999]
+type = S
+velSet = 0,0
+anim = 1
+
+[State 8999, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 0
+moveCamera = 1,1
+
+[State 8999, End]
+type = DestroySelf
+trigger1 = RoundState = 2
+
+

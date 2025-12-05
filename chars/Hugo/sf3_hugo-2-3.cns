@@ -1,0 +1,5379 @@
+;☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
+; 常時監視ステート（相手に行動を制御されても関係無く常に実行される）
+;☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
+
+[Statedef -2]
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoAirGuard
+
+[State -2, Finish]
+type = ScreenBound
+triggerall = (Life <= 0) || (!Alive) || (Lose)
+trigger1 = (StateNo = 5150) && (RoundState = 4)
+value = 0
+MoveCamera = 0,0
+IgnoreHitPause = 1
+
+[State -2, Hit Detection]
+type = varset
+trigger1 = movecontact = 1 && var(44) < 0
+var(44) = hitpausetime
+ignorehitpause = 1
+
+[State -2, Sparks]
+type = helper
+triggerall = StateNo != 1301 && StateNo != 1331
+triggerall = movecontact = 1 && var(44) = hitpausetime
+trigger1 = movehit = 1 && numenemy
+trigger1 = var(43) = 8010 || var(43) = 8011 || var(43) = 8012 || var(43) = 8013 || var(43) = 8014 || var(43) = 8001
+trigger2 = moveguarded = 1 && numenemy
+trigger2 = var(42) = 8000 || var(42) = 8001
+trigger3 = MoveHit = 1 && NumEnemy
+trigger3 = var(43) = 8015 || var(43) = 8016 || var(43) = 8017
+helpertype = normal
+stateno = ifelse(moveguarded, var(42), var(43))
+ID = 8000
+name = "Spark"
+postype = p1
+pos = ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < var(46), ceil(P2Dist x), var(46))), var(47)
+facing = -1
+ownpal = 1
+pausemovetime = 65535
+supermovetime = 65535
+ignorehitpause = 1
+
+[State -2, Counter FX]
+type = helper
+triggerAll = movehit = 1 && var(44) = hitpausetime
+triggerAll = numenemy && var(51)
+trigger1 = !(hitdefattr = SCA, AT) && (enemynear, movereversed != 1)
+trigger2 = (EnemyNear, MoveReversed != 1) && StateNo = [1100,1299]
+helpertype = normal
+stateno = 8290
+ID = 8290
+name = "Counter FX"
+postype = p1
+pos = ifElse(P2Dist x < 0, 0, ifElse(P2Dist x < var(46), ceil(P2Dist x), var(46))), var(47)
+facing = -1
+ownpal = 1
+pausemovetime = 255
+supermovetime = 255
+ignorehitpause = 1
+
+[State -2, Counter Flag]
+type = varset
+trigger1 = numenemy
+var(51) = (enemynear, movetype = A)
+ignorehitpause = 1
+
+[State -2, Hit Detection]
+type = varset
+trigger1 = 1
+var(44) = -1
+
+[State -2, Hit Detection]
+type = varrangeset
+trigger1 = movetype = I
+trigger2 = movetype = H && time
+first = 43
+last = 47
+value = -1
+ignorehitpause = 1
+
+
+;デバック
+[State -2]
+type = DisplayToClipBoard
+trigger1 = 1
+text = "P2BodyDist X: %d | P2BodyDist Y: %d | Pos X: %d | Pos Y: %d \n"
+params	= floor(P2BodyDist X),ceil(P2BodyDist Y),ceil(Pos X),ceil(Pos Y)
+ignorehitpause = 1
+
+[State -2]
+Type = AppendToClipBoard
+Trigger1 = 1
+Text = "frontedgebodydist: %d,fvar(26): %f,juggle: %d,HitShakeTime: %d,Combo: %d"
+Params = frontedgebodydist,fvar(26),var(41),var(36),ceil(fvar(35))
+ignorehitpause = 1
+
+[State 200, ChangeAnim]
+type = changeanim
+trigger1 = movecontact
+trigger1 = stateno = 230
+value = 230
+elem = 4
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ウルトラスルー相手喰らい
+[State -2, PlaySnd]
+type = PlaySnd
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+value = S5100,0
+
+[State -2, Explod]
+type = Explod
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+ID = 6800
+anim = 6800
+postype = p2
+pos = -40, target,const(size.mid.pos.Y)
+velocity = 0, 0
+accel = 0, 0
+bindtime = 1
+sprpriority = 3
+
+[State -2, HitAdd]
+type = HitAdd
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+value = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+value = 220
+
+[State -2, Poweradd]
+type = TargetPoweradd
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+value = 80
+
+[State 811, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+value = ceil(-70*fvar(0)*fvar(24)*fvar(31)*fvar(33)*(const(data.attack)*0.01))
+
+[State -2, VarAdd]
+type = VarAdd
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+fvar(35) = 2.15
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = fvar(23) > 1.0
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+fvar(23) = -0.0625
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = fvar(24) > 1.0
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+fvar(24) = -0.0625
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = var(15) = 1
+trigger1 = numtarget
+trigger1 = target,prevstateno = [1360,1362]
+trigger1 = target,stateno = [1370,1372]
+var(15) = 0
+
+[state -2, helper]
+type = null;helper
+triggerall = NumHelper(10000) = 0
+triggerall = NumHelper(11000) = 0
+triggerall = winko
+triggerall = numtarget
+triggerall = target,prevstateno = [1360,1362]
+triggerall = target,stateno = [1370,1372]
+trigger1 = !numpartner
+trigger2 = numpartner
+trigger2 = partner,alive = 0
+ID = 11000
+pos = 0,0
+postype = left
+stateno = 11000
+helpertype = normal
+name = "no-ko"
+pausemovetime = 99999999
+supermovetime = 99999999
+sprpriority = -5
+ownpal = 1
+keyctrl = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ヒットポーズ処理
+[State -2, HitPauseTime]
+type = VarAdd
+trigger1 = var(13) > 0
+var(13) = -1
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarAdd
+trigger1 = var(40) > 0
+var(40) = -1
+ignorehitpause = 1
+
+;小攻撃
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 200 || stateno = 400 || stateno = 430
+var(13) = 9
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 200 || stateno = 400 || stateno = 430
+var(40) = 11
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 230
+var(13) = 10
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 600 || stateno = 630
+var(13) = 8
+ignorehitpause = 1
+
+;中攻撃
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 210 || stateno = 240 || stateno = 440
+trigger2 = stateno = 910
+var(13) = 13
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 240
+var(40) = 16
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 410
+var(13) = 14
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 440
+var(40) = 14
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 610 || stateno = 640
+var(13) = 9
+ignorehitpause = 1
+
+;大攻撃
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 420
+var(13) = 13
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 420
+var(40) = 15
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 450
+var(13) = 10
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 450
+var(40) = 11
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 250
+var(13) = 14
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 620 || stateno = 650
+trigger2 = stateno = 920
+var(13) = 10
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 220
+var(13) = 17
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 900
+var(13) = 14
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 900
+var(40) = 19
+ignorehitpause = 1
+
+;必殺技
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = [1400,1420]
+var(13) = 13
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 1430
+var(13) = ifelse(animelemtime(12)<0,1,10)
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = [1500,1530]
+var(13) = 18
+ignorehitpause = 1
+
+;ハンマーマウンテン
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = (AnimElemtime(30) >= 0) && (AnimElemtime(32) <= 0)
+var(13) = 10
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = (AnimElemtime(3) >= 0) && (AnimElemtime(7) <= 0)
+trigger2 = (AnimElemtime(13) >= 0) && (AnimElemtime(16) <= 0)
+var(13) = 13
+ignorehitpause = 1
+
+[State -2, HitPauseTime]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = (AnimElemtime(25) >= 0) && (AnimElemtime(28) <= 0)
+trigger2 = (AnimElemtime(41) >= 0) && (AnimElemtime(43) <= 0)
+var(13) = 15
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;パワーゲージ
+[State -2, PowerSet]
+type = PowerSet
+trigger1 = var(2) = 1
+trigger1 = power > 1280
+trigger1 = numpartner = 0
+value = 1280
+ignorehitpause = 1
+
+[State -2, PowerSet]
+type = PowerSet
+trigger1 = var(2) = 2
+trigger1 = power > 2240
+trigger1 = numpartner = 0
+value = 2240
+ignorehitpause = 1
+
+[State -2, PowerSet]
+type = PowerSet
+trigger1 = var(2) = 3
+trigger1 = power > 1760
+trigger1 = numpartner = 0
+value = 1760
+ignorehitpause = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = movehit
+triggerall = !numtarget
+trigger1 = stateno = 200
+trigger2 = stateno = 230
+trigger3 = stateno = 240
+trigger3 = animelemtime(6) > 0
+trigger4 = stateno = 400
+trigger5 = stateno = 430
+trigger6 = stateno = 600
+trigger7 = stateno = 630
+value = 10
+ignorehitpause = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = movehit
+triggerall = !numtarget
+trigger1 = stateno = 910
+value = 20
+ignorehitpause = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = movehit
+trigger1 = numtarget(240)
+value = 40
+ignorehitpause = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = movehit
+trigger1 = numtarget(210)
+trigger2 = numtarget(410) || numtarget(440)
+trigger3 = numtarget(610) || numtarget(640)
+value = 50
+ignorehitpause = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = movehit
+trigger1 = numtarget(220) || numtarget(250) 
+trigger2 = numtarget(420) || numtarget(450)
+trigger3 = numtarget(620) || numtarget(650)
+trigger4 = numtarget(900) || numtarget(920)
+value = 110
+ignorehitpause = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = movehit
+trigger1 = numtarget(1400)
+trigger2 = numtarget(1410)
+trigger3 = numtarget(1420)
+value = 120
+ignorehitpause = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+triggerall = movehit
+trigger1 = numtarget(1500)
+trigger2 = numtarget(1510)
+trigger3 = numtarget(1520)
+value = 90
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;システムディレクション
+[State -3]
+type = helper
+trigger1 = numhelper(40000) = 0
+name = "system direction"
+id = 40000
+pos =  0,0
+postype = left
+stateno = 40000
+helpertype = normal
+sprpriority = 1
+keyctrl = 0
+
+[state 190, helper]
+type = null;helper
+trigger1 = numhelper(60000) = 0
+trigger1 = stateno = 191 || stateno = 192 || stateno = 193 || stateno = 194
+trigger1 = time = 1
+trigger1 = numpartner = 0
+ID = 60000
+pos = 0,0
+postype = back
+stateno = 60000+(helper(40000),var(18)=[0,3])*helper(40000),var(18)+(helper(40000),var(18)=4)*random%4
+helpertype = normal
+name = "SA-SELECT"
+sprpriority = 0
+ownpal = 1
+keyctrl = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;透明ヘルパー2
+[state -2, helper]
+type = helper
+trigger1 = numhelper(30000) = 0
+trigger1 = roundstate = 2
+ID = 30000
+pos =  floor(abs(enemynear,Pos X - Pos X)/2),0
+postype = p1
+stateno = 30000
+helpertype = normal
+bindtime = -1
+name = "toumei2"
+sprpriority = 1
+ownpal = 1
+keyctrl = 0
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;削りＫＯ
+[State -2, ChangeState] 
+type = null;ChangeState
+triggerall = !alive
+trigger1 = (Stateno = 5000) || (Stateno = 5010)
+trigger1 = (prevstateno = [130,131]) || (prevstateno = [150,153])
+value = 5190
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ＫＯ
+[State -2, VarSet]
+type = VarSet
+trigger1 = alive
+fvar(7) = 0
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = alive = 0
+trigger1 = fvar(7) = 0
+fvar(7) = 1
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+trigger1 = alive = 0
+trigger1 = fvar(7) >= 1
+fvar(7) = 1
+
+[State -2, playsnd]
+type = playsnd
+triggerall = alive = 0
+triggerall = fvar(7) = 3
+trigger1 = stateno != 5190
+trigger2 = anim != 5190
+value = 11,1
+channel = 1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = fvar(7) = 3
+fvar(7) = -1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;各種VarSet
+
+;ハイジャンプ
+[State -2,longjump]
+type = VarSet
+trigger1 = var(50) = 0
+trigger1 = Command = "longjump_u" || Command = "longjump_f" || Command = "longjump_b"
+var(3) = 1
+
+[State -2,longjump]
+type = VarSet
+triggerall = var(3)
+trigger1 = time = 1
+trigger1 = stateno != [40,50]
+var(3) = 0
+
+[State -2,longjump]
+type = VarSet
+trigger1 = time = 1
+trigger1 = stateno = [1000,3200]
+var(3) = 0
+
+;クイックスタンディング
+[State -2, VarSet]
+type = VarSet
+Trigger1 = statetype != L
+var(7) = -1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ブロッキング入力
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = var(30) >= 23
+trigger2 = (stateno = [4000,4205])&&!time
+var(34) = 0
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = var(30) >= 23
+trigger2 = (stateno = [4000,4205])&&!time
+var(30) = 0
+
+[State -2, ブロッキング]
+type = VarAdd
+trigger1 = var(30)
+var(30) = 1
+ignorehitpause = 1
+
+[State -2, ブロッキング]
+type = VarAdd
+trigger1 = fvar(12)
+fvar(12) = -1
+ignorehitpause = 1
+
+[State -2, ブロッキング]
+type = VarSet
+triggerall = var(30) = 0
+triggerall = var(50) = 0
+trigger1 = command = "bl1" && command != "holddown"&& Command != "holdup"
+trigger1 = fvar(12):= 10
+var(30) = 1
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = var(50) = 0
+trigger1 = var(30) = [1,6+helper(40000),var(1)]
+trigger1 = command != "holddown" && Command != "holdup" && command != "holdfwd"&& Command != "holdback"
+var(34) = 1
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = var(31) >= 23
+trigger2 = (stateno = [4000,4205])&&!time
+var(35) = 0
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = var(31) >= 23
+trigger2 = (stateno = [4000,4205])&&!time
+var(31) = 0
+
+[State -2, ブロッキング]
+type = VarAdd
+trigger1 = var(31)
+var(31) = 1
+ignorehitpause = 1
+
+[State -2, ブロッキング]
+type = VarSet
+triggerall = var(31) = 0
+triggerall = var(50) = 0
+trigger1 = command = "bl2" && command != "holdfwd"&& Command != "holdback"
+trigger1 = fvar(12):= 10
+var(31) = 1
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = var(50) = 0
+trigger1 = var(31) = [1,6+helper(40000),var(1)]
+trigger1 = command != "holddown" && Command != "holdup" && command != "holdfwd"&& Command != "holdback"
+var(35) = 1
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = ctrl
+trigger2 = stateno = [150,155]
+trigger3 = stateno = [6150,6155]
+var(29) = 0
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = stateno = [6150,6155]
+trigger2 = numhelper(30000)
+trigger2 = helper(30000),var(4) = 1
+trigger2 = stateno = [150,155]
+var(32) = 1
+
+[State -2, ブロッキング]
+type = VarSet
+trigger1 = ctrl
+trigger2 = numhelper(30000)
+trigger2 = helper(30000),var(4) = 0
+trigger2 = stateno = [150,155]
+var(32) = 0
+
+;立ちブロ
+[State -2, HitOverride] 
+type = HitOverride
+triggerall = var(50) = 0
+triggerall = statetype != A
+trigger1 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(30) = [1,6+helper(40000),var(1)]) && (helper(40000),var(0)=1)
+trigger2 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(30) = [7+helper(40000),var(1),10+helper(40000),var(1)]) && var(33) && (helper(40000),var(0)=1)
+trigger3 = (stateno = [4000,4115]) && fvar(12)
+trigger4 = (stateno = [6150,6153]) && (var(30) = [1,ifelse((enemynear,hitdefattr=S,SA,HA),2,3)+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+trigger5 = numhelper(40000) && helper(40000),var(4) = 1
+trigger5 = (stateno = [150,153]) && (var(30) = [1,ifelse((enemynear,hitdefattr=S,SA,HA),2,3)+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+slot = 0
+attr = S, AA
+stateno = 4000
+time = 1
+
+[State -2, HitOverride] 
+type = HitOverride
+triggerall = var(50) = 0
+triggerall = statetype != A
+trigger1 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(30) = [1,5+helper(40000),var(1)]) && (helper(40000),var(0)=1)
+trigger2 = (stateno = [4000,4115]) && fvar(12)
+trigger3 = (stateno = [6150,6153]) && (var(30) = [1,ifelse((enemynear,hitdefattr=A,SA,HA),2,3)+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+trigger4 = numhelper(40000) && helper(40000),var(4) = 1
+trigger4 = (stateno = [150,153]) && (var(30) = [1,ifelse((enemynear,hitdefattr=A,SA,HA),2,3)+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+slot = 1
+attr = A, AA
+stateno = 4000
+time = 1
+
+[State -2, HitOverride] 
+type = HitOverride
+triggerall = var(50) = 0
+triggerall = statetype != A
+trigger1 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(30) = [1,6+helper(40000),var(1)]) && (helper(40000),var(0)=1)
+trigger2 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(30) = [7+helper(40000),var(1),10+helper(40000),var(1)]) && var(33) && (helper(40000),var(0)=1)
+trigger3 = (stateno = [4000,4115]) && fvar(12)
+trigger4 = (stateno = [6150,6153]) && (var(30) = [1,2+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+trigger5 = numhelper(40000) && helper(40000),var(4) = 1
+trigger5 = (stateno = [150,153]) && (var(30) = [1,2+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+slot = 2
+attr = SA, AP
+stateno = 4010
+time = 1
+
+;屈ブロ
+[State -2, HitOverride]
+type = HitOverride
+triggerall = var(50) = 0
+triggerall = statetype != A
+trigger1 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(31) = [1,6+helper(40000),var(1)]) && (helper(40000),var(0)=1)
+trigger2 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(31) = [7+helper(40000),var(1),10+helper(40000),var(1)]) && var(34) && (helper(40000),var(0)=1)
+trigger3 = (stateno = [4000,4115]) && fvar(12)
+trigger4 = (stateno = [6150,6153]) && (var(31) = [1,ifelse((enemynear,hitdefattr=C,SA,HA),2,3)+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+trigger5 = numhelper(40000) && helper(40000),var(4) = 1
+trigger5 = (stateno = [150,153]) && (var(31) = [1,ifelse((enemynear,hitdefattr=C,SA,HA),2,3)+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+slot = 3
+attr = C, AA
+stateno = 4100
+time = 1
+
+[State -2, HitOverride]
+type = HitOverride
+triggerall = var(50) = 0
+triggerall = statetype != A
+trigger1 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(31) = [1,6+helper(40000),var(1)]) && (helper(40000),var(0)=1)
+trigger2 = (ctrl||((stateno = [4000,4115])&&!fvar(12))) && (var(31) = [7+helper(40000),var(1),10+helper(40000),var(1)]) && var(34) && (helper(40000),var(0)=1)
+trigger3 = (stateno = [4000,4115]) && fvar(12)
+trigger4 = (stateno = [6150,6153]) && (var(31) = [1,2+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+trigger5 = numhelper(40000) && helper(40000),var(4) = 1
+trigger5 = (stateno = [150,153]) && (var(31) = [1,2+helper(40000),var(3)]) && (helper(40000),var(2)=1)
+slot = 4
+attr = C, AP
+stateno = 4110
+time = 1
+
+;空中ブロ
+[State -2, HitOverride]
+type = HitOverride
+triggerall = var(50) = 0
+triggerall = statetype = A
+trigger1 = (ctrl||(stateno=5040&&var(0)=1)||((stateno = [4200,4205])&&!fvar(12))) && (var(30) = [1,6+helper(40000),var(1)]) && (helper(40000),var(0)=1)
+trigger2 = (ctrl||(stateno=5040&&var(0)=1)||((stateno = [4200,4205])&&!fvar(12))) && (var(30) = 7+helper(40000),var(1)) && var(33) && (helper(40000),var(0)=1)
+trigger3 = (stateno = [4200,4205]) && fvar(12)
+slot = 5
+attr = SCA, AA
+stateno = 4200
+time = 1
+
+[State -2, HitOverride]
+type = HitOverride
+triggerall = var(50) = 0
+triggerall = statetype = A
+trigger1 = (ctrl||(stateno=5040&&var(0)=1)||((stateno = [4200,4205])&&!fvar(12))) && (var(30) = [1,6+helper(40000),var(1)]) && (helper(40000),var(0)=1)
+trigger2 = (ctrl||(stateno=5040&&var(0)=1)||((stateno = [4200,4205])&&!fvar(12))) && (var(30) = 7+helper(40000),var(1)) && var(33) && (helper(40000),var(0)=1)
+trigger3 = (stateno = [4200,4205]) && fvar(12)
+slot = 6
+attr = SCA, AP
+stateno = 4205
+time = 1
+
+[State -2, PowerAdd]
+type = PowerAdd
+trigger1 = stateno = [4000,4205]
+trigger1 = !time
+trigger1 = power-ceil(fvar(13)) >= 0
+value = 40-power+ceil(fvar(13))
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+trigger1 = 1
+fvar(13) = power
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+trigger1 = stateno = 151 || stateno = 153 || stateno = 155
+trigger2 = stateno = 6151 || stateno = 6153 || stateno = 6155
+fvar(3) = 1
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = stateno != 151 && stateno != 153 && stateno != 155
+trigger1 = stateno != 6151 && stateno != 6153 && stateno != 6155
+fvar(3) = 0
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = numpartner = 0
+trigger1 = numenemy
+trigger1 = enemy,numpartner = 0
+trigger1 = enemy,authorname = "GM"
+trigger1 = enemy,name="Alex"||enemy,name="Hugo"||enemy,name="Ryu"||enemy,name="Ken"||enemy,name="Gouki"||enemy,name="Sean"||enemy,name="Ibuki"||enemy,name="Gill"
+var(0) = 1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = numpartner > 0
+trigger2 = numenemy
+trigger2 = enemy,numpartner > 0
+trigger3 = numenemy
+trigger3 = enemy,authorname = "GM"
+trigger3 = enemy,name!="Alex"&&enemy,name!="Hugo"&&enemy,name!="Ryu"&&enemy,name!="Ken"&&enemy,name!="Gouki"&&enemy,name!="Sean"&&enemy,name!="Ibuki"&&enemy,name!="Gill"
+var(0) = 0
+
+[State -2, Varset]
+type = Varset
+trigger1 = stateno != [4000,4205]
+fvar(21) = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;stateno
+[State -2, VarSet]
+type = VarSet
+trigger1 = movetype = A
+var(49) = stateno
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ライフ情報取得
+[State -2, ライフ確認]
+type = VarSet
+triggerall = RoundState = [0,1]
+trigger1 = RoundNo = 1  
+var(52) = Life
+
+[State -2, ライフ取得ミス対策]
+type = VarSet
+triggerall = Var(52) = [0,100]
+triggerall = Time = 1
+trigger1 = RoundNo = 1
+trigger2 = RoundsExisted = 0
+var(52) = const(data.life)
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ファーストアタック判定
+[State -2, varset]
+type = varset
+triggerall = var(9) = 0
+trigger1 = movetype = H
+trigger1 = (stateno != [150,155]) && (stateno != [6150,6155])
+trigger1 = var(53)-life > 0
+var(9) = 1
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+triggerall = var(9) = 0
+trigger1 = stateno != [800,899]
+trigger1 = numenemy
+trigger1 = enemy,movetype = H
+trigger1 = enemy,stateno = [5000,5099]
+trigger2 = stateno = 1050
+trigger3 = stateno = 1150
+trigger4 = stateno = 1250
+trigger5 = stateno = 1350
+trigger6 = numtarget
+trigger6 = target,stateno = [1560,1571]
+trigger7 = stateno = 3010
+trigger8 = stateno = 3150
+var(9) = 1
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+trigger1 = roundstate = [0,1]
+var(9) = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ダメージ補正
+
+;パーソナルアクション(打撃)
+[State -2, Varset]
+type = Varset
+trigger1 = fvar(23) >= 1.188
+fvar(23) = 1.188
+ignorehitpause = 1
+
+[State -2, Varset]
+type = Varset
+trigger1 = fvar(23) <= 1.0
+trigger2 = moveguarded
+trigger3 = fvar(23) > 1.0
+trigger3 = fvar(23) < 1.188
+trigger3 = !numtarget
+fvar(23) = 1.0
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = fvar(23) > 1.0
+triggerall = movehit
+trigger1 = stateno = [200,650]
+trigger2 = stateno = [900,920]
+trigger3 = stateno = [1400,1430]
+trigger4 = stateno = [1500,1530]
+trigger5 = stateno = 3210
+fvar(23) = -0.0625
+ignorehitpause = 1
+
+;パーソナルアクション(投げ)
+[State -2, Varset]
+type = Varset
+trigger1 = fvar(24) >= 1.25
+fvar(24) = 1.25
+ignorehitpause = 1
+
+[State -2, Varset]
+type = Varset
+trigger1 = fvar(24) <= 1.0
+trigger2 = moveguarded
+trigger3 = fvar(24) > 1.0
+trigger3 = fvar(24) < 1.25
+trigger3 = !numtarget
+fvar(24) = 1.0
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = fvar(24) > 1.0
+triggerall = movehit
+trigger1 = stateno = [200,650]
+trigger2 = stateno = [900,920]
+trigger3 = stateno = [1400,1430]
+trigger4 = stateno = [1500,1530]
+trigger5 = stateno = 3210
+fvar(24) = -0.0625
+ignorehitpause = 1
+
+;パーソナルアクション(防御力)
+[State -2, Varset]
+type = Varset
+trigger1 = fvar(26) >= 1.25
+fvar(26) = 1.25
+ignorehitpause = 1
+
+[State -2, Varset]
+type = Varset
+trigger1 = fvar(26) <= 1.0
+fvar(26) = 1.0
+
+[State -2, DefenceMulSet]
+type = DefenceMulSet
+trigger1 = 1
+value = (1.0/fvar(26))*ifelse((stateno=[5080,5110])&&(statetype=L),0.5,1.0)
+ignorehitpause = 1
+
+[State -2, LifeAdd]
+type = LifeAdd
+trigger1 = roundstate = 2
+trigger1 = fvar(26) > 1.0
+trigger1 = fvar(30) = 0
+trigger1 = movetype = H
+trigger1 = (stateno != [150,155]) && (stateno != [6150,6155])
+trigger1 = var(53)-life > 0
+value = ceil((var(53)-life)*(fvar(26)-1.0)/fvar(26))
+ignorehitpause = 1
+
+[State -2, Varset]
+type = Varset
+trigger1 = movetype != H
+fvar(30) = 0
+ignorehitpause = 1
+
+[State -2, Varset]
+type = Varset
+trigger1 = movetype = H
+trigger1 = gethitvar(damage) = 0
+fvar(30) = 1
+ignorehitpause = 1
+
+;スーパーキャンセル
+[State -2, Varset]
+type = Varset
+trigger1 = movetype != A
+trigger2 = stateno != [3000,3210]
+trigger3 = !fvar(35)
+trigger4 = fvar(27) = 0
+fvar(27) = 1
+ignorehitpause = 1
+
+;しゃがみカウンター
+[State -2, Attack_Up]
+type = VarSet
+trigger1 = numenemy
+trigger1 = enemy,statetype = C
+fvar(28) = 1.25
+
+[State -2, Attack_Up]
+type = VarSet
+trigger1 = numenemy
+trigger1 = enemy,statetype != C
+fvar(28) = 1
+
+;根性値補正
+[State -2, VarSet]
+type = VarSet
+trigger1 = numenemy > 2
+fvar(31) = 1.0
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 2
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))>30
+fvar(31) = 1.0
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 2
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))<=30
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))>20
+fvar(31) = 0.89
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 2
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))<=20
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))>10
+fvar(31) = 0.78
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 2
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))<=10
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))>5
+fvar(31) = 0.67
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 2
+trigger1 = (100*((enemy(0),life)+(enemy(1),life))/((enemy(0),const(data.life))+(enemy(1),const(data.life))))<=5
+fvar(31) = 0.56
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 1
+trigger1 = (100*enemy,life/enemy,const(data.life))>30
+fvar(31) = 1.0
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 1
+trigger1 = (100*enemy,life/enemy,const(data.life))<=30
+trigger1 = (100*enemy,life/enemy,const(data.life))>20
+fvar(31) = 0.89
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 1
+trigger1 = (100*enemy,life/enemy,const(data.life))<=20
+trigger1 = (100*enemy,life/enemy,const(data.life))>10
+fvar(31) = 0.78
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 1
+trigger1 = (100*enemy,life/enemy,const(data.life))<=10
+trigger1 = (100*enemy,life/enemy,const(data.life))>5
+fvar(31) = 0.67
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy = 1
+trigger1 = (100*enemy,life/enemy,const(data.life))<=5
+fvar(31) = 0.56
+
+;チェーンコンボ
+[State -2, Attack_Up]
+type = VarSet
+trigger1 = movetype != A
+trigger2 = !numtarget
+fvar(39) = 1.0
+
+;ネックハンギング連続技補正
+[State -2, Attack_Down]
+type = VarSet
+trigger1 = !numtarget
+fvar(33) = 1
+
+[State -2, Attack_Down]
+type = VarSet
+trigger1 = !numtarget
+fvar(34) = 1
+
+;コンボダメージ補正
+[State -2, Attack_Down]
+type = VarSet
+triggerall = fvar(35) > 0
+trigger1 = !numtarget
+fvar(35) = 0
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = MoveHit 
+trigger1 = stateno = 220
+trigger2 = stateno = 250
+trigger3 = stateno = 410
+trigger4 = stateno = 450
+trigger5 = stateno = 620
+trigger6 = stateno = 650
+trigger7 = stateno = 900
+trigger8 = stateno = 920
+trigger9 = stateno = [1400,1430]
+trigger10 = stateno = [1500,1530]
+fvar(35) = 1.0
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = MoveHit 
+trigger1 = stateno = 200
+trigger2 = stateno = 230
+trigger3 = stateno = 400
+trigger4 = stateno = 430
+trigger5 = stateno = 600
+trigger6 = stateno = 630
+fvar(35) = 0.55
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = MoveHit 
+trigger1 = stateno = 210
+trigger2 = stateno = 240
+trigger3 = stateno = 410
+trigger4 = stateno = 440
+trigger5 = stateno = 610
+trigger6 = stateno = 640
+trigger7 = stateno = 910
+fvar(10) = 0.80
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+triggerall = MoveHit 
+trigger1 = stateno = 3210
+fvar(35) = 0.5
+ignorehitpause = 1
+
+[State -2, Attack_Down]
+type = VarSet
+trigger1 = !fvar(35)
+fvar(25) = 1.0
+
+[State -2, Attack_Down]
+type = VarSet
+trigger1 = 1
+fvar(0) = ifelse((1.0-(fvar(35)*0.095))<0.15,0.15,(1.0-(fvar(35)*0.095)))
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;スタン判定
+[State -2, varset]
+type = varset
+trigger1 = roundstate != 2
+fvar(2) = 0.0
+
+[State -2, varset]
+type = varset
+trigger1 = fvar(2) <= 0.0
+trigger2 = var(46) = 1
+trigger2 = anim != [5300,5301]
+fvar(2) = 0.0
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+trigger1 = movetype != H
+fvar(9) = 0
+
+[State -2, varset]
+type = varadd
+trigger1 = numhelper(40000)
+trigger1 = helper(40000),var(14) = 1
+trigger1 = roundstate = 2
+trigger1 = stateno != [120,155]
+trigger1 = movetype = H
+trigger1 = numenemy
+trigger1 = var(53)-life > 0
+fvar(9) = ifelse(fvar(9)=0,1,fvar(9)*ifelse((enemy,HitDefAttr=SCA,NA),.1,ifelse((enemy,HitDefAttr=SCA,SA),.2,ifelse((enemy,HitDefAttr=SCA,HA),.3,.4))))
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+trigger1 = numhelper(40000)
+trigger1 = helper(40000),var(14) = 0
+fvar(2) = 0
+
+[State -2, varadd]
+type = varadd
+trigger1 = numhelper(40000)
+trigger1 = helper(40000),var(14) = 1
+trigger1 = roundstate = 2
+trigger1 = stateno != [120,155]
+trigger1 = movetype = H
+trigger1 = numenemy
+trigger1 = var(53)-life > 0
+fvar(2) = (var(53)-life)/(ifelse((enemy,HitDefAttr=SCA,NA),8,ifelse((enemy,HitDefAttr=SCA,SA),10,ifelse((enemy,HitDefAttr=SCA,HA),12,ifelse(enemy,hitcount>=10,1000,14)))*fvar(9)))
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+trigger1 = fvar(2) >= 72.0
+trigger1 = anim = 5300
+var(46) = 1
+
+[State -2, varset]
+type = varset
+trigger1 = fvar(2) < 72.0
+var(46) = 0
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+trigger1 = fvar(2) >= 72.0
+trigger2 = anim = 5300
+fvar(2) = 72.0
+ignorehitpause = 1
+
+[State -2, varadd]
+type = varadd
+trigger1 = fvar(2) > 0.0
+trigger1 = fvar(2) < 72.0
+trigger1 = gametime%11 = 0
+fvar(2) = -0.5
+ignorehitpause = 1
+
+[State -2, varadd]
+type = null;varadd
+trigger1 = anim = 9010
+fvar(2) = 1.8
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+trigger1 = 1
+var(53) = life
+ignorehitpause = 1
+
+[State -2, Varset]
+type = Varset
+trigger1 = gethitvar(hitcount) > 0
+trigger1 = movetype = H
+trigger1 = var(53)-life > 0
+fvar(30) = 1
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+[State -2, VarSet]
+type = VarSet
+triggerall = numpartner
+triggerall = partner,authorname = "GM"
+trigger1 = partner,name = "Alex"
+trigger2 = partner,name = "Hugo"
+trigger3 = partner,name = "Ryu"
+trigger4 = partner,name = "Ken"
+trigger5 = partner,name = "Gouki"
+trigger6 = partner,name = "Sean"
+trigger7 = partner,name = "Ibuki"
+trigger8 = partner,name = "Gill"
+fvar(38) = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numpartner
+triggerall = partner,authorname = "Homura"
+trigger1 = partner,name = "Remy"
+fvar(38) = 1
+
+;パワーゲージ
+[State -3]
+type = null;helper
+triggerall = numhelper(50000) = 0
+trigger1 = numpartner = 0
+trigger2 = numpartner && !fvar(38)
+trigger3 = fvar(38) && id < partner,id
+name = "ゲージ"
+id = 50000
+pos =  0,0
+postype = left
+stateno = 50000
+helpertype = normal
+ontop = 1
+keyctrl = 0
+
+;スタンゲージ
+[State -3]
+type = helper
+triggerall = helper(40000),var(14) = 1
+triggerall = fvar(15) = 1
+triggerall = numhelper(25000) = 0
+trigger1 = numpartner = 0
+trigger2 = numpartner && !fvar(38)
+trigger3 = fvar(38) && id < partner,id
+name = "ゲージ"
+id = 25000
+pos =  0,0
+postype = left
+stateno = 25000
+helpertype = normal
+keyctrl = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;1P,2P側判定
+[State -2, VarSet]
+type = VarSet
+triggerall = Var(1) != 1
+triggerall = Var(1) != 2
+trigger1 = Facing = 1
+var(1) = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = Var(1) != 1
+triggerall = Var(1) != 2
+trigger1 = Facing = -1
+var(1) = 2
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;AssertSpecial
+[State -2, AssertSpecial]
+Type = AssertSpecial
+Trigger1 = 1
+flag = NoAirGuard
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ジャグルリセット
+[State -2, Juggle Reset]
+type = VarSet
+triggerall = var(41)
+triggerall = numenemy
+trigger1 = enemy,statetype != A
+trigger2 = enemy,movetype = A
+trigger3 = enemy,life = 0
+var(41) = 0
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ジャグルチェック(通常技)
+[State -2, Juggle Check]
+type = VarAdd
+triggerall = MoveHit
+trigger1 = stateno = 910
+var(41) = 1
+ignorehitpause = 1
+
+[State -2, Juggle Check]
+type = VarAdd
+triggerall = MoveHit
+trigger1 = stateno = [600,650]
+trigger2 = stateno = 920
+var(41) = 3
+ignorehitpause = 1
+
+[State -2, Juggle Check]
+type = VarAdd
+triggerall = MoveHit
+trigger1 = stateno = [200,450]
+trigger2 = stateno = 900
+var(41) = 6
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ジャグルチェック(必殺技)
+[State -2, Juggle Check]
+type = VarAdd
+triggerall = MoveHit
+trigger1 = numtarget(3204)
+var(41) = 6
+ignorehitpause = 1
+
+[State -2, Juggle Check]
+type = VarAdd
+triggerall = MoveHit
+trigger1 = stateno = [1400,1420]
+var(41) = 5
+ignorehitpause = 1
+
+[State -2, Juggle Check]
+type = VarAdd
+triggerall = MoveHit
+trigger1 = numtarget(1432)
+var(41) = 3
+ignorehitpause = 1
+
+[State -2, Juggle Check]
+type = VarAdd
+triggerall = MoveHit
+trigger1 = numtarget(1430)
+trigger2 = numtarget(1431)
+trigger3 = numtarget(3200)
+trigger4 = numtarget(3201)
+trigger5 = numtarget(3202)
+trigger6 = numtarget(3203)
+var(41) = 1
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;強制終了技ヒット
+[State -2, varset]
+type = varset
+triggerall = numenemy
+trigger1 = enemy,statetype != A
+trigger2 = enemy,movetype = A
+trigger3 = enemy,life = 0
+fvar(5) = 0
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+triggerall = MoveHit
+trigger1 = stateno = [1200,1220]
+trigger2 = stateno = [1500,1530]
+fvar(5) = 1
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy
+trigger1 = enemy,statetype != A
+trigger2 = enemy,movetype = A
+trigger3 = enemy,life = 0
+var(5) = 0
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movehit
+triggerall = numtarget
+trigger1 = stateno = [1400,1430]
+trigger2 = stateno = 3210
+var(5) = 0
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = numpartner = 0
+triggerall = movehit
+triggerall = numtarget
+trigger1 = stateno = [200,450]
+trigger2 = stateno = [600,650]
+trigger3 = stateno = [900,920]
+trigger4 = stateno = [1500,1530]
+var(5) = 1
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;追い討ち判定
+[State -2, VarAdd]
+type = VarAdd
+trigger1 = fvar(4) > 0
+trigger1 = !var(13)
+trigger1 = !var(40)
+trigger1 = !var(25)
+fvar(4) = -1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveHit 
+trigger1 = stateno = [1200,1220]
+trigger2 = stateno = [1500,1530]
+fvar(4) = 1
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveHit 
+trigger1 = stateno = 200
+trigger2 = stateno = 400
+trigger3 = stateno = 430
+trigger4 = stateno = 600
+trigger5 = stateno = 630
+fvar(4) = 3
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveHit 
+trigger1 = stateno = 210
+trigger2 = stateno = 240
+trigger3 = stateno = 410
+trigger4 = stateno = 440
+trigger5 = stateno = 610
+trigger6 = stateno = 640
+trigger7 = stateno = 910
+fvar(4) = 5
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveHit 
+trigger1 = stateno = 220
+trigger2 = stateno = 250
+trigger3 = stateno = 420
+trigger4 = stateno = 620
+trigger5 = stateno = 650
+trigger6 = stateno = 900
+trigger7 = stateno = 920
+trigger8 = stateno = [1400,1430]
+trigger9 = stateno = 3210
+fvar(4) = 7
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = 1
+fvar(10) = helper(40000),var(12)
+
+[State -2, varset]
+type = varset
+trigger1 = stateno != [3000,3200]
+var(25) = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;追い討ちの可不
+[State -2, VarSet]
+type = VarSet
+triggerall = numenemy
+trigger1 = enemy,statetype != A
+trigger2 = enemy,movetype = A
+trigger3 = enemy,life = 0
+var(24) = 0
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = enemy,life > 0
+triggerall = numenemy
+triggerall = enemy,statetype = A
+triggerall = enemy,movetype = H
+trigger1 = var(41) < (fvar(10)=1)*4+(fvar(10)=2)*6+(fvar(10)=3)*9+(fvar(10)=4)*999999999
+trigger2 = var(41) >= (fvar(10)=1)*4+(fvar(10)=2)*6+(fvar(10)=3)*9+(fvar(10)=4)*999999999
+trigger2 = fvar(4)
+var(24) = 0
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = enemy,life > 0
+triggerall = numtarget 
+triggerall = numenemy
+triggerall = enemy,statetype = A
+triggerall = enemy,movetype = H
+trigger1 = fvar(5) = 1
+trigger2 = !fvar(4)
+trigger2 = var(41) >= (fvar(10)=1)*4+(fvar(10)=2)*6+(fvar(10)=3)*9+(fvar(10)=4)*999999999
+var(24) = 1
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;相手空中復帰誘導
+[State -2, Air Recovery]
+type = VarSet
+triggerall = numenemy
+trigger1 = enemy,stateno != [5000,5050]
+trigger2 = enemy,statetype != A
+var(6) = 0
+ignorehitpause = 1
+
+[State -2, Air Recovery]
+type = VarSet
+triggerall = MoveHit
+trigger1 = stateno = 220
+trigger2 = stateno = [410,420]
+trigger3 = stateno = 450
+trigger4 = stateno = [1400,1430]
+trigger5 = stateno = [1500,1540]
+trigger6 = stateno = 3210
+var(6) = 1
+ignorehitpause = 1
+
+[State -2, Air Recovery]
+type = TargetState
+triggerall = var(6) = 1
+triggerall = MoveHit
+trigger1 = stateno = [200,210]
+trigger2 = stateno = [230,250]
+trigger3 = stateno = 400
+trigger4 = stateno = [430,440]
+trigger5 = stateno = [900,920]
+value = 7000
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;Hit確認
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact || movereversed
+trigger1 = stateno = [200,650]
+trigger1 = stateno!= 240
+trigger2 = stateno = [900,920]
+trigger3 = stateno = [1400,1430]
+trigger4 = stateno = [1500,1530]
+var(23) = stateno
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact || movereversed
+trigger1 = stateno = 240
+trigger1 = anim = 240
+var(23) = ifelse(animelemtime(6)<0,240,241)
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact || movereversed
+triggerall = stateno = 3210
+trigger1 = animelemtime(3) >= 0
+trigger1 = animelemtime(7) < 0
+var(23) = 3200
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact || movereversed
+triggerall = stateno = 3210
+trigger1 = animelemtime(13) >= 0
+trigger1 = animelemtime(16) < 0
+var(23) = 3201
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact || movereversed
+triggerall = stateno = 3210
+trigger1 = animelemtime(25) >= 0
+trigger1 = animelemtime(28) < 0
+var(23) = 3202
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact || movereversed
+triggerall = stateno = 3210
+trigger1 = animelemtime(30) >= 0
+trigger1 = animelemtime(32) < 0
+var(23) = 3203
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact || movereversed
+triggerall = stateno = 3210
+trigger1 = animelemtime(41) >= 0
+trigger1 = animelemtime(43) < 0
+var(23) = 3204
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = movetype != A
+var(23) = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ヒット確認
+[State -2, VarSet]
+type = VarSet
+trigger1 = var(11)
+var(11) = 0
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveHit 
+trigger1 = var(49) = [200,650]
+trigger2 = var(49) = [900,920]
+trigger3 = var(49) = [1400,1430]
+trigger4 = var(49) = 3210
+var(11) = 1
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveHit 
+trigger1 = var(49) = [1500,1530]
+var(11) = 2
+ignorehitpause = 1
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;コンボ用ヒット確認
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = [200,650]
+trigger1 = stateno!= 240
+trigger2 = stateno = [900,920]
+trigger3 = stateno = [1400,1430]
+trigger4 = stateno = [1500,1530]
+var(38) = stateno
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 240
+trigger1 = anim = 240
+var(38) = ifelse(animelemtime(6)<0,240,241)
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = animelemtime(3) >= 0
+trigger1 = animelemtime(7) <= 0
+var(38) = 3200
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = animelemtime(13) >= 0
+trigger1 = animelemtime(16) <= 0
+var(38) = 3201
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = animelemtime(25) >= 0
+trigger1 = animelemtime(28) <= 0
+var(38) = 3202
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = animelemtime(30) >= 0
+trigger1 = animelemtime(32) <= 0
+var(38) = 3203
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+triggerall = stateno = 3210
+trigger1 = animelemtime(41) >= 0
+trigger1 = animelemtime(43) <= 0
+var(38) = 3204
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = [200,650]
+trigger2 = stateno = [900,920]
+trigger3 = stateno = [1400,1430]
+trigger4 = stateno = [1500,1530]
+trigger5 = stateno = 3210
+fvar(29) = 5
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarAdd
+trigger1 = var(38)
+trigger1 = !var(13)
+trigger1 = fvar(29) > 0
+fvar(29) = -1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = ctrl
+trigger2 = !var(13)
+trigger2 = !fvar(29)
+var(38) = 0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;モンスターラリアットＨＩＴ
+[State -2, ChangeState] 
+type = ChangeState
+trigger1 = stateno = [1500,1530]
+trigger1 = movehit
+value = 1550
+ignorehitpause = 1
+
+[State -2, ChangeState] 
+type = ChangeState
+triggerall = stateno = [1500,1530]
+trigger1 = moveguarded
+value = 1555
+ignorehitpause = 1
+
+[State -2, ChangeState] 
+type = ChangeState
+triggerall = stateno = [1500,1530]
+trigger1 = movereversed
+value = 1556
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+triggerall = movecontact || movereversed
+trigger1 = stateno = 1500
+trigger1 = animelem = 7
+trigger2 = stateno = 1510
+trigger2 = animelem = 7
+trigger3 = stateno = 1520
+trigger3 = animelem = 11
+trigger4 = stateno = 1530
+trigger4 = anim = 1531
+trigger4 = animelem = 3
+var(14) = 1
+ignorehitpause = 1
+
+[State 810, Explod]
+type = Explod
+trigger1 = numtarget(1500)
+trigger1 = target(1500),stateno = 5100
+trigger1 = target(1500),time = 1
+trigger2 = numtarget(1510)
+trigger2 = target(1510),stateno = 5100
+trigger2 = target(1510),time = 1
+trigger3 = numtarget(1520)
+trigger3 = target(1520),stateno = 5100
+trigger3 = target(1520),time = 1
+anim = 6700
+postype = p2
+pos = 0, 0
+persistent = 0
+velocity = 0, 0
+accel = 0, 0
+sprpriority = 5
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;後ろ仰け反り攻撃ＨＩＴ
+[State -2, TargetState]
+type = TargetState
+triggerall = movehit
+triggerall = numenemy = 1
+triggerall = numtarget
+triggerall = target,statetype != A
+triggerall = target,statetype != C
+triggerall = target,authorname = "GM"
+triggerall = target,name="Alex"||target,name="Hugo"||target,name="Ryu"||target,name="Ken"||target,name="Gouki"||target,name="Ibuki"
+trigger1 = NumTarget(250)
+trigger2 = NumTarget(900)
+trigger3 = NumTarget(3201)
+value = 5600
+ignorehitpause = 1
+
+[State -2, varset]
+type = varset
+triggerall = numtarget
+triggerall = target,gethitvar(hittime) = 0
+trigger1 = (target,stateno = 5001) || (target,stateno =5011)
+trigger2 = (target,stateno = 5610) || (target,stateno =5630)
+trigger3 = (target,stateno = 151) || (target,stateno =153) || (target,stateno =155)
+trigger4 = (target,stateno = 6151) || (target,stateno = 6153) || (target,stateno = 6155)
+var(18) = 6
+ignorehitpause = 1
+
+[State -2, varadd]
+type = varadd
+trigger1 = var(18) > 0
+var(18) = -1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ガード確認
+[State -2, VarSet]
+type = VarSet
+trigger1 = var(12) > 0
+var(12) = 0
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveGuarded 
+trigger1 = var(49) = [200,650]
+trigger2 = var(49) = [900,920]
+trigger3 = var(49) = [1400,1430]
+trigger4 = var(49) = 3210
+var(12) = 1
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+triggerall = MoveGuarded 
+trigger1 = var(49) = [1500,1530]
+var(12) = 2
+ignorehitpause = 1
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ヒットバックフラグ発生
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+triggerall = numtarget
+triggerall = target,statetype != A
+trigger1 = stateno = 600 || stateno = 630 || stateno = 920
+trigger2 = stateno = 610 || stateno = 640
+trigger3 = stateno = 620 || stateno = 650
+fvar(1) = 6*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+triggerall = numtarget
+triggerall = target,statetype = A
+trigger1 = stateno = 600 || stateno = 630 || stateno = 920
+fvar(1) = 6*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+triggerall = numtarget
+triggerall = target,statetype = A
+trigger1 = stateno = 610 || stateno = 640
+fvar(1) = 9*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+triggerall = numtarget
+triggerall = target,statetype = A
+trigger1 = stateno = 620 || stateno = 650
+fvar(1) = 12*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 200
+fvar(1) = 12.0*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 400
+fvar(1) = 12.0*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 420
+trigger2 = stateno = 450
+fvar(1) = 12*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 430
+fvar(1) = 12*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 230
+fvar(1) = 10.5*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 240
+fvar(1) = 12*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 210
+fvar(1) = 12.5*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 220
+fvar(1) = 14*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 440
+fvar(1) = 16*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 250 || stateno = 900
+fvar(1) = 34*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 910
+fvar(1) = 9.5*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = 410
+fvar(1) = 13*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = stateno = [1400,1420]
+fvar(1) = 11*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movehit
+trigger1 = numtarget(1430)
+trigger2 = numtarget(1431)
+trigger3 = numtarget(1432)
+fvar(1) = 14*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = moveguarded
+trigger1 = numtarget(1430)
+trigger2 = numtarget(1431)
+trigger3 = numtarget(1432)
+fvar(1) = 7*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = numtarget(3203)
+trigger2 = numtarget(3204)
+fvar(1) = 6*const(size.xscale)
+ignorehitpause = 1
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movecontact
+trigger1 = numtarget(3200)
+trigger2 = numtarget(3201)
+fvar(1) = 10*const(size.xscale)
+ignorehitpause = 1
+
+;コーナープッシュ処理
+[State -2, CornerPush]
+type = VarSet
+trigger1 = !NumTarget
+trigger2 = movetype = H
+fvar(1) = 0
+
+[State -2, CornerPush]
+type = VarSet
+trigger1 = !var(13) && !var(40) && fvar(1) < 1.0
+fvar(1) = 0
+
+[State -2, CornerPush]
+type = PosAdd
+trigger1 = !var(13) && !var(40) && fvar(1) && !fvar(6)
+trigger1 = numtarget
+trigger1 = target,BackEdgeBodyDist <= 0 || target,FrontEdgeBodyDist <= 0
+x = -fvar(1)
+
+[State -2, CornerPush]
+type = VarSet
+trigger1 = !var(13) && !var(40) && fvar(1) && !fvar(6)
+fvar(1) = fvar(1)*.8
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = numenemy
+trigger1 = (enemy,stateno != [5000,5050]) && (enemy,stateno != [7000,7999]) && enemy,stateno != 5700
+trigger2 = enemynear,statetype != A
+fvar(14) = 0
+
+[State -2, CornerPush]
+type = VarSet
+triggerall = movehit
+triggerall = numtarget
+trigger1 = stateno = [200,650]
+trigger2 = stateno = [900,920]
+trigger3 = stateno = [1400,1430]
+trigger4 = stateno = 3210
+fvar(14) = 1
+ignorehitpause = 1
+
+[State -2, VelSet]
+type = posadd
+triggerall = fvar(14)
+triggerall = statetype = A
+triggerall = vel X > 0
+triggerall = FrontEdgeBodyDist < ceil(90*const(size.xscale))
+trigger1 = numenemy
+trigger1 = (enemynear,stateno = [5020,5050])||(enemynear,stateno = [7000,7020])||enemynear,stateno = 5700
+trigger1 = enemynear,BackEdgeBodyDist <= 0
+x = (enemy,vel X)*.8
+
+[State -2, VelSet]
+type = posadd
+triggerall = fvar(14)
+triggerall = stateno = 20 || stateno = 100
+triggerall = vel X > 0
+triggerall = FrontEdgeBodyDist < ceil(90*const(size.xscale))
+trigger1 = numenemy
+trigger1 = (enemynear,stateno = [5020,5050])||(enemynear,stateno = [7000,7020])||enemynear,stateno = 5700
+trigger1 = enemynear,BackEdgeBodyDist <= 0
+x = -(vel X)
+
+;空中通常技(対ブロッキング)
+[State -2, Velocity]
+type = VelSet
+triggerall = stateno = 250 || (stateno = [600,650]) || (stateno = [910,920])
+triggerall = statetype = A
+triggerall = movehit
+triggerall = numenemy
+triggerall = enemynear,authorname = "GM"
+triggerall = enemynear,name="Alex"||enemynear,name="Hugo"||enemynear,name="Ryu"||enemynear,name="Ken"||enemynear,name="Gouki"||enemynear,name="Sean"||enemynear,name="Ibuki"||enemynear,name="Gill"
+trigger1 = enemynear,stateno = [4000,4205]
+x = ifelse(vel X < 0,(vel X)*.4,ifelse(vel X > 0,-(vel X)*.6,-1.0))
+y = ifelse(vel Y<0,(vel Y)*.85,0)
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;MoveHitReset
+[State -2, MoveHitReset]
+type = MoveHitReset
+trigger1 = MoveContact
+trigger2 = var(11) || var(12)
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+[State -3, PlaySnd]
+type = PlaySnd
+triggerall = time = 1
+triggerall = alive
+triggerall = movetype = H
+trigger1 = stateno = 7000
+trigger1 = Anim = 5000 || Anim = 5001 || Anim = 5010 || Anim = 5011
+value = S5000,0
+channel = 2
+
+[State -3, PlaySnd]
+type = PlaySnd
+triggerall = time = 1
+triggerall = alive
+triggerall = movetype = H
+trigger1 = stateno = 5600
+trigger1 = Anim = 5600
+trigger2 = stateno = 7000
+trigger2 = Anim = 5002 || Anim = 5012 || Anim = 5030
+trigger3 = stateno = [7400,7500]
+trigger3 = Anim = 5002 || Anim = 5012 || Anim = 5022 || Anim = 5030 || Anim = [5050,5052]
+trigger4 = stateno = 5700
+trigger4 = Anim = 5700
+value = S5000,1
+channel = 2
+
+;Light
+[State -2]
+type = Helper
+triggerall = !NumHelper(23680) 
+trigger1 = StageVar(info.author) = "light"
+pos = 0,0
+stateno = 23680
+id = 23680
+ownpal = 1
+persistent = 0
+ignorehitpause = 1
+postype = p1
+
+[State -2]
+type = Helper
+triggerall = !NumHelper(23681) 
+trigger1 = StageVar(info.author) = "light"
+pos = 134,0
+stateno = 23681
+id = 23681
+ownpal = 1
+persistent = 0
+ignorehitpause = 1
+postype = left
+
+[State -2]
+type = Helper
+triggerall = !NumHelper(23682)
+trigger1 = StageVar(info.author) = "light"
+pos = -134,0
+stateno = 23682
+id = 23682
+ownpal = 1
+persistent = 0
+ignorehitpause = 1
+postype = right
+;--------------------------------------------------------------
+;1aDｧ3oE?I?OA
+;--------------------------------------------------------------
+[Statedef 23680]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = -10
+
+[State 3680, 4]
+type = changeanim
+trigger1 = time%2 = 0
+value = 9741
+
+[State 3680, 4]
+type = ChangeAnim
+triggerall = time%2 = 1
+trigger1 = ((root,anim = [0,9741]) && root,movetype != H) 
+trigger2 = (root,anim = [5000,9999])
+value = root,anim
+elem = root,animelemno(0)
+ignorehitpause = 1
+persistent = 1
+
+[State 3680, 0]
+type = PalFX
+trigger1 = time = 0
+time = -1
+add = 224,88,0
+sinadd = 48,50,32,16
+;add = 248,232,192
+
+[State 3680,0]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 3680, 4]
+type=BindToParent
+trigger1 = 1
+time = -1
+facing = 1
+pos = (1+ifelse(Parent,fvar(36) = 1,-1,0)+ifelse(Parent,fvar(36) = 2,-2,0))*ifelse(Facing = -1,-1,1),0
+;--------------------------------------------------------------
+;1aDｧﾗo
+;--------------------------------------------------------------
+[Statedef 23681]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+anim = 9741
+sprpriority = -10
+
+[State 3680,1]
+type = ParentVarSet
+trigger1 = RootDist X > 0 && RootDist X < 52
+fvar(40) = 1
+
+[State 3680,1]
+type = ParentVarSet
+trigger1 = RootDist X < 0
+fvar(40) = 0
+
+[State 3680,1]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+;--------------------------------------------------------------
+;1aDｧOO
+;--------------------------------------------------------------
+[Statedef 23682]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+anim = 9741
+sprpriority = -10
+
+[State 3680,1]
+type = ParentVarSet
+trigger1 = RootDist X < 0 && RootDist X > 52
+fvar(40) = 1
+
+[State 3680,1]
+type = ParentVarSet
+trigger1 = RootDist X > 0
+fvar(40) = 2
+
+[State 3680,1]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+;---------------------------------------------------
+;VVVVVVV Electro -2 Interactive stage codes VVVVVVVV
+;---------------------------------------------------
+
+;---------------------------------------
+;VVVVV - Extra Fun Stuff Remove - VVVVV
+
+;Fire React (Remove this code if you have custom Fire animations)
+[State -2,FX]
+type = PalFX
+trigger1 = time =1
+trigger1 = anim = (88912) = 1
+time = 45
+add = 255,155,2
+mul = 255,155,1
+sinadd = 110,55,85,10
+invertall = 0
+color = 0
+
+;---------------------------------------
+;Electric react   (Remove this code if you have custom Electric animations)
+[State -2,FX]
+type = PalFX
+trigger1 = time =1
+trigger1 = anim = (88920) = 1
+time = 45
+add = 48,48,48
+mul = 256,256,256
+sinadd = 64,64,64,4
+invertall = 1
+color = 0
+;--------------------------------------------
+
+;^^^^^^ - Extra Fun Stuff Remove - ^^^^^^
+;---------------------------------------------
+
+;---------------------------------------
+;Assert Specials Finishers Stuff
+[State -2, NoShadowFinishers]
+type = AssertSpecial
+trigger1 = stateno = 5150
+trigger1 = prevstateno = 889668
+trigger2 = stateno = 5150
+trigger2 = prevstateno = 889674
+trigger3 = stateno = 5150
+trigger3 = prevstateno = 889756
+trigger4 = stateno = 5150 && prevstateno = 889310
+flag = noshadow
+
+[State -2, nokoslow]
+type = assertspecial
+trigger1  = roundno != 1
+trigger1 = stagevar(info.name) = "Howard Arena"
+trigger2  = roundno != 1
+trigger2 = stagevar(info.name) = "Howard Arena Storm"
+trigger3  = roundno != 1
+trigger3 = stagevar(info.name) = "Howard Arena Thunder"
+trigger4  = roundno != 1
+trigger4 = stagevar(info.name) = "The Dead Pool"
+trigger5  = roundno != 1
+trigger5 = stagevar(info.name) = "Green Hell"
+trigger6  = roundno != 1
+trigger6 = stagevar(info.name) = "Vagnad Stage"
+trigger7  = roundno != 1
+trigger7 = stagevar(info.name) = "Ultimate_Capcom_Building"
+trigger8  = roundno != 1
+trigger8 =stagevar(info.name) = "Ultimate_USSR" 
+flag = nokoslow
+
+[State -2, NoForeground]
+type = AssertSpecial
+trigger1 = stateno = 5150
+trigger1 = prevstateno = 889764
+flag = noFG
+
+[State -2, Invisble]
+type = ChangeAnim
+trigger1 = stateno = 181
+trigger1 = prevstateno = 889769
+trigger2 = stateno = 5150 && prevstateno = 889310
+value = 9800 ;invisible
+ignorehitpause = 1
+
+[State -2, PosSet]
+type = PosSet
+trigger1 = stateno = 181
+trigger1 = prevstateno = 889769
+trigger1 = stateno = 5150 && prevstateno = 889310
+x = 0
+y = 300
+ignorehitpause = 1
+
+;---------------------------------------
+;Fire React (Remove this code if you have custom Fire animations)
+[State -2,FX]
+type = PalFX
+trigger1 = time =1
+trigger1 = anim = (88912) = 1
+time = 45
+add = 255,155,2
+mul = 255,155,1
+sinadd = 110,55,85,10
+invertall = 0
+color = 0
+
+;---------------------------------------
+;Electric react   (Remove this code if you have custom Electric animations)
+[State -2,FX]
+type = PalFX
+trigger1 = time =1
+trigger1 = anim = (88920) = 1
+time = 45
+add = 48,48,48
+mul = 256,256,256
+sinadd = 64,64,64,4
+invertall = 1
+color = 0
+
+;---------------------------------
+;Fire Ropes for J. Carn's World Heroes Death Match 1 stage
+[State -2, deathmatchfire]
+type = Helper
+trigger1 = stagevar(info.name) = "Death Match"
+trigger1 = Numhelper(88910) = 0  ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Death Match"
+trigger2 = Numhelper(88910) = 0  ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -460,0
+name = "Firerope"
+stateno = 88910
+helpertype = normal
+ownpal = 1
+ID = 88910   ;Numhelper and ID have to be the same
+
+;---------------------------------
+;Electric Ropes for Hanzo's World heroes Death Match 2 stage
+[State -2, deathmatchfire]
+type = Helper
+trigger1 = stagevar(info.name) = "Death Match 2"
+trigger1 = Numhelper(88920) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Death Match 2"
+trigger2 = Numhelper(88920) = 0  ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -460,0
+name = "Electricrope"
+stateno = 88920
+helpertype = normal
+ownpal = 1
+ID = 88920    ;Numhelper and ID have to be the same
+
+;------------------------------------------
+;Spiked Wall for Fumma's World Heroes Death Match 3 stage
+[State -2, deathmatchspikes]
+type = Helper
+trigger1 = stagevar(info.name) = "Death Match 3"
+trigger1 = Numhelper(88926) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Death Match 3"
+trigger2 = Numhelper(88926) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -500,0
+name = "SpikedWall"
+stateno = 88926
+helpertype = normal
+ownpal = 1
+ID = 88926   ;Numhelper and ID have to be the same
+
+;----------------------------------------
+; Water Splash KoF Garou stage
+[State -2, watersplashfall]
+type = Explod
+trigger1 = time = 1
+trigger1 = stagevar(info.name) = "KoF95_Garou"
+trigger1 = stateno = 5100 || stateno = 5110
+anim = F89059
+ID = 7448
+pos = 0,-5
+postype = p1  ;p2,front,back,left,right
+facing = -1
+vfacing = 1
+bindtime = 1
+removetime = 17
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 7
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, watersplashjump]
+type = Explod
+trigger1 = time = 1
+trigger1 = stagevar(info.name) = "KoF95_Garou"
+trigger1 = stateno = 40 || stateno = 52
+anim = F89056
+ID = 7448
+pos = 0,-5
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = 1
+removetime = 14
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 7
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, watersplashIdle]
+type = Explod
+trigger1 = NumExplod(77446) = 0
+trigger1 = Pos Y = 0
+trigger1 = stagevar(info.name) = "KoF95_Garou"
+anim = F89228
+ID = 77446
+pos = 0,-8
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = -1
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 7
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, RemoveWater]
+type = RemoveExplod
+trigger1 = Pos Y <= -1 
+trigger1 = time >=0
+id = 77446
+
+;-----------------------------------------------------
+; Water Splash for Northern Country Canyon stages
+[State -2, watersplash2fall]
+type = Explod
+trigger1 = time = 1
+trigger1 = stagevar(info.name) = "Northern Country Canyon Autumn"
+trigger1 = stateno = 5100 || stateno = 5110
+trigger2 = time = 1
+trigger2 = stagevar(info.name) = "Northern Country Canyon Spring"
+trigger2 = stateno = 5100 || stateno = 5110
+anim = F89104
+ID = 7448
+pos = 0,-5
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = 1
+removetime = 27
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 7
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, watersplash2jump]
+type = Explod
+trigger1 = time = 1
+trigger1 = stagevar(info.name) = "Northern Country Canyon Autumn"
+trigger1 = stateno = 40 || stateno = 52
+trigger2 = time = 1
+trigger2 = stagevar(info.name) = "Northern Country Canyon Spring"
+trigger2 = stateno = 40 || stateno = 52
+anim = F89103
+ID = 7448
+pos = 0,-5
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = 1
+removetime = 21
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 7
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, watersplash2idle]
+type = Explod
+trigger1 = NumExplod(77446) = 0
+trigger1 = Pos Y = 0
+trigger1 = stagevar(info.name) = "Northern Country Canyon Autumn"
+trigger2 = NumExplod(77446) = 0 
+trigger2 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Northern Country Canyon Spring" 
+anim = F89102
+ID = 77446
+pos = 0,-5
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = -1
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 7
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+;------------------------------------
+;  Totem for "Green Hell" Stage Behind/Lower
+[State -2, Totem]
+type = Helper
+trigger1 = stagevar(info.name) = "Green Hell"
+trigger1 = Numhelper(889360) = 0  ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Green Hell"
+trigger2 = Numhelper(889360) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -190,17
+name = "Totem"
+stateno = 889360
+helpertype = normal
+ownpal = 1
+ID = 889360   ;Numhelper and ID have to be the same
+
+;  Totem for "Green Hell" Stage Front/Higher
+[State -2, Totem]
+type = Helper
+trigger1 = stagevar(info.name) = "Green Hell"
+trigger1 = Numhelper(889365) = 0  ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Green Hell"
+trigger2 = Numhelper(889365) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 266,-2
+name = "Totem"
+stateno = 889365
+helpertype = normal
+ownpal = 1
+ID = 889365   ;Numhelper and ID have to be the same
+
+;--------------------------------
+;Howard Arena stuff
+[State -2, Andy FF3 stage finisher floor]
+type = Helper
+trigger1 = stagevar(info.name) = "Howard Arena"
+trigger1 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = roundno != 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Howard Arena Storm"
+trigger2 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = roundno != 1
+trigger2 = TeamMode != Simul
+trigger2 = Pos Y = 0
+trigger3 = stagevar(info.name) = "Howard Arena Thunder"
+trigger3 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger3 = teamside = 1
+trigger3 = roundno != 1
+trigger3 = TeamMode != Simul
+trigger3 = Pos Y = 0
+trigger4 = stagevar(info.name) = "Andy's FFS stage(day)"
+trigger4 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger4 = teamside = 1
+trigger4 = roundno != 1
+trigger4 = TeamMode != Simul
+trigger4 = Pos Y = 0
+trigger5 = stagevar(info.name) = "Howard Arena"
+trigger5 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger5 = teamside = 1
+trigger5 = roundno != 1
+trigger5 = TeamMode = Simul
+trigger5 = numpartner = 1 && id<partner,id
+trigger5 = Pos Y = 0
+trigger6 = stagevar(info.name) = "Howard Arena Storm"
+trigger6 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger6 = teamside = 1
+trigger6 = roundno != 1
+trigger6 = TeamMode = Simul
+trigger6 = numpartner = 1 && id<partner,id
+trigger6 = Pos Y = 0
+trigger7 = stagevar(info.name) = "Howard Arena Thunder"
+trigger7 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger7 = teamside = 1
+trigger7 = roundno != 1
+trigger7 = TeamMode = Simul
+trigger7 = numpartner = 1 && id<partner,id
+trigger7 = Pos Y = 0
+trigger8 = stagevar(info.name) = "Andy's FFS stage(day)"
+trigger8 = Numhelper(889323) = 0 ;Numhelper and ID have to be the same
+trigger8 = teamside = 1
+trigger8 = roundno != 1
+trigger8 = TeamMode = Simul
+trigger8 = numpartner = 1 && id<partner,id
+trigger8 = Pos Y = 0
+helpertype = normal ;player
+name = "ff3stagefinisher"
+ID = 889323       ;Numhelper and ID have to be the same
+stateno = 889323
+pos = 0,0
+postype = left
+facing = 1
+ownpal = 1
+supermove = 999999999
+pausemove = 999999999
+
+;-----------------------------------------
+; FF subway stuff
+[State -2, barrel subway ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Subway Train"
+trigger1 = Numhelper(889120) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Subway Train"
+trigger2 = Numhelper(889120) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 0,17
+name = "Barrel 2"
+stateno = 889120
+helpertype = normal
+ownpal = 1
+ID = 889120   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;FF subway barrel Energy #1
+[State -2, barrel subway ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Subway Train"
+trigger1 = Numhelper(889140) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Subway Train"
+trigger2 = Numhelper(889140) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 0,-3
+name = "Barrel 2"
+stateno = 889140
+helpertype = normal
+ownpal = 1
+ID = 889140   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;FF subway barrel Energy #2
+[State -2, barrel subway ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Subway Train"
+trigger1 = Numhelper(889150) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Subway Train"
+trigger2 = Numhelper(889150) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 0,21
+name = "Barrel 2"
+stateno = 889150
+helpertype = normal
+ownpal = 1
+ID = 889150   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;-----------------------------------------
+;FF Sodom's Back Alley barrel rolling
+[State -2, barrel rolling SBA ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Sodom's Back Alley"
+trigger1 = Numhelper(889475) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamSide = 1
+trigger1 = RoundNo = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Sodom's Back Alley"
+trigger2 = Numhelper(889475) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamSide = 1
+trigger2 = RoundNo = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 259,22
+name = "BarrelRoll"
+stateno = 889475
+helpertype = normal
+ownpal = 1
+ID = 889475   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;FF Sodom's Back Alley barrel Health
+[State -2, barrel SBA ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Sodom's Back Alley"
+trigger1 = Numhelper(889440) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Sodom's Back Alley"
+trigger2 = Numhelper(889440) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 96,-19
+name = "Barrel6"
+stateno = 889440
+helpertype = normal
+ownpal = 1
+ID = 889440   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;FF Sodom's Back Alley trash can #1
+[State -2, trashcan#1 SBA ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Sodom's Back Alley"
+trigger1 = Numhelper(889458) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Sodom's Back Alley"
+trigger2 = Numhelper(889458) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 29,-19
+name = "SBAtrashcan1"
+stateno = 889458
+helpertype = normal
+ownpal = 1
+ID = 889458   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;FF Sodom's Back Alley trash can #2 empty
+[State -2, trashcan#1 subway ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Sodom's Back Alley"
+trigger1 = Numhelper(889467) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Sodom's Back Alley"
+trigger2 = Numhelper(889467) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -27,-19
+name = "SBAtrashcan1"
+stateno = 889467
+helpertype = normal
+ownpal = 1
+ID = 889467   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------------------
+;Barrels for SS2 Galford stage
+[State -2, GalfordBarrel1]
+type = Helper
+trigger1 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger1 = Numhelper(889109) = 0  ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger2 = Numhelper(889109) = 0  ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -123,12
+name = "GalfordBarrel1"
+stateno = 889109
+helpertype = normal
+ownpal = 1
+ID = 889109   ;Numhelper and ID have to be the same
+
+[State -2, GalfordBarrel2]
+type = Helper
+trigger1 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger1 = Numhelper(889113) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger2 = Numhelper(889113) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 260,12
+name = "GalfordBarrel2"
+stateno = 889113
+helpertype = normal
+ownpal = 1
+ID = 889113   ;Numhelper and ID have to be the same
+
+;-----------------------------------------------
+;Samurai Monger Life & Bomb toss for player 1
+[State -2, LifeandBomb]
+type = Helper
+trigger1 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger1 = (GameTime % 1600) = random%27
+trigger1 = time >=1
+trigger1 = teamside = 1
+trigger1 = Numhelper(889160) = 0 ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger2 = (GameTime % 1600) = random%27
+trigger2 = time >=1
+trigger2 = teamside = 1
+trigger2 = Numhelper(889160) = 0 ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -385,-5
+name = "LifeMonger"
+stateno = 889160
+helpertype = normal
+postype = back;p1    ;p2,front,back,left,right
+ownpal = 1
+ID = 889160
+
+;-----------------------------------------------
+;Samurai Monger Life & Bomb toss for player 2
+[State -2, LifeandBomb2]
+type = Helper
+trigger1 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger1 = (GameTime % 1600) = random%27
+trigger1 = time >=1
+trigger1 = teamside = 2
+trigger1 = Numhelper(889170) = 0 ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "SS2_GALFORD_STAGE"
+trigger2 = (GameTime % 1600) = random%27
+trigger2 = time >=1
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -400,-5
+name = "LifeMonger"
+stateno = 889170
+helpertype = normal
+postype = back;p1    ;p2,front,back,left,right
+ownpal = 1
+ID = 889170
+
+;------------------------
+;FF subway station telephone booth Health
+[State -2, telephonebooth subway ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Subway Station - FF"
+trigger1 = Numhelper(889180) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Subway Station - FF"
+trigger2 = Numhelper(889180) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 0,14
+name = "telephone1"
+stateno = 889180
+helpertype = normal
+ownpal = 1
+ID = 889180   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;FF subway station trash can #1
+[State -2, trashcan#1 subway ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Subway Station - FF"
+trigger1 = Numhelper(889195) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Subway Station - FF"
+trigger2 = Numhelper(889195) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 0,-3
+name = "telephone1"
+stateno = 889195
+helpertype = normal
+ownpal = 1
+ID = 889195   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;FF subway station trash can #2 empty
+[State -2, trashcan#1 subway ff]
+type = Helper
+trigger1 = stagevar(info.name) = "Subway Station - FF"
+trigger1 = Numhelper(889205) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Subway Station - FF"
+trigger2 = Numhelper(889205) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 0,16
+name = "telephone1"
+stateno = 889205
+helpertype = normal
+ownpal = 1
+ID = 889205   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;Ryu Signs
+[State -2, Ryu Sign]
+type = Helper
+trigger1 = stagevar(info.name) = "(SF2) Ryu"
+trigger1 = Numhelper(889211) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "(SF2) Ryu"
+trigger2 = Numhelper(889211) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -190,-5
+name = "Ryusign"
+stateno = 889211
+helpertype = normal
+ownpal = 1
+ID = 889211   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Ryu Sign2]
+type = Helper
+trigger1 = stagevar(info.name) = "(SF2) Ryu"
+trigger1 = Numhelper(889221) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "(SF2) Ryu"
+trigger2 = Numhelper(889221) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 350,-5
+name = "Ryusign2"
+stateno = 889221
+helpertype = normal
+ownpal = 1
+ID = 889221   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;Guile Crate
+[State -2, Guile Crate]
+type = Helper
+trigger1 = stagevar(info.name) = "(SF2) Guile" 
+trigger1 = Numhelper(889240) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "(SF2) Guile" 
+trigger2 = Numhelper(889240) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 360,-3
+name = "GuileCrate"
+stateno = 889240
+helpertype = normal
+ownpal = 1
+ID = 889240   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;Ken Barrels/Crates
+[State -2, Ken Barrels/Crates]
+type = Helper
+trigger1 = stagevar(info.name) = "(SF2) Ken"
+trigger1 = Numhelper(889248) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "(SF2) Ken"
+trigger2 = Numhelper(889248) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 390,20
+name = "KenBarrelsCrates"
+stateno = 889248
+helpertype = normal
+ownpal = 1
+ID = 889248   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------
+;M.Bison Statues
+[State -2, M.Bison Statue]
+type = Helper
+trigger1 = stagevar(info.name) = "(SF2) M.Bison"
+trigger1 = Numhelper(889400) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "(SF2) M.Bison"
+trigger2 = Numhelper(889400) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -190,-5
+name = "MBisonStatue1"
+stateno = 889400
+helpertype = normal
+ownpal = 1
+ID = 889400   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, M.Bison Statue2]
+type = Helper
+trigger1 = stagevar(info.name) = "(SF2) M.Bison"
+trigger1 = Numhelper(889430) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "(SF2) M.Bison"
+trigger2 = Numhelper(889430) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 350,-5
+name = "MBisonStatue2"
+stateno = 889430
+helpertype = normal
+ownpal = 1
+ID = 889430   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------------------------------------------
+;^^^^^^^ ELECTR0's IM Code #1 ^^^^^^^^^
+;------------------------------------------------------------
+
+;------------------------------------------------------------
+;vvvvvv ELECTR0's IM Code #2 vvvvvvvv
+;------------------------------------------------------------
+
+;----------------------------------------------
+; Belgrave Square Labs Finishers
+[State -2, Death Chamber]
+type = Helper
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 = Numhelper(889480) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 = Numhelper(889480) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 69,0
+name = "DeathChamber1"
+stateno = 889480
+helpertype = normal
+ownpal = 1
+ID = 889480   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Death Chamber2]
+type = Helper
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 = Numhelper(889481) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 = Numhelper(889481) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 69,0
+name = "DeathChamber2"
+stateno = 889481
+helpertype = normal
+ownpal = 1
+ID = 889481   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Vapor Chamber]
+type = Helper
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 = Numhelper(889482) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 = Numhelper(889482) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -85,0
+name = "VaporChamber1"
+stateno = 889482
+helpertype = normal
+ownpal = 1
+ID = 889482   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Vapor Chamber2]
+type = Helper
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 = Numhelper(889483) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 = Numhelper(889483) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 228,0
+name = "VaporChamber2"
+stateno = 889483
+helpertype = normal
+ownpal = 1
+ID = 889483   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Vapor Chamber Camera Marker]
+type = Helper
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 = Numhelper(889478) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 = Numhelper(889478) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 184,0
+name = "VaporChamber3"
+stateno = 889478
+helpertype = normal
+ownpal = 1
+ID = 889478   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Vapor Chamber Camera Marker2]
+type = Helper
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 = Numhelper(889479) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 = Numhelper(889479) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -41,0
+name = "VaporChamber4"
+stateno = 889479
+helpertype = normal
+ownpal = 1
+ID = 889479   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Belgrave Square Labs] ;send opponent to Death Chamber
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,499]
+trigger1=numhelper(889480)
+trigger1=abs(Rootdist X-Helper(889480),Rootdist X)=[-60,60]
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1=P2Dist Y =0
+trigger2=numhelper(889481)
+trigger2=abs(Rootdist X-Helper(889481),Rootdist X)=[-60,60]
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2=P2Dist Y =0
+value = 889485
+persistent = 0
+
+[State -2, Time Warp] ;player 1 go to time warp
+type = ChangeState
+triggerall = movehit
+trigger1=numhelper(889480)
+trigger1=abs(Rootdist X-Helper(889480),Rootdist X)=[-60,60]
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1=P2Dist Y =0
+trigger2=numhelper(889481)
+trigger2=abs(Rootdist X-Helper(889481),Rootdist X)=[-60,60]
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2=P2Dist Y =0
+value = 889493
+ctrl = 0
+
+[State -2, Belgrave Square Labs2] ;send opponent to Vapor Chamber
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,499]
+trigger1=numhelper(889482)
+trigger1=abs(Rootdist X-Helper(889482),Rootdist X)=[-50,50]
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1=P2Dist Y =0
+trigger2=numhelper(889483)
+trigger2=abs(Rootdist X-Helper(889483),Rootdist X)=[-50,50]
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2=P2Dist Y =0
+value = 889494
+persistent = 0
+
+[State -2, Time Warp2] ;player 1 go to Time Warp
+type = ChangeState
+triggerall = movehit
+trigger1=numhelper(889482)
+trigger1=abs(Rootdist X-Helper(889482),Rootdist X)=[-50,50]
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1=P2Dist Y =0
+trigger2=numhelper(889483)
+trigger2=abs(Rootdist X-Helper(889483),Rootdist X)=[-50,50]
+trigger2 = stagevar(info.name) = "Belgrave Square Labs"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2=P2Dist Y =0
+value = 889498
+ctrl = 0
+
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+trigger1 = stagevar(info.name) = "Belgrave Square Labs"
+trigger1  = roundno != 1
+flag = nokoslow
+
+;-----------------------------------------------------
+;SurfJet
+[State -2, SurfJetidle]
+type = Explod
+trigger1 = NumExplod(77447) = 0
+trigger1 = time <= 1
+trigger1 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger1 = facing = 1
+anim = F89156
+ID = 77447
+pos = 0,5
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = -1
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = -10
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, SurfJetidle]
+type = Explod
+trigger1 = NumExplod(77447) = 0
+trigger1 = time <= 1
+trigger1 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger1 = facing = -1
+anim = F89156
+ID = 77447
+pos = 0,5
+postype = p1  ;p2,front,back,left,right
+facing = -1
+vfacing = 1
+bindtime = -1
+removetime = -1
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = -10
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, JetRemover]
+type = RemoveExplod
+trigger1 = Pos Y < 0 
+trigger1 = time >=0
+id = 77447
+
+[State -2, SurfJetJump]
+type = Explod
+trigger1 = NumExplod(77448) = 0
+trigger1 = time <= 1
+trigger1 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger1 = facing = 1
+anim = F89157
+ID = 77448
+pos = 0,-5
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = -1
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 10
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, SurfJetJump]
+type = Explod
+trigger1 = NumExplod(77448) = 0
+trigger1 = time <= 1
+trigger1 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger1 = facing = -1
+anim = F89157
+ID = 77448
+pos = 0,-5
+postype = p1  ;p2,front,back,left,right
+facing = -1
+vfacing = 1
+bindtime = -1
+removetime = -1
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 10
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, JetJumpRemover]
+type = RemoveExplod
+trigger1 = Pos Y = 0 
+trigger1 = time >=0
+trigger2 = NumExplod(77447) = 1
+id = 77448
+
+[State -2, SurfJetSplash]
+type = Explod
+trigger1 = Pos Y = 0
+trigger1 = (GameTime % 10) = 0
+trigger1 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger1 = facing = 1
+anim = F89158
+ID = 77449
+pos = -16,21
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = 1
+removetime = 32
+supermove = 99999
+pausemove = 99999
+scale = 2,2
+sprpriority = 10
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, SurfJetSplash]
+type = Explod
+trigger1 = Pos Y = 0
+trigger1 = (GameTime % 10) = 0
+trigger1 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger1 = facing = -1
+anim = F89158
+ID = 77449
+pos = 16,21
+postype = p1  ;p2,front,back,left,right
+facing = -1
+vfacing = 1
+bindtime = 1
+removetime = 32
+supermove = 99999
+pausemove = 99999
+scale = 2,2
+sprpriority = 10
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, AiroJetSpawner]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger1 = Numhelper(889500) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Distruction_Surfing"
+trigger2 = Numhelper(889500) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -350,0
+name = "FarAiroJetSpawn"
+stateno = 889500
+helpertype = normal
+ownpal = 1
+ID = 889500   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;-----------------------------------------
+;Shin Forest Stuff
+[State -2, Shin TimeBox]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889520) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889520) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 1500,0
+name = "ShinTimebox1"
+stateno = 889520
+helpertype = normal
+ownpal = 1
+ID = 889520   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Shin TimeBox2]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889525) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889525) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -1205,0
+name = "ShinTimebox2"
+stateno = 889525
+helpertype = normal
+ownpal = 1
+ID = 889525   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Shin TimeBox3]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889530) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889530) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 494,0
+name = "ShinTimebox3"
+stateno = 889530
+helpertype = normal
+ownpal = 1
+ID = 889530   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Shin Knife]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889535) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889535) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 860,0
+name = "ShinKnife1"
+stateno = 889535
+helpertype = normal
+ownpal = 1
+ID = 889535   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Shin Knife2]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889546) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889546) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -550,0
+name = "ShinKnife2"
+stateno = 889546
+helpertype = normal
+ownpal = 1
+ID = 889546   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Shin Pow1]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889556) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889556) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -1790,0
+name = "ShinPow1"
+stateno = 889556
+helpertype = normal
+ownpal = 1
+ID = 889556   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Shin Pow2]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889563) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889563) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 1970,0
+name = "ShinPow2"
+stateno = 889563
+helpertype = normal
+ownpal = 1
+ID = 889563   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, KnifeTossHelper]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = NumHelper(889542) >= 1
+trigger1 = movetype != H
+trigger1 = movetype != A
+trigger1 = StateType != C
+trigger1 = StateType != L
+trigger1 = P2BodyDist X > 70
+trigger1 = command = "x"
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = NumHelper(889553) >= 1
+trigger2 = movetype != H
+trigger2 = movetype != A
+trigger2 = StateType != C
+trigger2 = StateType != L
+trigger2 = P2BodyDist X > 70
+trigger2 = command = "x"
+helpertype = normal ;player
+name = "shinknifeToss1"
+ID = 889545
+stateno = 889545
+pos = -5,-75
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause = 1
+
+[State -2, KnifeTossHelper]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = NumHelper(889542) >= 1
+trigger1 = movetype != H
+trigger1 = movetype != A
+trigger1 = StateType = C
+trigger1 = StateType != L
+trigger1 = P2BodyDist X > 70
+trigger1 = command = "x"
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = NumHelper(889553) >= 1
+trigger2 = movetype != H
+trigger2 = movetype != A
+trigger2 = StateType = C
+trigger2 = StateType != L
+trigger2 = P2BodyDist X > 70
+trigger2 = command = "x"
+helpertype = normal ;player
+name = "shinknifeToss1Low"
+ID = 889555
+stateno = 889555
+pos = -5,-40
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause = 1
+
+[State -2, ShinHatGuy]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = (GameTime % 600) = random%27
+trigger1 = teamside = 2
+trigger1 = Numhelper(889571) = 0 ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = (GameTime % 600) = random%27
+trigger2 = teamside = 2
+trigger2 = Numhelper(889571) = 0 ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -800,0
+postype = p1
+name = "ShinHatGuy"
+stateno = 889571 + random%2
+helpertype = normal
+ownpal = 1
+ID = 889571
+
+[State -2, ShinGirl]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = (GameTime % 1300) = random%27
+trigger1 = teamside = 2
+trigger1 = Numhelper(889582) = 0 ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = (GameTime % 1300) = random%27
+trigger2 = teamside = 2
+trigger2 = Numhelper(889582) = 0 ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+Pos = 0,-450
+postype = p1 ;left
+name = "ShinGirl"
+stateno = 889582 + random%2
+helpertype = normal
+ownpal = 1
+ID = 889582
+
+[State -2, ShinNinjaSpawner]
+type = Helper
+trigger1 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger1 = Numhelper(889600) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Shinobi_Zeed_Ressurection_Forest"
+trigger2 = Numhelper(889600) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 0,0
+name = "ShinNinjaSpawner"
+stateno = 889600
+helpertype = normal
+ownpal = 1
+ID = 889600   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;------------------------------------------------
+;Sheeps
+[State -2, Sheep]
+type = Helper
+trigger1 = stagevar(info.name) = "Mareep"
+trigger1 = Numhelper(889632) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = Pos Y = 0
+;trigger1 = TeamMode != simul
+Pos = 0,0
+name = "sheep"
+stateno = 889632
+helpertype = normal
+ownpal = 1
+ID = 889632   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;-----------------------------------------
+;Pit 1 Fatality
+[State -2, Pit1Fatality] ;send opponent to Death Chamber
+type = TargetState
+triggerall = movehit
+trigger1 = stagevar(info.name) = "The Pit"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1=P2Dist Y =0
+trigger1 = StateType != A
+trigger2 = stagevar(info.name) = "SF1 China"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2=P2Dist Y =0
+trigger2 = StateType != A
+trigger3 = stagevar(info.name) = "The Pit I"
+trigger3 =p2life=0
+trigger3=MatchOver
+trigger3=P2Dist Y =0
+trigger3 = StateType != A
+value = 889660
+persistent = 0
+
+[State -2, Pit1Fatality] ;player 1 go to time warp
+type = ChangeState
+triggerall = movehit
+trigger1 = stagevar(info.name) = "The Pit"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1=P2Dist Y =0
+trigger1 = StateType != A
+trigger2 = stagevar(info.name) = "SF1 China"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2=P2Dist Y =0
+trigger2 = StateType != A
+trigger3 = stagevar(info.name) = "The Pit I"
+trigger3 =p2life=0
+trigger3=MatchOver
+trigger3=P2Dist Y =0
+trigger3 = StateType != A
+value = 889658
+ctrl = 0
+
+[State -2, Pit1nokoslow]
+type = assertspecial
+trigger1  = roundno != 1
+trigger1 = stagevar(info.name) = "The Pit"
+trigger2  = roundno != 1
+trigger2 = stagevar(info.name) = "SF1 China"
+trigger3  = roundno != 1
+trigger3 = stagevar(info.name) = "The Pit I"
+flag = nokoslow
+flag2 = nokosnd
+
+;----------------------------------------------
+;Real Bout Fatal Fury Subway 3
+[State -2, RBFFTrain1]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger1 = Numhelper(889665) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger2 = Numhelper(889665) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -446,21
+name = "RBFFTrain1"
+stateno = 889665
+helpertype = normal
+ownpal = 1
+ID = 889665   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, RBFFTrain2] ;Position marker player 1
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger1 = Numhelper(889671) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger2 = Numhelper(889671) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 648,0
+name = "RBFFTrainMarker1"
+stateno = 889671
+helpertype = normal
+ownpal = 1
+ID = 889671   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, RBFFTrain2] ;Position marker player 2
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger1 = Numhelper(889676) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger2 = Numhelper(889676) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -508,0
+name = "RBFFTrainMarker2"
+stateno = 889676
+helpertype = normal
+ownpal = 1
+ID = 889676   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, RBFFSubway3Finisher] ;send opponent to train death
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,499]
+trigger1=numhelper(889671)
+trigger1=abs(Rootdist X-Helper(889671),Rootdist X)=[1,300]
+trigger1 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger2=numhelper(889676)
+trigger2=abs(Rootdist X-Helper(889676),Rootdist X)=[1,300]
+trigger2 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger2 =p2life=0
+trigger2=MatchOver
+value = 889672
+persistent = 0
+ignorehitpause = 1
+
+[State -2, RBFFSubway3Finisher] ;player walk away from train path
+type = ChangeState
+triggerall = movehit
+triggerall = stateno = [200,499]
+trigger1=numhelper(889671)
+trigger1=abs(Rootdist X-Helper(889671),Rootdist X)=[1,300]
+trigger1 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger2=numhelper(889676)
+trigger2=abs(Rootdist X-Helper(889676),Rootdist X)=[1,300]
+trigger2 = stagevar(info.name) = "Ultimate_RBFF_Subway_3"
+trigger2 =p2life=0
+trigger2=MatchOver
+value = 889675
+ctrl = 0
+ignorehitpause = 1
+
+;------------------------
+; FF West Side barrel Health
+[State -2, barrel1 WestSide Health]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889440) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 602,-15
+name = "Barrel1"
+stateno = 889440
+helpertype = normal
+ownpal = 1
+ID = 889440   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, barrel2 WestSide Energy]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889680) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 545,-15
+name = "Barrel2"
+stateno = 889680
+helpertype = normal
+ownpal = 1
+ID = 889680   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Trashcan WestSide Energy]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889690) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 1267,-14
+name = "trashcanWSEnergy"
+stateno = 889690
+helpertype = normal
+ownpal = 1
+ID = 889690   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Trashcan WestSide Empty]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889700) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 1315,-14
+name = "trashcanWSEmpty"
+stateno = 889700
+helpertype = normal
+ownpal = 1
+ID = 889700   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Trashcan2 WestSide Empty]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889706) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 330,23
+name = "trashcan2WSEmpty"
+stateno = 889706
+helpertype = normal
+ownpal = 1
+ID = 889706   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Wall 1 WestSide]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889712) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -255,0
+name = "Wall1"
+stateno = 889712
+helpertype = normal
+ownpal = 1
+ID = 889712  ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Wall 2 WestSide]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889713) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 208,0
+name = "Wall2"
+stateno = 889713
+helpertype = normal
+ownpal = 1
+ID = 889713  ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Wall 3 WestSide]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889714) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 943,0
+name = "Wall3"
+stateno = 889714
+helpertype = normal
+ownpal = 1
+ID = 889714  ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Door 1 WestSide]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889715) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889715) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0 
+Pos = -255,0
+name = "WSDoor1"
+stateno = 889715
+helpertype = normal
+ownpal = 1
+ID = 889715  ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Door 2 WestSide]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889717) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889717) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id 
+trigger2 = Pos Y = 0
+Pos = 208,0
+name = "WSDoor2"
+stateno = 889717
+helpertype = normal
+ownpal = 1
+ID = 889717  ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Door 3 WestSide]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 943,0
+name = "WSDoor3"
+stateno = 889719
+helpertype = normal
+ownpal = 1
+ID = 889719  ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Edi E WestSide]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889724) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -1000,0
+name = "WSEdiE"
+stateno = 889724
+helpertype = normal
+ownpal = 1
+ID = 889724  ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Surf Sign1]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889743) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -970,-9
+name = "Surfsign1"
+stateno = 889743
+helpertype = normal
+ownpal = 1
+ID = 889743   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, Surf Sign2]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger1 = Numhelper(889749) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_FF_Westside"
+trigger2 = Numhelper(889719) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 662,-7
+name = "Surfsign2"
+stateno = 889749
+helpertype = normal
+ownpal = 1
+ID = 889749   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;-----------------------------------------------------
+; Water Splash for YDA_Forest-of_Desolation stage by Yoda & Elk
+[State -2, Desolationplash2fall]
+type = Explod
+trigger1 = time = 1
+trigger1 = stagevar(info.name) = "YDA_Forest-of_Desolation"
+trigger1 = stateno = 5100 || stateno = 5110
+anim = F89226
+ID = 7448
+pos = 0,-12
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = 1
+removetime = 27
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 52
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, Desolationplash2jump]
+type = Explod
+trigger1 = time = 1
+trigger1 = stagevar(info.name) = "YDA_Forest-of_Desolation"
+trigger1 = stateno = 40 || stateno = 52
+anim = F89225
+ID = 7448
+pos = 0,-12
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = 1
+removetime = 21
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 52
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+[State -2, watersplash2idle]
+type = Explod
+trigger1 = NumExplod(77446) = 0
+trigger1 = Pos Y = 0
+trigger1 = stagevar(info.name) = "YDA_Forest-of_Desolation"
+anim = F89224
+ID = 77446
+pos = 0,-12
+postype = p1  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = -1
+supermove = 99999
+pausemove = 99999
+scale = 1,1
+sprpriority = 51
+ontop = 0
+ownpal = 1
+removeongethit = 0
+
+;--------------------------------------
+;Train Floor for Vagnad Stage
+[State -2, Vagnad Stage finisher floor]
+type = Helper
+trigger1 = stagevar(info.name) = "Vagnad Stage"
+trigger1 = Numhelper(889315) = 0 ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Vagnad Stage"
+trigger2 = Numhelper(889315) = 0 ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+helpertype = normal ;player
+name = "Vagnadstagefinisher"
+ID = 889315       ;Numhelper and ID have to be the same
+stateno = 889315
+pos = 0,0
+postype = left
+facing = 1
+ownpal = 1
+supermove = 999999999
+pausemove = 999999999
+
+;--------------------------------------------
+;Railing for Capcom Building Stage
+[State -2, Capcom Builing Stage finisher Railing]
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_Capcom_Building"
+trigger1 = Numhelper(889758) = 0 ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = roundno != 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_Capcom_Building"
+trigger2 = Numhelper(889758) = 0 ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = roundno != 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+helpertype = normal ;player
+name = "CBRailstagefinisher"
+ID = 889758       ;Numhelper and ID have to be the same
+stateno = 889758
+pos = 0,0
+postype = left
+facing = 1
+;keyctrl = 0
+ownpal = 1
+supermove = 999999999
+pausemove = 999999999
+
+;------------------------------------------
+;Spiked Wall for Death Match Needle stage
+[State -2, deathmatchspikes]
+type = Helper
+trigger1 = stagevar(info.name) = "DEATH MATCH NEEDLE"
+trigger1 = Numhelper(889759) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "DEATH MATCH NEEDLE"
+trigger2 = Numhelper(889759) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -500,0
+name = "SpikedWall"
+stateno = 889759
+helpertype = normal
+ownpal = 1
+ID = 889759   ;Numhelper and ID have to be the same
+
+;--------------------------------------------------
+;USSR stage finisher stuff
+[State -2, USSRstagefinisher] ;Position marker player 1
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_USSR" 
+trigger1 = Numhelper(889761) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_USSR" 
+trigger2 = Numhelper(889761) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 70,0
+name = "USSRMarker1"
+stateno = 889761
+helpertype = normal
+ownpal = 1
+ID = 889761   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, USSRstagefinisher] ;Position marker player 2
+type = Helper
+trigger1 = stagevar(info.name) = "Ultimate_USSR" 
+trigger1 = Numhelper(889762) = 0   ;Numhelper and ID have to be the same
+trigger1 = teamside = 2
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Ultimate_USSR" 
+trigger2 = Numhelper(889762) = 0   ;Numhelper and ID have to be the same
+trigger2 = teamside = 2
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 70,0
+name = "USSRMarker2"
+stateno = 889762
+helpertype = normal
+ownpal = 1
+ID = 889762   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+[State -2, RSSRFinisherReact] ;send opponent to train death
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,499]
+trigger1=numhelper(889761)
+trigger1=abs(Rootdist X-Helper(889761),Rootdist X)=[-100,100]
+trigger1 = stagevar(info.name) = "Ultimate_USSR" 
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger2=numhelper(889762)
+trigger2=abs(Rootdist X-Helper(889762),Rootdist X)=[-100,100]
+trigger2 = stagevar(info.name) = "Ultimate_USSR" 
+trigger2 =p2life=0
+trigger2=MatchOver
+value = 889763
+persistent = 0
+ignorehitpause = 1
+
+[State -2, USSR3Finisher] ;player walk away from train path
+type = ChangeState
+triggerall = movehit
+triggerall = stateno = [200,499]
+trigger1=numhelper(889761)
+trigger1=abs(Rootdist X-Helper(889761),Rootdist X)=[-100,100]
+trigger1 = stagevar(info.name) = "Ultimate_USSR" 
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger2=numhelper(889762)
+trigger2=abs(Rootdist X-Helper(889762),Rootdist X)=[-100,100]
+trigger2 = stagevar(info.name) = "Ultimate_USSR" 
+trigger2 =p2life=0
+trigger2=MatchOver
+value = 889769
+ctrl = 0
+ignorehitpause = 1
+
+;---------------------------------
+;Electric Ropes for Axel's Fatal Fury 2 stage
+[State -2, ElectricRing]
+type = Helper
+trigger1 = stagevar(info.name) = "Axel Hawk FFS Night"
+trigger1 = Numhelper(889770) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Axel Hawk FFS Night"
+trigger2 = Numhelper(889770) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -460,0
+name = "Electricrope2"
+stateno = 889770
+helpertype = normal
+ownpal = 1
+ID = 889770    ;Numhelper and ID have to be the same
+
+;---------------------------------
+;Explode Ropes for Neo Deo World Heroes Death Match stage
+[State -2, deathmatchfire]
+type = Helper
+trigger1 = stagevar(info.name) = "DIO DEATH MATCH"
+trigger1 = Numhelper(889772) = 0  ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "DIO DEATH MATCH"
+trigger2 = Numhelper(889772) = 0  ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = -460,0
+name = "Firerope"
+stateno = 889772
+helpertype = normal
+ownpal = 1
+ID = 889772  ;Numhelper and ID have to be the same
+
+;------------------------
+;Andy Barrel
+[State -2, Andy Barrel]
+type = Helper
+trigger1 = stagevar(info.name) = "Andy's FFS stage(day)"
+trigger1 = Numhelper(889240) = 0   ;Numhelper and ID have to be the same
+trigger1 = TeamMode != Simul
+trigger1 = Pos Y = 0
+trigger2 = stagevar(info.name) = "Andy's FFS stage(day)"
+trigger2 = Numhelper(889240) = 0   ;Numhelper and ID have to be the same
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+trigger2 = Pos Y = 0
+Pos = 350,-3
+name = "AndyBarrel"
+stateno = 889240
+helpertype = normal
+ownpal = 1
+ID = 889240   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;----------------------------------------------
+;VFGowcaizer Fire Flair
+[State -2, VFGowcaizer Fire Flair]
+type = Helper
+trigger1 = stagevar(info.name) = "VFGowcaizer Stage"
+trigger1 = Numhelper(889780) = 0 
+trigger1 = teamside = 1
+trigger1 = TeamMode != Simul
+trigger2 = stagevar(info.name) = "VFGowcaizer Stage"
+trigger1 = Numhelper(889780) = 0 
+trigger2 = teamside = 1
+trigger2 = TeamMode = Simul
+trigger2 = numpartner = 1 && id<partner,id
+Pos = 52,15
+name = "FireFlair"
+stateno = 889780
+helpertype = normal
+ownpal = 1
+ID = 889780   ;Numhelper and ID have to be the same
+size.xscale = 1.0
+size.yscale = 1.0
+
+;----------------------------------------
+;VVVVVV stage finishers VVVVVV
+;----------------------------------------
+[State -2, Stage Finisher Andy FF3]
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,699] 
+trigger1 = stagevar(info.name) = "Howard Arena"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1 = P2stateno !=889320
+trigger2 = stagevar(info.name) = "Howard Arena Storm"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2 = P2stateno !=889320
+trigger3 = stagevar(info.name) = "Howard Arena Thunder"
+trigger3 =p2life=0
+trigger3=MatchOver
+trigger3 = P2stateno !=889320
+trigger4 = stagevar(info.name) = "VFGowcaizer Stage"
+trigger4 =p2life=0
+trigger4=MatchOver
+trigger4 = P2stateno !=889320
+value = 889320
+ignorehitpause = 1
+persistent = 0
+
+[State -2, Stage Finisher Green Hell]
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,699] 
+trigger1 = stagevar(info.name) = "Green Hell"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1 = P2stateno !=889370
+trigger2 = stagevar(info.name) = "Andy's FFS stage(day)"
+trigger2 =p2life=0
+trigger2=MatchOver
+trigger2 = P2stateno !=889370
+value = 889370
+ignorehitpause = 1
+persistent = 0
+
+[State -2, Stage Finisher Deadpool MK]
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,699] 
+trigger1 = stagevar(info.name) = "The Dead Pool"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1 = P2stateno !=889629
+value = 889629
+ignorehitpause = 1
+persistent = 0
+
+[State -2, Stage Finisher Vagnad]
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,699] 
+trigger1 = stagevar(info.name) = "Vagnad Stage"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1 = P2stateno !=889310
+value = 889310
+ignorehitpause = 1
+persistent = 0
+
+[State -2, Stage Finisher Capcom Building]
+type = TargetState
+triggerall = movehit
+triggerall = stateno = [200,699] 
+trigger1 = stagevar(info.name) = "Ultimate_Capcom_Building"
+trigger1 =p2life=0
+trigger1=MatchOver
+trigger1 = P2stateno !=889755
+value = 889755
+ignorehitpause = 1
+persistent = 0
+
+;--------------------------------------
+;Remove Explod from Slam Masters Intros
+[State -2, RemoveExplod]
+type = RemoveExplod
+trigger1 = stateno = 0
+trigger1 = stagevar(info.name) = "Slam Masters LA" || stagevar(info.name) = "Slam Masters LA Ringout"
+ID = 889775
+ignorehitpause = 1
+
+
+;---------------------------------------
+;^^^^^^ stage finishers^^^^^^
+;---------------------------------------
+
+;-------------------------------------------------------------
+;^^^^^^^ ELECTR0's IM Code ^^^^^^^^
+;-------------------------------------------------------------
+;☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
+; 常時監視ステート（p2statenoなどで相手に行動を制御された時は実行しない）
+;☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
+
+[Statedef -3]
+
+;各種音声
+[State -3, 音を鳴らす]
+type = PlaySnd
+triggerall = Time = 1
+trigger1 = stateno = [52,54] 
+value = 5100, 0
+
+[State -3, PlaySnd]
+type = PlaySnd
+triggerall = time = 1
+triggerall = alive
+trigger1 = stateno = 5000
+trigger1 = Anim = 15000 || Anim = 15001 || Anim = 15010 || Anim = 15011
+trigger2 = stateno = 5010
+trigger2 = Anim = 15020 || Anim = 15021
+trigger3 = stateno = 5020
+trigger3 = Anim = 5000 || Anim = 5001 || Anim = 5010 || Anim = 5011
+value = S5000,0
+channel = 2
+
+[State -3, PlaySnd]
+type = PlaySnd
+triggerall = time = 1
+triggerall = alive
+trigger1 = stateno = 5000
+trigger1 = Anim = 15002 || Anim = 15012
+trigger2 = stateno = 5010
+trigger2 = Anim = 15022
+trigger3 = stateno = 5020
+trigger3 = Anim = 5002 || Anim = 5012
+trigger4 = stateno = 5070
+trigger4 = Anim = 5070
+trigger5 = stateno = 5080
+trigger5 = Anim = 5080 || Anim = 5090
+value = S5000,1
+channel = 2
+
+[State -3, PlaySnd]
+type = PlaySnd
+triggerall = time = 1
+triggerall = alive
+trigger1 = stateno = 5000 || stateno = 5010
+trigger1 = anim != [15000,15002]
+trigger1 = anim != [15010,15012]
+trigger1 = anim != [15020,15022]
+trigger2 = stateno = 5020
+trigger2 = anim != [5000,5002]
+trigger2 = anim != [5010,5012]
+trigger2 = anim != [5020,5022]
+value = S5000,1
+channel = 2
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;Width
+[State -3, 物理的なキャラの幅]
+type = Width
+triggerall = numenemy
+triggerall = enemynear,BackEdgeBodyDist <= 0 || enemynear,FrontEdgeBodyDist <= 0
+trigger1 = facing = 1
+trigger1 = enemynear,Pos X - Pos X >= 0
+trigger2 = facing = -1
+trigger2 = enemynear,Pos X - Pos X < 0
+edge = 5,0
+
+[State -3, 物理的なキャラの幅]
+type = Width
+triggerall = numtarget
+triggerall = target,statetype = A
+triggerall = target,BackEdgeBodyDist <= 0 || target,FrontEdgeBodyDist <= 0
+trigger1 = facing = 1
+trigger1 = target,Pos X - Pos X >= 0
+trigger2 = facing = -1
+trigger2 = target,Pos X - Pos X < 0
+edge = target,const(size.air.front),0
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ブロッキングテキスト
+
+;Blocking text (1p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20000) = 0
+triggerall = IsHelper != 1
+triggerall = Var(1) = 1
+trigger1 = stateno = [4000,4015]
+trigger2 = stateno = [4100,4115]
+trigger3 = stateno = [4200,4205]
+anim = 20060;20000
+ID = 20000
+pos = 10,ceil(fvar(19))
+postype = left
+removetime = 42
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+ignorehitpause = 1
+scale = 0.5,0.5
+
+;Blocking text (2p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20000) = 0
+triggerall = IsHelper != 1
+triggerall = Var(1) = 2
+trigger1 = stateno = [4000,4015]
+trigger2 = stateno = [4100,4115]
+trigger3 = stateno = [4200,4205]
+anim = 20061;20001
+ID = 20000
+pos = -10,ceil(fvar(19))
+postype = right
+removetime = 42
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+ignorehitpause = 1
+scale = 0.5,0.5
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20000) = 1
+ID = 20020
+ignorehitpause = 1
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20000) = 1
+ID = 20030
+ignorehitpause = 1
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20000) = 1
+ID = 20040
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;リバーサルテキスト
+
+;Reversal text (1p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20030) = 0
+triggerall = Var(1) = 1
+triggerall = time = 1
+triggerall = Stateno = 195 || Stateno = [1000,3200]
+;triggerall = movetype = A
+trigger1 = Prevstateno = [5120,5121]
+trigger2 = PrevStateNo = [5300,5301]
+trigger3 = PrevStateNo = [5400,5420]
+trigger4 = (PrevStateNo = [150,155]) || (PrevStateNo = [6150,6155])
+trigger5 = (Prevstateno = 5001) || (Prevstateno = 5011)
+trigger6 = Prevstateno = 5610
+anim = 20030
+ID = 20030
+pos = 10,ceil(fvar(19))
+postype = left
+removetime = 60
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+ignorehitpause = 1
+scale = 0.5,0.5
+
+;Reversal text (2p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20030) = 0
+triggerall = Var(1) = 2
+triggerall = time = 1
+triggerall = Stateno = 195 || Stateno = [1000,3200]
+;triggerall = movetype = A
+trigger1 = Prevstateno = [5120,5121]
+trigger2 = PrevStateNo = [5300,5301]
+trigger3 = PrevStateNo = [5400,5420]
+trigger4 = (PrevStateNo = [150,155]) || (PrevStateNo = [6150,6155])
+trigger5 = (Prevstateno = 5001) || (Prevstateno = 5011)
+trigger6 = Prevstateno = 5610
+anim = 20031
+ID = 20030
+pos = -10,ceil(fvar(19))
+postype = right
+removetime = 60
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+ignorehitpause = 1
+scale = 0.5,0.5
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20030) = 1
+ID = 20000
+ignorehitpause = 1
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20030) = 1
+ID = 20010
+ignorehitpause = 1
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20030) = 1
+ID = 20040
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ファーストアタックテキスト
+
+;First Attack text (1p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20040) = 0
+triggerall = var(1) = 1
+triggerall = var(9) = 0
+trigger1 = stateno != [800,899]
+trigger1 = numenemy
+trigger1 = enemy,movetype = H
+trigger1 = enemy,stateno = [5000,5099]
+trigger2 = stateno = 1050
+trigger3 = stateno = 1150
+trigger4 = stateno = 1250
+trigger5 = stateno = 1350
+trigger6 = numtarget
+trigger6 = target,stateno = 1560
+trigger7 = stateno = 3010
+trigger8 = stateno = 3150
+anim = 20040
+ID = 20040
+pos = 10,ceil(fvar(19)); + ifelse(NumExplod(20030) = 1,16,0)
+postype = left
+removetime = 60
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+ignorehitpause = 1
+scale = 0.5,0.5
+
+;First Attack text (2p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20040) = 0
+triggerall = var(1) = 2
+triggerall = var(9) = 0
+trigger1 = stateno != [800,899]
+trigger1 = numenemy
+trigger1 = enemy,movetype = H
+trigger1 = enemy,stateno = [5000,5099]
+trigger2 = stateno = 1050
+trigger3 = stateno = 1150
+trigger4 = stateno = 1250
+trigger5 = stateno = 1350
+trigger6 = numtarget
+trigger6 = target,stateno = 1560
+trigger7 = stateno = 3010
+trigger8 = stateno = 3150
+anim = 20041
+ID = 20040
+pos = -10,ceil(fvar(19)); + ifelse(NumExplod(20031) = 1,16,0)
+postype = right
+removetime = 60
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+ignorehitpause = 1
+scale = 0.5,0.5
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20040) = 1
+ID = 20000
+ignorehitpause = 1
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20040) = 1
+ID = 20010
+ignorehitpause = 1
+
+[State -3, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumExplod(20040) = 1
+ID = 20030
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;スーパーアーツフィニッシュテキスト
+;Super Arts Finish text (1p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20050) = 0
+triggerall = Var(1) = 1
+triggerall = stateno = 180
+trigger1 = var(59) = -1
+anim = 20050
+ID = 20050
+pos = 10,ceil(fvar(19))
+postype = left
+removetime = 120
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+scale = 0.5,0.5
+
+;Super Arts Finish text (2p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20050) = 0
+triggerall = Var(1) = 2
+triggerall = stateno = 180
+trigger1 = var(59) = -1
+anim = 20051
+ID = 20050
+pos = -10,ceil(fvar(19))
+postype = right
+removetime = 120
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+scale = 0.5,0.5
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;勝利判定
+[State -3, VarSet]
+type = VarSet
+trigger1 = roundstate = [0,1]
+var(48) = 0
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = var(48) = 0
+trigger1 = roundstate = 3
+var(48) = 1
+ignorehitpause = 1
+
+[State -2, VarAdd]
+type = VarSet
+trigger1 = var(48) = 1
+var(48) = -1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;スーパーアーツ　フィニッシュ
+[State -3, VarSet]
+type = VarSet
+trigger1 = roundstate = [0,1]
+var(59) = 0
+
+[state -3, VarSet]
+type = VarSet
+triggerall = var(59) = 0
+triggerall = winko
+trigger1 = stateno = [3000,3210]
+var(59) = 1
+ignorehitpause = 1
+
+[state -3, helper]
+type = null;helper
+triggerall = NumHelper(10000) = 0
+triggerall = NumHelper(11000) = 0
+triggerall = var(48)
+triggerall = var(59) = 1
+triggerall = numtarget
+trigger1 = !numpartner
+trigger2 = numpartner
+trigger2 = partner,alive = 0
+ID = 10000
+pos = 0,0
+postype = left
+stateno = 10000
+helpertype = normal
+name = "sa-ko"
+pausemovetime = 99999999
+supermovetime = 99999999
+sprpriority = -5
+ownpal = 1
+keyctrl = 0
+ignorehitpause = 1
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;パーフェクトテキスト
+[State -2, VarAdd]
+type = VarSet
+trigger1 = roundstate != [3,4]
+fvar(8) = 0
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = roundstate = 3
+trigger1 = life >= var(52)
+fvar(8) = 1
+ignorehitpause = 1
+
+;Perfect text (1p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20070) = 0
+triggerall = Var(1) = 1
+trigger1 = stateno = 180
+trigger1 = fvar(8) = 1
+trigger1 = life >= var(52)
+anim = 20070
+ID = 20070
+pos = 10,ceil(fvar(19)) + ifelse(var(59)=-1,16,0)
+postype = left
+removetime = 120
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+scale = 0.5,0.5
+
+;Perfect text (2p)
+[State -3, Explod]
+type = Explod
+triggerall = fvar(18) = 1
+triggerall = NumExplod(20070) = 0
+triggerall = Var(1) = 2
+trigger1 = stateno = 180
+trigger1 = fvar(8) = 1
+trigger1 = life >= var(52)
+anim = 20071
+ID = 20070
+pos = -10,ceil(fvar(19)) + ifelse(var(59)=-1,16,0)
+postype = right
+removetime = 120
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+supermove = 1
+bindtime = -1
+sprpriority = -2
+ownpal = 1
+scale = 0.5,0.5
+
+;△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△△
+;ノーマルフィニッシュ
+[state -3, VarSet]
+type = VarSet
+triggerall = var(59) = 0
+triggerall = winko
+trigger1 = stateno = [200,950]
+trigger2 = stateno = [1000,1560]
+var(59) = 2
+ignorehitpause = 1
+
+[state -2, helper]
+type = null;helper
+triggerall = NumHelper(10000) = 0
+triggerall = NumHelper(11000) = 0
+triggerall = var(59) = 2
+triggerall = var(48)
+triggerall = numtarget
+trigger1 = !numpartner
+trigger2 = numpartner
+trigger2 = partner,alive = 0
+ID = 11000
+pos = 0,0
+postype = left
+stateno = 11000
+helpertype = normal
+name = "no-ko"
+pausemovetime = 99999999
+supermovetime = 99999999
+sprpriority = -5
+ownpal = 1
+keyctrl = 0
+ignorehitpause = 1
+
+[State -3, Movement Afterimage]
+type = afterimage
+triggerall = time = 1 && !var(20)
+trigger1 = stateno = 50 && (var(3) = 2 || var(3) = 3)
+trigger2 = (stateno = [700,715])
+time = 2
+timegap = 1
+framegap = 4
+length = 9
+palbright = 0, 0, 0
+palcontrast = 128, 128, 128
+palpostbright = 0, 0, 0
+paladd = 0, 0, 0
+palmul = 0.9, 0.9, 0.9
+trans = add1
+
+
+[State -3, supershadowtime]
+type = AfterImageTime
+trigger1 = (stateno=[3000,4999]) && AnimElemTime(1) >= 0
+trigger2 = (stateno=[2000,2999]) && AnimElemTime(1) >= 0
+trigger3 = (stateno=[700,715]) && AnimElemTime(1) >= 0
+time = 2
+
+[State -3, Prevent Crossup]
+type=width
+trigger1= 1
+edge=8,0
+ignorehitpause=1
+
+[State -3, Super Finish]
+type = helper
+triggerall = winKO
+triggerall = roundstate = 3 && !numhelper(8600)
+trigger1 = MoveHit = 1 && (StateNo = [3000,4999])
+trigger1 = var(23) := stateno
+trigger2 = StateNo = [3000,3099]
+trigger2 = var(23) := 3000
+trigger3 = StateNo = [3100,3199]
+trigger3 = var(23) := 3100
+trigger4 = StateNo = [3200,3299]
+trigger4 = var(23) := 3200
+helpertype = normal
+stateno = 8600
+ID = 8600
+name = "Super Finish"
+postype = left
+pos = 160, -120
+ownpal = 1
+pausemovetime = 255
+supermovetime = 255
+ignorehitpause = 1

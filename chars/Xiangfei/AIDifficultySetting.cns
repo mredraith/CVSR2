@@ -1,0 +1,736 @@
+[statedef -2, -2]
+
+[State -2, AI Difficulty]
+type = VarSet
+triggerall = (var(20) > 0)
+trigger1 = (RoundState = 2)
+trigger2 = Alive
+var(20) = 8 ;<-----Change this to adjust difficulty: 1(easiest) to 8(hardest)
+IgnoreHitPause = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[State -2, StopAI]
+type = VarSet
+triggerall = (var(20) > 0)
+trigger1 = (RoundState != 2)
+trigger2 = !Alive
+var(20) = -2
+IgnoreHitPause = 1
+
+[State 0, VarSet, Life1];3
+type = VarSet
+trigger1 = enemy, const(data.life) >= 2000 && enemy, const(data.life) < 2500
+v = 16
+value = 2
+
+[State 0, VarSet, Life3];5
+type = VarSet
+trigger1 = enemy, const(data.life) >= 2500 && enemy, const(data.life) < 3000
+v = 16
+value = 3
+
+[State 0, VarSet, Life4];7
+type = VarSet
+trigger1 = enemy, const(data.life) >=3000 && enemy, const(data.life) < 3500
+v = 16
+value = 4
+
+[State 0, VarSet, Life5];9
+type = VarSet
+trigger1 = enemy, const(data.life) >= 3500 && enemy, const(data.life) < 4000
+v = 16
+value = 5
+
+[State 0, VarSet, Life6];25
+type = VarSet
+trigger1 = enemy, const(data.life) >= 4000
+v = 16
+value = 10
+
+[State 0, Varadd, Defence1]
+type = Varset
+trigger1 = enemy, const(data.defence) >= 120 && enemy, const(data.defence) < 170
+v = 17
+value = 1
+
+[State 0, Varadd, Defence1]
+type = Varset
+trigger1 = enemy, const(data.defence) >= 170 && enemy, const(data.defence) < 250
+v = 17
+value = 2
+
+[State 0, VarSet, Defence3]
+type = Varset
+trigger1 = enemy, const(data.defence) >= 250 && enemy, const(data.defence) < 300
+v = 17
+value = 3
+
+[State 0, VarSet, Defence4]
+type = Varset
+trigger1 = enemy, const(data.defence) >=300 && enemy, const(data.defence) < 350
+v = 17
+value = 4
+
+[State 0, VarSet, Defence5]
+type = Varset
+trigger1 = enemy, const(data.defence) >= 350 && enemy, const(data.defence) < 400
+v = 17
+value = 6
+
+[State 0, VarSet, Defence6]
+type = Varset
+trigger1 = enemy, const(data.defence) >= 400
+v = 17
+value = 15
+
+[State 0, VarSet, Attack1]
+type = Varset
+trigger1 = enemy, const(data.attack) >= 200 && enemy, const(data.attack) < 250
+fv = 18
+value = 0.5
+
+[State 0, VarSet, Attack1]
+type = Varset
+trigger1 = enemy, const(data.attack) >= 250 && enemy, const(data.attack) < 300
+fv = 18
+value = 0.3
+
+[State 0, VarSet, Attack1]
+type = Varset
+trigger1 = enemy, const(data.attack) >= 300 && enemy, const(data.attack) < 350
+fv = 18
+value = 0.2
+
+[State 0, VarSet, Attack1]
+type = Varset
+trigger1 = enemy, const(data.attack) >= 350 && enemy, const(data.attack) < 400
+fv = 18
+value = 0.1
+
+[State 0, VarSet, Attack1]
+type = Varset
+trigger1 = enemy, const(data.attack) >= 400
+fv = 18
+value = 0
+
+[State -2, Detect Rape Monsters]
+type = Varset
+trigger1 = enemy, name = "Kuromaru" || enemy, authorname = "Anonygoose" || enemy, authorname = "Jeffry081"
+trigger2 = enemy, name = "SLIME" || enemy, authorname = "anasakusya" || enemy, name = "Niku"
+trigger3 = enemy,name = "roper" || enemy, name = "Ra_plant" || enemy, name = "Tendril"
+trigger4 = enemy,name = "Vairocana" || enemy, authorname = "Souken" || enemy, authorname = "anamochi"
+trigger5 = enemy,name = "ripps" || enemy, authorname = "The Doctor" || enemy, name = "Kingpamaty"
+V = 29
+value = 1
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = var(29) =1
+value = Var(16) + Var(17)
+
+[State 0, NotHitBy]
+type = NotHitBy
+trigger1 = var(29) = 1 && StateNo = [1000,3300]
+trigger2 = var(29) = 1 && StateNo = [100,106]
+trigger3 = var(29) = 1 && StateNo = [300,301]
+trigger4 = var(29) = 1 && StateNo = [10100,10101]
+trigger5 = var(29) = 1 && StateNo = [11201,11204]
+trigger6 = var(29) = 1 && StateNo = 900
+trigger7 = var(29) = 1 && StateNo = 10950
+trigger8 = enemy, authorname = "anasakusya"
+value = SCA,AP,AT
+time = 1
+
+[State 0, AttackMulSet]
+type = AttackMulSet
+trigger1 = enemy, const(data.life) >= 2000 && enemy, const(data.defence) >= 120
+trigger2 = Var(29) = 1
+time = -1
+value = Var(16) + Var(17) + Var(29)
+
+[State 0, DefenceMulSet]
+type = DefenceMulSet
+trigger1 = enemy, Const(data.attack)>= 200
+value = FVar(18)
+
+[State -2, P2 Facing]
+type= TargetFacing
+trigger1= movecontact=1 && numtarget=1
+trigger1= !(target,hitshakeover) && !(target,hitfall) && (target,time<=1)
+value= ifelse(p2dist x>=0, -1, 1)
+ignorehitpause= 1
+
+[State -2, Debug Info]
+type = DisplayToClipboard
+trigger1 = 1
+text = "DefenceMul = %f AI Level = %d"
+params= (1+(numhelper(980)*.4)), var(20)
+ignorehitpause = 1
+
+[State -2, Debug Info]
+type = AppendToClipboard
+trigger1 = 1
+text = "\nWINMUGEN version"
+ignorehitpause = 1
+
+[State -2, Contact Detection]
+type = Varset
+trigger1 = movecontact = 1 && var(30) < 0
+var(30) = hitpausetime
+ignorehitpause = 1
+
+[State -2, Hit/Guard Sparks]
+type = Helper
+triggerall = (stateno != [800,899])
+triggerall = stateno != 3000
+triggerall = (stateno != [1000,1131])
+triggerall = movecontact = 1 && var(30) = hitpausetime
+trigger1 = movehit = 1 && numenemy
+trigger1 = var(33) = 2000 || var(33) = 2001 || var(33) = 2002 || var(33) = 2020 || var(33) = 2021 || var(33) = 2022 || var(33) = 2051
+trigger2 = moveguarded = 1 && numenemy
+trigger2 = var(34) = 2010
+helpertype = normal
+stateno = ifelse(moveguarded, var(34), var(33))
+ID = 2000
+name = "hitspark"
+postype = P1
+pos = ifelse(P2dist x < 0, 0, ifelse(P2dist x < var(35), ceil(P2dist x), var(35))), var(36)
+facing = -1
+ownpal = 1
+pausemovetime = 65535
+supermovetime = 65535
+ignorehitpause = 1
+
+[State -2, Hit Detection]
+type = Varset
+trigger1 = 1
+var(30) = -1
+
+[State -2, Hit Detection]
+type = VarRangeSet
+trigger1 = movetype = I
+trigger2 = movetype = H && time
+first = 30
+last = 36
+value = -1
+ignorehitpause = 1
+
+[Statedef -3,-3]
+
+[State -3, AI Helper (Compatibly Partnered Version)]
+type = Helper
+trigger1 = !var(20)
+trigger1 = !NumHelper(9742)
+trigger1 = (RoundState = 2)
+trigger1 = Alive
+trigger1 = NumPartner
+trigger1 = Partner,SelfAnimExist(9741)
+HelperType = normal
+name = "AI Helper (Simul Version)"
+ID = 9742
+pos = 9999999,99999
+StateNo = 9742
+KeyCtrl = 1
+PauseMoveTime = 999999999
+SuperMoveTime = 999999999
+
+[State -3, AI Helper]
+type = Helper
+triggerall = !var(20)
+triggerall = !NumHelper(9741)
+triggerall = (RoundState = 2)
+triggerall = Alive
+trigger1 = !NumPartner
+trigger2 = !(Partner,SelfAnimExist(9741))
+HelperType = normal
+name = "AI Helper"
+ID = 9741
+pos = 9999999,99999
+StateNo = 9741
+KeyCtrl = 1
+PauseMoveTime = 999999999
+SuperMoveTime = 999999999
+
+[State -3, TurnBackOnAI]
+type = VarSet
+trigger1 = (var(20) = -2)
+trigger1 = (RoundState = 2)
+trigger1 = Alive
+var(20) = 8
+
+[State -3, GameTime]
+type = VarSet
+trigger1 = 1
+var(58) = GameTime
+ignoreHitPause = 1
+
+[State -3, Esaka Attack Down]
+type = AttackMulSet
+trigger1 = numhelper(970) != 0
+value = 0.7
+
+[State -3, Esaka Defence Down]
+type = DefenceMulSet
+trigger1 = numhelper(980) != 0
+trigger1 = life < 350
+value = 1+(numhelper(980)*.4)
+
+[State 0, Esaka Defence Down]
+type = LifeAdd
+trigger1 = numhelper(980) != 0
+trigger1 = enemynear,movehit
+trigger1 = movetype = H
+trigger1 = life >= 350
+value = ceil(GetHitVar(damage)*(numhelper(980)*-.4))
+kill = 0
+
+[State -3, Prevent Undergound Juggles]
+type= targetbind
+trigger1= movehit=1
+trigger1= numtarget=1 && numenemy
+trigger1= (target,time<=1) && (target,ID=enemynear,ID)
+trigger1= !(target,hitshakeover) && (target, hitfall) && (target, pos y>0)
+pos= ceil(p2dist x), ceil(-pos y)
+ignorehitpause= 1
+
+[State -3, Landing Sound]
+type = PlaySnd
+triggerall = Time = 1
+trigger1 = stateno = 52
+trigger2 = stateno = 106
+trigger3 = stateno = 452
+value = 40, 0
+
+[State -3, After Image Time]
+type = AfterImageTime
+trigger1 = movetype = H
+trigger2 = stateno = [0,99]
+trigger2 = stateno != 50
+trigger3 = stateno = [5000,5999]
+trigger4 = stateno = 106
+Time = 0
+
+[State 0, StopSnd]
+type = StopSnd
+trigger1 = Movetype = H
+channel = 7
+
+[State -3, Stand/Air Light/Med Hit Voice]
+type=PlaySnd
+triggerall=random < 700
+triggerall = Lose = 0
+triggerall=time = 1
+triggerall=stateno = 5000 || stateno = 5010 || stateno = 5020
+trigger1=anim = 5000
+trigger2=anim = 5001
+trigger3=anim = 5010
+trigger4=anim = 5011
+value=s5000,(0+random%3)
+channel = 8
+
+[State -3, Stand Hard/Air Hit Voice]
+type=PlaySnd
+triggerall=random < 700
+triggerall = Lose = 0
+triggerall=time = 1
+triggerall=stateno = 5000 || stateno = 5010 || stateno = 5020
+trigger1=anim = 5002
+trigger2=anim = 5012
+trigger3=anim = 5030
+value=s5001,(0+random%3)
+channel = 8
+
+[State -3, Crouch Hit Voice]
+type=PlaySnd
+triggerall=random < 700
+triggerall = Lose = 0
+trigger1=time = 1
+triggerall=stateno = 5000 || stateno = 5010
+trigger1=anim = 5022
+value=s5002,(0+random%3)
+channel = 8
+
+[State -3, Get Hit Voice]
+type=PlaySnd
+triggerall=random < 700
+triggerall = Lose = 0
+trigger1=time = 1
+trigger1=StateNo = 5020
+value=s5003,(0+random%2)
+channel = 8
+
+[State -3, Get Hit Voice]
+type=PlaySnd
+triggerall = Lose = 0
+trigger1=random < 500
+trigger1=time = 1
+trigger1=StateNo = 5030
+value=s5004,0
+channel = 8
+
+[State -3, Get Tripped/Ground Hit Voice]
+type=PlaySnd
+triggerall=random < 700
+triggerall = Lose = 0
+triggerall=time = 1
+trigger1=stateno = 5070
+trigger2=stateno = 5080
+trigger3=stateno = 5090
+value=s5004,(1+random%2)
+channel = 8
+
+[State -3, Skip Watch Mode Intro Helper]
+type = Helper
+trigger1 = NumHelper(8000) = 0
+trigger1 = Roundstate != 2
+trigger1 = 1
+helpertype = Normal
+name = "IntroSkip"
+pos = 290,-4008
+id = 8000
+postype = p1
+stateno = 8000
+size.xscale = 0
+size.yscale = 0
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999999
+pausemovetime = 999999999
+ignorehitpause=1
+
+[State -3, KO Sound]
+type = Helper
+trigger1 = NumHelper(8001) = 0
+trigger1 = alive
+helpertype = Normal
+name = "KO Sound"
+pos = 70,0
+id = 8001
+postype = p1
+stateno = 8001
+size.xscale = 0
+size.yscale = 0
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999999
+pausemovetime = 999999999
+ignorehitpause=1
+persistent = 0
+
+[State -3, Esaka KO]
+type = Helper
+triggerall = NumHelper(8002) = 0
+trigger1 = winKO && stateno = [910,930]
+helpertype = Normal
+name = "Esaka KO"
+pos = 0,0
+id = 8002
+postype = p1
+stateno = 8002
+size.xscale = 0
+size.yscale = 0
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999999
+pausemovetime = 999999999
+ignorehitpause=1
+persistent = 0
+
+[State 0, Nampa Hitspark]
+type = Helper
+trigger1 =  Projhit1001 = 1
+helpertype = normal ;player
+name = "hitspark"
+ID = 2000
+stateno = 2021
+pos = 110,-57
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 0, Nampa EX Hitspark]
+type = Helper
+trigger1 = ProjHit1002 = 1
+helpertype = normal ;player
+name = "hitspark"
+ID = 2000
+stateno = 2021
+pos = 140,-57
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 0, Nampa Guardspark]
+type = Helper
+trigger1 =  Projguarded1001 = 1
+helpertype = normal ;player
+name = "hitspark"
+ID = 2000
+stateno = 2010
+pos = 105,-57
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+[State 0, Nampa EX Guardspark]
+type = Helper
+trigger1 = Projguarded1002 = 1
+helpertype = normal ;player
+name = "hitspark"
+ID = 2000
+stateno = 2010
+pos = 135,-57
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+persistent = 0
+
+
+[State -3, Super KO]
+type = Helper
+triggerall = NumHelper(1800) = 0
+trigger1= (anim=[3000,3020]) || anim = 3110
+trigger1= winKO && movecontact
+trigger2 = WinKO && ProjHit3211 = 1,<15
+trigger3 = WinKO && anim = 3225
+;trigger4 = winko && movetype = A
+helpertype = normal
+name = "Super KO"
+pos = 160,0                           ;WinMugen
+postype = left
+ID = 1800
+facing = 1
+stateno = 1800
+ignorehitpause=1
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+;Skip Intro in Watch Mode
+[Statedef 8000]
+type    = S
+anim = 9999
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = Roundstate = 2
+
+; - KO Sound
+[Statedef 8001]
+type    = S
+anim = 9999
+
+[State 0, PosSet]
+type = PosSet
+trigger1 = root,alive = 0
+x = (root, pos x)
+y = (root, pos y)
+
+[State -3, KOSND]
+type=PlaySnd
+trigger1 = root,alive = 0
+value=s11,1+random%5
+channel = 8
+ignorehitpause=1
+persistent = 0
+
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = root,alive = 0
+
+[Statedef 8002, - Esaka KO]
+type    = S
+anim = 9999
+
+[State 0, PosSet]
+type = PosSet
+trigger1 = root,alive = 0
+x = (root, pos x)
+y = (root, pos y)
+
+[State 0, AssertSpecial]
+type = null;AssertSpecial
+trigger1 =  1
+flag = nomusic
+
+[Statedef 1800,Super KO]
+type    = S
+movetype= I
+physics = S
+juggle  = 0
+poweradd= 0
+ctrl = 0
+anim = 9999
+sprpriority = -4
+
+[State 9999: NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S1800,0
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S1800,1
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = S1800,2
+
+[State 0, Burst]
+type = Explod
+trigger1 =time = 0
+anim =1810
+ID =1810
+pos = 160,120                           ;WinMugen
+postype =left  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = 78
+supermovetime = 0
+pausemovetime = 0
+scale = .5,.5
+sprpriority = -5
+ontop = 0
+shadow = 0,0,0
+ownpal = 1
+
+[State 0, Xiangfei Portrait]
+type = Explod
+trigger1 =time = 0
+anim =1800
+ID =1800
+pos = 160,120                           ;WinMugen
+postype =left  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = -2
+supermovetime = 0
+pausemovetime = 0
+sprpriority = -4
+ontop = 0
+shadow = 0,0,0
+ownpal = 1
+scale= 1,1
+
+[State 0, ModifyExplod]
+type = ModifyExplod
+trigger1 = time < 10
+ID =  1800
+scale = 1-((time*.05)-(time*-.001)),1-((time*.05)-(time*-.001))
+
+[State 0, Fade to White]
+type =Explod
+trigger1 =time = 25
+anim =1802
+ID =1802
+pos = 160,120                           ;WinMugen
+postype =left  ;p2,front,back,left,right
+facing = 1
+vfacing = 1
+bindtime = -1
+removetime = 53
+supermovetime = 0
+pausemovetime = 0
+scale = 8,6
+sprpriority = -5
+ontop = 1
+shadow = 0,0,0
+ownpal = 1
+
+[state 1800]
+type = assertspecial
+trigger1 = 1
+flag = nobg
+flag2 = nofg
+flag3 = nomusic
+
+[State 1800, DestroySelf]
+type = DestroySelf
+trigger1 = Time = 78
+
+
+;-------------- Generated by Fighter Factory -------------
+
+;--------------------- Variable List ----------------------
+
+; Var(2) - StateDef 900, esaka, 901, - override, 940, - recover
+; Var(3) - StateDef 900, esaka, 901, - override, 940, - recover
+; Var(4) - StateDef 182, - hmmph
+; Var(16) - StateDef -2, -2
+; Var(17) - StateDef -2, -2
+; Var(20) - StateDef -2, -2
+; Var(29) - StateDef -2, -2
+; Var(30) - StateDef -2, -2
+; Var(33) - StateDef 200, 205, - stand jab2, 210, 215, - stand strong2, 220, stand fierce, 225, - stand fierce2, 230, 240, 245, - stand forward2, 250, 255,- overhead kick, 400, 405, - crouch jab2, 410, 415, - crouch strong2, 420, 430, 440, 450, 451, - leaping roundhouse, 452, - leaping roundhouse 2, 600, 610, 620, 630, 640, 650, 701, 702, 703, 910, - high box, 920, - mid box, 930, - low box, 1135, - p1 ekisupo, 1210, tenpou zan m, 1211, - rise, 1220, tenpou zan h, 1221, - rise, 1230, tenpou zan ex, 3010, chou pai-long medium, 3020, chou pai-long hard, 3110, - shoulder charge
+; Var(34) - StateDef 200, 205, - stand jab2, 210, 215, - stand strong2, 220, stand fierce, 225, - stand fierce2, 230, 240, 245, - stand forward2, 250, 255,- overhead kick, 400, 405, - crouch jab2, 410, 415, - crouch strong2, 420, 430, 440, 450, 451, - leaping roundhouse, 452, - leaping roundhouse 2, 600, 610, 620, 630, 640, 650, 701, 702, 703, 910, - high box, 920, - mid box, 930, - low box, 1135, - p1 ekisupo, 1210, tenpou zan m, 1211, - rise, 1220, tenpou zan h, 1221, - rise, 1230, tenpou zan ex, 3010, chou pai-long medium, 3020, chou pai-long hard, 3110, - shoulder charge
+; Var(35) - StateDef 200, 205, - stand jab2, 210, 215, - stand strong2, 220, stand fierce, 225, - stand fierce2, 230, 240, 245, - stand forward2, 250, 255,- overhead kick, 400, 405, - crouch jab2, 410, 415, - crouch strong2, 420, 430, 440, 450, 451, - leaping roundhouse, 452, - leaping roundhouse 2, 600, 610, 620, 630, 640, 650, 701, 702, 703, 910, - high box, 920, - mid box, 930, - low box, 1135, - p1 ekisupo, 1210, tenpou zan m, 1211, - rise, 1220, tenpou zan h, 1221, - rise, 1230, tenpou zan ex, 3010, chou pai-long medium, 3020, chou pai-long hard, 3110, - shoulder charge
+; Var(58) - StateDef -3,-3
+
+;--------------------- Float Variable List ----------------------
+
+; fVar(0) - StateDef 40
+; fVar(18) - StateDef -2, -2
+

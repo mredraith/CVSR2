@@ -1,0 +1,215 @@
+[statedef -2]
+
+;---------------------------------------------------------------------------
+;Gethit Sounds!
+[State -2, Gethit Sound 1]
+type = PlaySnd
+triggerall = Time = 1
+trigger1 = random < 150 && stateno = 5000
+value = S0,3
+
+[state -2, Gethit Sound 2]
+type = playsnd
+triggerall = Time = 1
+trigger1 = random < 500 && stateno = 5050
+value = S10,2
+
+[state -2, Gethit Sound 2]
+type = playsnd
+triggerall = Time = 1
+trigger1 = random < 150 && stateno = 5070
+value = S10,2
+
+[state -2, Gethit Sound 3]
+type = playsnd
+triggerall = Time = 1
+trigger1 = random < 750 && stateno = 5010
+value = S10,2
+
+[State -2, StopSnd]
+type = StopSnd
+trigger1 = roundstate = 2
+trigger2 = stateno != [19000,19002]
+channel = 10
+
+[State -2, Hyper Combo Finish!!]
+type = Helper
+triggerall = NumHelper(99999) <= 0
+triggerall = stateno = [3000,3999]
+triggerall = roundstate = 3
+trigger1 = Winko
+helpertype = normal
+name = "HyperFinish"
+ID = 99999
+stateno = 99999
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+
+[State -2, Fffffinish!!]
+type = Helper
+triggerall = NumHelper(99998) <= 0
+triggerall = NumHelper(99999) <= 0
+triggerall = stateno != [3000,3999]
+triggerall = roundstate = 3
+trigger1 = Winko
+helpertype = normal
+name = "Finish"
+ID = 99998
+stateno = 99998
+ownpal = 1
+supermovetime = 9999
+pausemovetime = 9999
+ignorehitpause = 1
+
+[State -2, RemoveExplod]
+type = RemoveExplod
+trigger1 = NumHelper(99999) > 0
+trigger2 = stateno != [3000,3999]
+id = 8888
+
+[State -2, It's Not Over Yet...]
+type = PlaySnd
+triggerall = Var(6) = 1
+trigger1 = Life <= 300
+value = S0,5
+
+[State -2, VarAdd]
+type = varadd
+triggerall = Life <= 300
+trigger1 = Var(6)<= 2
+v = 6
+value = 1
+
+[State -2, P2Dist XY]
+type = DisplayToClipboard
+trigger1 = 1
+text = "P2Dist X = %f and P2BodyDist X = %f \n P2BodyDist Y = %f | AI = %d and Random Var(4) = %d"
+params = P2Dist X, P2BodyDist X, P2BodyDist Y, Var(7), Var(4)
+
+;--En el air recovery
+[state -2, hu]
+type = playsnd
+triggerall = time = 2
+trigger1 = stateno = 5210
+value = 0, 1
+
+;toca sonido cuando cae
+[state -2, sonido]
+type = playsnd
+triggerall = time = 2
+trigger1 = stateno = 5100
+trigger2 = stateno = 5110
+trigger3 = stateno = 106
+value = 0,6
+
+[State -2, 1]
+type = AfterImageTime
+trigger1 = stateno = 5000
+trigger2 = stateno = 5001
+trigger3 = stateno = 5002
+trigger4 = stateno = 5010
+trigger5 = stateno = 5011
+trigger6 = stateno = 5012
+trigger7 = stateno = 5020
+trigger8 = stateno = 5021
+trigger9 = stateno = 5022
+trigger10 = stateno = 5070
+Time = 0
+
+[State -2, 2]
+type = PlaySnd
+trigger1 = anim = 5300
+trigger1 = time = 1
+value = 10,2
+
+[State -2, 13]
+type = PlaySnd
+trigger1 = anim = 5500
+trigger1 = time = 1
+value = 10,2
+
+[State -2, Combo VarAdd]
+type = VarAdd
+trigger1 = (hitpausetime = 1) && (P2Movetype = H) && (MoveHit)
+trigger2 = ProjHitTime(0) = 1
+v = 20
+value = 1
+ignorehitpause = 1
+
+[State -2, VarSet]
+type = VarSet
+trigger1 = P2Movetype != H
+v = 20
+value = 0
+
+[State -2, Clipboard]
+type = DisplayToClipboard
+trigger1 = 1
+text = "Counter = %d"
+params = Var(20)
+
+;-----------------------------------------------------------------------------
+;Combos do less damage
+
+[State -2, AttackMulSet 1]
+type = AttackMulSet
+triggerall = stateno > 3000
+trigger2 = hitdefattr = SCA, HA, HP
+trigger1 = Var(20) >= 0
+value = 1
+
+[State -2, AttackMulSet 1]
+type = AttackMulSet
+triggerall = stateno < 3000
+trigger1 = Var(20) <= 0
+value = 1
+
+[State -2, AttackMulSet 2]
+type = AttackMulSet
+triggerall = stateno < 3000
+trigger1 = Var(20) = [1,4]
+value = 0.5
+
+[State -2, AttackMulSet 3]
+type = AttackMulSet
+triggerall = stateno < 3000
+trigger1 = Var(20) = [5,8]
+value = 0.3
+
+[State -2, AttackMulSet 4]
+type = AttackMulSet
+triggerall = stateno < 3000
+trigger1 = Var(20) > 8
+value = 0.2
+
+[Statedef -3]
+
+[State -3, AssertSpecial]
+type = AssertSpecial
+triggerall = roundno = 1
+trigger1 = roundstate < 2
+flag = nomusic
+
+[State -3, Return to fall state]
+type = ChangeState
+trigger1 = Stateno = 0
+trigger1 = Pos y != 0
+value = 50
+ctrl = 1
+
+[State -3, AfterImageTime]
+type = AfterImageTime
+trigger1 = stateno = [19000,19001]
+trigger2 = stateno = [100,102]
+trigger3 = stateno = 3800
+trigger4 = stateno = 3900
+time = 2
+;ignorehitpause =
+;persistent =
+
+[State 710, 1]
+type = StopSnd
+trigger1 = movetype = H
+channel = 1

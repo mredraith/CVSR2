@@ -1,0 +1,1148 @@
+;#ADD004BASIC PIEs#
+;====================< SINGLE BUTTON >====================
+
+[Command]
+name = "a"
+command = a
+time = 1
+[Command]
+name = "b"
+command = b
+time = 1
+[Command]
+name = "c"
+command = c
+time = 1
+[Command]
+name = "x"
+command = x
+time = 1
+[Command]
+name = "y"
+command = y
+time = 1
+[Command]
+name = "z"
+command = z
+time = 1
+[Command]
+name = "start"
+command = s
+time = 1
+
+
+;====================< HOLD DIR >====================
+
+[Command]
+name = "holdfwd"
+command = /$F
+time = 1
+[Command]
+name = "holdback"
+command = /$B
+time = 1
+[Command]
+name = "holdup"
+command = /$U
+time = 1
+[Command]
+name = "holddown"
+command = /$D
+time = 1
+
+
+;====================< HOLD BUTTON >====================
+
+[Command]
+name = "holda"
+command = /a
+time = 1
+[Command]
+name = "holdb"
+command = /b
+time = 1
+[Command]
+name = "holdc"
+command = /c
+time = 1
+[Command]
+name = "holdx"
+command = /x
+time = 1
+[Command]
+name = "holdy"
+command = /y
+time = 1
+[Command]
+name = "holdz"
+command = /z
+time = 1
+[Command]
+name = "holdstart"
+command = /s
+time = 1
+
+
+;====================< DIR >====================
+
+[Command]
+name = "fwd"
+command = F
+time = 1
+[Command]
+name = "back"
+command = B
+time = 1
+[Command]
+name = "up"
+command = U
+time = 1
+[Command]
+name = "down"
+command = D
+time = 1
+
+
+;====================< RELEASE DIR >====================
+
+[Command]
+name = "rlsfwd"
+command = ~$F
+time = 1
+[Command]
+name = "rlsback"
+command = ~$B
+time = 1
+[Command]
+name = "rlsup"
+command = ~$U
+time = 1
+[Command]
+name = "rlsdown"
+command = ~$D
+time = 1
+
+
+;====================< RELEASE BUTTON >====================
+
+[Command]
+name = "rlsx"
+command = ~x
+time = 1
+[Command]
+name = "rlsy"
+command = ~y
+time = 1
+[Command]
+name = "rlsz"
+command = ~z
+time = 1
+[Command]
+name = "rlsa"
+command = ~a
+time = 1
+[Command]
+name = "rlsb"
+command = ~b
+time = 1
+[Command]
+name = "rlsc"
+command = ~c
+time = 1
+
+;-| Super Motions |--------------------------------------------------------
+[Command]
+name = "4123641236pp"
+command = ~B, DB, D, DF, F, B, DB, D, DF, F, x+y
+time = 64
+[Command]
+name = "4123641236pp"
+command = ~B, DB, D, DF, F, B, DB, D, DF, F, x+z
+time = 64
+[Command]
+name = "4123641236pp"
+command = ~B, DB, D, DF, F, B, DB, D, DF, F, y+z
+time = 64
+
+[Command]
+name = "236236pp"
+command = ~D, DF, F, D, DF, x+y
+time = 32
+[Command]
+name = "236236pp"
+command = ~D, DF, F, D, DF, x+z
+time = 32
+[Command]
+name = "236236pp"
+command = ~D, DF, F, D, DF, y+z
+time = 32
+
+[Command]
+name = "236236p"
+command = ~D, DF, F, D, DF, x
+time = 32
+[Command]
+name = "236236p"
+command = ~D, DF, F, D, DF, y
+time = 32
+[Command]
+name = "236236p"
+command = ~D, DF, F, D, DF, z
+time = 32
+[Command]
+name = "236236p"
+command = ~D, DF, F, D, DF, ~x
+time = 32
+[Command]
+name = "236236p"
+command = ~D, DF, F, D, DF, ~y
+time = 32
+[Command]
+name = "236236p"
+command = ~D, DF, F, D, DF, ~z
+time = 32
+
+[Command]
+name = "214214pp"
+command = ~D, DB, B, D, DB, B, x+y
+time = 32
+[Command]
+name = "214214pp"
+command = ~D, DB, B, D, DB, B, x+z
+time = 32
+[Command]
+name = "214214pp"
+command = ~D, DB, B, D, DB, B, y+z
+time = 32
+
+
+[Command]
+name = "214214p"
+command = ~D, DB, B, D, DB, x
+time = 32
+[Command]
+name = "214214p"
+command = ~D, DB, B, D, DB, y
+time = 32
+[Command]
+name = "214214p"
+command = ~D, DB, B, D, DB, z
+time = 32
+[Command]
+name = "214214p"
+command = ~D, DB, B, D, DB, ~x
+time = 32
+[Command]
+name = "214214p"
+command = ~D, DB, B, D, DB, ~y
+time = 32
+[Command]
+name = "214214p"
+command = ~D, DB, B, D, DB, ~z
+time = 32
+
+[Command]
+name = "214214kk"
+command = ~D, DB, B, D, DB, B, a+b
+time = 32
+[Command]
+name = "214214kk"
+command = ~D, DB, B, D, DB, B, a+c
+time = 32
+[Command]
+name = "214214kk"
+command = ~D, DB, B, D, DB, B, b+c
+time = 32
+
+
+;-| Special Motions |------------------------------------------------------
+
+[Command]
+name = "214k"
+command = ~D, DB, B, a
+time = 32
+[Command]
+name = "214k"
+command = ~D, DB, B, b
+time = 32
+[Command]
+name = "214k"
+command = ~D, DB, B, c
+time = 32
+[Command]
+name = "214k"
+command = ~D, DB, B, ~a
+time = 32
+[Command]
+name = "214k"
+command = ~D, DB, B, ~b
+time = 32
+[Command]
+name = "214k"
+command = ~D, DB, B, ~c
+time = 32
+
+[Command]
+name = "214kk"
+command = ~D, DB, B, a+b
+time = 32
+[Command]
+name = "214kk"
+command = ~D, DB, B, b+c
+time = 32
+[Command]
+name = "214kk"
+command = ~D, DB, B, a+c
+time = 32
+
+[Command]
+name = "41236kk"
+command = ~B, DB, D, DF, F, a+b
+time = 32
+[Command]
+name = "41236kk"
+command = ~B, DB, D, DF, F, a+c
+time = 32
+[Command]
+name = "41236kk"
+command = ~B, DB, D, DF, F, b+c
+time = 32
+
+[Command]
+name = "41236k"
+command = ~B, DB, D, DF, F, a
+time = 32
+[Command]
+name = "41236k"
+command = ~B, DB, D, DF, F, b
+time = 32
+[Command]
+name = "41236k"
+command = ~B, DB, D, DF, F, c
+time = 32
+[Command]
+name = "41236k"
+command = ~B, DB, D, DF, F, ~a
+time = 32
+[Command]
+name = "41236k"
+command = ~B, DB, D, DF, F, ~b
+time = 32
+[Command]
+name = "41236k"
+command = ~B, DB, D, DF, F, ~c
+time = 32
+
+[Command]
+name = "623pp"
+command = ~F, D, DF, x+y
+time = 16
+[Command]
+name = "623pp"
+command = ~F, D, DF, y+z
+time = 16
+[Command]
+name = "623pp"
+command = ~F, D, DF, x+z
+time = 16
+[Command]
+name = "623pp"
+command = ~F, D, DF, ~x+y
+time = 16
+[Command]
+name = "623pp"
+command = ~F, D, DF, ~y+z
+time = 16
+[Command]
+name = "623pp"
+command = ~F, D, DF, ~x+z
+time = 16
+
+[Command]
+name = "623p"
+command = ~F, D, DF, x
+time = 16
+[Command]
+name = "623p"
+command = ~F, D, DF, y
+time = 16
+[Command]
+name = "623p"
+command = ~F, D, DF, z
+time = 16
+[Command]
+name = "623p"
+command = ~F, D, DF, ~x
+time = 16
+[Command]
+name = "623p"
+command = ~F, D, DF, ~y
+time = 16
+[Command]
+name = "623p"
+command = ~F, D, DF, ~z
+time = 16
+
+[Command]
+name = "236pp"
+command = ~D, DF, F, x+y
+time = 16
+[Command]
+name = "236pp"
+command = ~D, DF, F, y+z
+time = 16
+[Command]
+name = "236pp"
+command = ~D, DF, F, x+z
+time = 16
+
+[Command]
+name = "236p"
+command = ~D, DF, F, x
+time = 16
+[Command]
+name = "236p"
+command = ~D, DF, F, y
+time = 16
+[Command]
+name = "236p"
+command = ~D, DF, F, z
+time = 16
+[Command]
+name = "236p"
+command = ~D, DF, F, ~x
+time = 16
+[Command]
+name = "236p"
+command = ~D, DF, F, ~y
+time = 16
+[Command]
+name = "236p"
+command = ~D, DF, F, ~z
+time = 16
+
+[Command]
+name = "214pp"
+command = ~D, DB, B, x+y
+time = 16
+[Command]
+name = "214pp"
+command = ~D, DB, B, x+z
+time = 16
+[Command]
+name = "214pp"
+command = ~D, DB, B, y+z
+time = 16
+
+[Command]
+name = "214p"
+command = ~D, DB, B, x
+time = 16
+[Command]
+name = "214p"
+command = ~D, DB, B, y
+time = 16
+[Command]
+name = "214p"
+command = ~D, DB, B, z
+time = 16
+[Command]
+name = "214p"
+command = ~D, DB, B, ~x
+time = 16
+[Command]
+name = "214p"
+command = ~D, DB, B, ~y
+time = 16
+[Command]
+name = "214p"
+command = ~D, DB, B, ~z
+time = 16
+
+[Command]
+name = "412p"
+command = ~B, DB, D, x
+time = 16
+[Command]
+name = "412p"
+command = ~B, DB, D, y
+time = 16
+[Command]
+name = "412p"
+command = ~B, DB, D, z
+time = 16
+
+[Command]
+name = "412k"
+command = ~B, DB, D, a
+time = 16
+[Command]
+name = "412k"
+command = ~B, DB, D, b
+time = 16
+[Command]
+name = "412k"
+command = ~B, DB, D, c
+time = 16
+;====================< OTHER >====================
+
+[Command]
+name = "highjump"
+command = $D, $U
+time = 15
+
+
+;====================< DOUBLE TAP >====================
+
+[Command]
+name = "FF"
+command = F, F
+time = 10
+[Command]
+name = "BB"
+command = B, B
+time = 10
+
+
+;====================< 2/3 BUTTON COMBINATION >====================
+[Command]
+name = "a+b"
+command = a+b
+time = 1
+[Command]
+name = "a+c"
+command = a+c
+time = 1
+[Command]
+name = "b+c"
+command = b+c
+time = 1
+
+[Command]
+name = "recovery"
+command = x+y
+time = 1
+[Command]
+name = "recovery"
+command = x+z
+time = 1
+[Command]
+name = "recovery"
+command = y+z
+time = 1
+[Command]
+name = "recovery"
+command = a+x
+time = 1
+
+[Command]
+name = "pp"
+command = x+y
+time = 1
+[Command]
+name = "pp"
+command = x+z
+time = 1
+[Command]
+name = "pp"
+command = y+z
+time = 1
+
+[Command]
+name = "kk"
+command = a+b
+time = 1
+[Command]
+name = "kk"
+command = a+c
+time = 1
+[Command]
+name = "kk"
+command = b+c
+time = 1
+
+[Command]
+name = "a+x"
+command = a+x
+time = 1
+
+[Command]
+name = "b+y"
+command = b+y
+time = 1
+
+[Command]
+name = "c+z"
+command = c+z
+time = 1
+
+;-| Dir + Button |---------------------------------------------------------
+[Command]
+name = "back_x"
+command = /$B,x
+time = 1
+
+[Command]
+name = "back_y"
+command = /$B,y
+time = 1
+
+[Command]
+name = "back_z"
+command = /$B,z
+time = 1
+
+[Command]
+name = "down_x"
+command = /$D,x
+time = 1
+
+[Command]
+name = "down_y"
+command = /$D,y
+time = 1
+
+[Command]
+name = "down_z"
+command = /$D,z
+time = 1
+
+[Command]
+name = "fwd_x"
+command = /$F,x
+time = 1
+
+[Command]
+name = "fwd_y"
+command = /$F,y
+time = 1
+
+[Command]
+name = "fwd_z"
+command = /$F,z
+time = 1
+
+[Command]
+name = "up_x"
+command = /$U,x
+time = 1
+
+[Command]
+name = "up_y"
+command = /$U,y
+time = 1
+
+[Command]
+name = "up_z"
+command = /$U,z
+time = 1
+
+[Command]
+name = "back_a"
+command = /$B,a
+time = 1
+
+[Command]
+name = "back_b"
+command = /$B,b
+time = 1
+
+[Command]
+name = "back_c"
+command = /$B,c
+time = 1
+
+[Command]
+name = "down_a"
+command = /$D,a
+time = 1
+
+[Command]
+name = "down_b"
+command = /$D,b
+time = 1
+
+[Command]
+name = "down_c"
+command = /$D,c
+time = 1
+
+[Command]
+name = "fwd_a"
+command = /$F,a
+time = 1
+
+[Command]
+name = "fwd_b"
+command = /$F,b
+time = 1
+
+[Command]
+name = "fwd_c"
+command = /$F,c
+time = 1
+
+[Command]
+name = "up_a"
+command = /$U,a
+time = 1
+
+[Command]
+name = "up_b"
+command = /$U,b
+time = 1
+
+[Command]
+name = "up_c"
+command = /$U,c
+time = 1
+
+[statedef -1]
+
+;//==========================
+;// add004-1-sctrls-start
+;//==========================
+;--- partner_standby
+[state 0]
+	type=selfstate
+	value=190190
+	ctrl=0
+	trigger1=ctrl && numpartner && !ishelper && roundstate=2 && pos y=0
+	trigger1=(sysfvar(4)>0) && (sysfvar(0)>0) && playeridexist(floor(sysfvar(0)))
+	trigger1=(playerid(floor(sysfvar(0))),var(0)=90900) && (playerid(floor(sysfvar(0))),var(22)=4)
+	ignorehitpause=1
+;##Add.List01##
+;//==========================
+;// add004-1-sctrls-end
+;//==========================
+
+
+
+
+[State -1, Run Fwd]
+type = ChangeState
+value = 102
+trigger1 = command = "FF"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+; Run Back
+[State -1, Run Back]
+type = ChangeState
+value = 105
+trigger1 = command = "BB"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;===========================================================================
+;---------------------------------------------------------------------------
+; Taunt
+[State -1, Taunt]
+type = ChangeState
+value = 195
+triggerall = command = "start"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+[State -1, London Silver]
+type = changestate
+value = 3200
+triggerall = command = "214214kk"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 3000 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(7)
+
+[State -1, MAX Union Jack Platinum]
+type = changestate
+value = 3150
+triggerall = command = "236236pp"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 2000 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(7) || var(8)
+
+[State -1, MAX Manchester Gold]
+type = changestate
+value = 3050
+triggerall = command = "214214pp"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 2000 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(7) || var(8)
+
+[State -1, Union Jack Platinum]
+type = changestate
+value = 3100
+triggerall = command = "236236p"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 1000 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(7)
+
+[State -1, Manchester Gold]
+type = changestate
+value = 3000
+triggerall = command = "214214p"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 1000 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(7)
+
+[State -1, EX St. Andrews Green]
+type = changestate
+value = 1430
+triggerall = command = "623pp"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 500 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, EX Liverpool White]
+type = changestate
+value = 1330
+triggerall = command = "214kk"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 500 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, EX Oxford Red]
+type = changestate
+value = 1230
+triggerall = command = "41236kk"
+triggerall = roundstate = 2 && statetype != A
+triggerall = power >= 500 && var(20) <= 60
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, EX Manchester Black]
+type = changestate
+value = 1050
+triggerall = command = "214pp"
+triggerall = roundstate = 2 && statetype != A
+triggerall = !var(39)
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, St. Andrews Green]
+type = changestate
+value = 1400
+triggerall = command = "623p"
+triggerall = roundstate = 2 && statetype != A
+triggerall = !var(39)
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, Liverpool White]
+type = changestate
+value = 1300
+triggerall = command = "214k"
+triggerall = roundstate = 2 && statetype != A
+triggerall = !var(39)
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, Oxford Red]
+type = changestate
+value = 1200
+triggerall = command = "41236k"
+triggerall = roundstate = 2 && statetype != A
+triggerall = !var(39)
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, Canterbury Blue]
+type = changestate
+value = 1100
+triggerall = command = "236p"
+triggerall = roundstate = 2 && statetype != A
+triggerall = !var(39)
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, Manchester Black]
+type = changestate
+value = 1000
+triggerall = command = "214p"
+triggerall = roundstate = 2 && statetype != A
+triggerall = !var(39)
+trigger1 = ctrl || stateno = 40 || stateno = 52 || (stateno = [100, 101])
+trigger2 = var(6)
+
+[State -1, Custom Combo]
+type = changestate
+value = ifelse(statetype = A, 905, 900)
+trigger1 = command = "c+z"
+trigger1 = roundstate = 2
+trigger1 = power >= 1000 && !var(20)
+trigger1 = ctrl || stateno = 52 || (stateno = [100, 101])
+
+[State -1, Zero Counter]
+type = changestate
+value = 750
+trigger1 = stateno = 150 || stateno = 152
+trigger1 = command = "412p" || command = "412k"
+trigger1 = roundstate = 2 && statetype != A
+trigger1 = power >= 1000 && !var(20)
+
+[State -1, Power Charge]
+type = changestate
+value = 730
+trigger1 = command = "holdb" && command = "holdy"
+trigger1 = roundstate = 2 && statetype != A
+trigger1 = power < const(data.power) && power < powermax && !var(20)
+trigger1 = ctrl || (stateno = [100, 101])
+
+[State -1, Roll Forward]
+type = changestate
+value = 710
+triggerall = command = "a+x"
+triggerall = roundstate = 2 && statetype != A
+trigger1 = (ctrl || (stateno = [100, 101])) && command = "holdfwd"
+trigger2 = var(20) && var(4)
+
+[State -1, Roll Backward]
+type = changestate
+value = 715
+triggerall = command = "a+x"
+triggerall = roundstate = 2 && statetype != A
+trigger1 = (ctrl || (stateno = [100, 101])) && command = "holdback"
+
+[State -1, Dodge]
+type = changestate
+value = 700
+triggerall = command = "a+x"
+triggerall = roundstate = 2 && statetype != A
+trigger1 = (ctrl || (stateno = [100, 101]))
+
+[State -1, Throw]
+type = changestate
+value = 800
+trigger1 = (command = "holdfwd" || command = "holdback") && (command = "pp" || command = "kk")
+trigger1 = roundstate = 2 && statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+; Stand Light Punch
+[State -1, Stand Light Punch]
+type = ChangeState
+value = 200
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = (stateno = 200 || stateno = 201 || stateno = 400 || stateno = 430) && time >= 5
+trigger3 = var(4)
+
+;---------------------------------------------------------------------------
+; Stand Medium Punch
+[State -1, Stand Medium Punch]
+type = ChangeState
+value = 210
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Stand Close Strong Punch
+[State -1, Stand Close Strong Punch]
+type = ChangeState
+value = 225
+triggerall = command = "z"
+triggerall = command != "holddown"
+triggerall = p2bodydist x <= 20
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Stand Strong Punch
+[State -1, Stand Strong Punch]
+type = ChangeState
+value = 220
+triggerall = command = "z"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Stand Light Kick
+[State -1, Stand Light Kick]
+type = ChangeState
+value = 230
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = (stateno = 200 || stateno = 201 || stateno = 400 || stateno = 430) && time >= 5
+trigger3 = var(4)
+
+;---------------------------------------------------------------------------
+; Standing Medium Kick
+[State -1, Standing Medium Kick]
+type = ChangeState
+value = 240
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Standing Strong Kick
+[State -1, Standing Strong Kick]
+type = ChangeState
+value = 255
+triggerall = command = "c"
+triggerall = command != "holddown"
+triggerall = p2bodydist x <= 20
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Standing Strong Kick
+[State -1, Standing Strong Kick]
+type = ChangeState
+value = 250
+triggerall = command = "c"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Crouching Light Punch
+[State -1, Crouching Light Punch]
+type = ChangeState
+value = 400
+triggerall = command = "x"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = (stateno = 200 || stateno = 201 || stateno = 400 || stateno = 430) && time >= 5
+trigger3 = var(4)
+
+;---------------------------------------------------------------------------
+; Crouching Medium Punch
+[State -1, Crouching Medium Punch]
+type = ChangeState
+value = 410
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Crouching Strong Punch
+[State -1, Crouching Strong Punch]
+type = ChangeState
+value = 420
+triggerall = command = "z"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Crouching Light Kick
+[State -1, Crouching Light Kick]
+type = ChangeState
+value = 430
+triggerall = command = "a"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = (stateno = 200 || stateno = 201 || stateno = 400 || stateno = 430) && time >= 5
+trigger3 = var(4)
+
+;---------------------------------------------------------------------------
+; Crouching Medium Kick
+[State -1, Crouching Medium Kick]
+type = ChangeState
+value = 440
+triggerall = command = "b"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Crouching Strong Kick
+[State -1, Crouching Strong Kick]
+type = ChangeState
+value = 450
+triggerall = command = "c"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl || (stateno = [100, 101])
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Jump Light Punch
+[State -1, Jump Light Punch]
+type = ChangeState
+value = 600
+triggerall = command = "x"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Jump Medium Punch
+[State -1, Jump Medium Punch]
+type = ChangeState
+value = 610
+triggerall = command = "y"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Jump Strong Punch
+[State -1, Jump Strong Punch]
+type = ChangeState
+value = 620
+triggerall = command = "z"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Jump Light Kick
+[State -1, Jump Light Kick]
+type = ChangeState
+value = 630
+triggerall = command = "a"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Jump Medium Kick
+[State -1, Jump Medium Kick]
+type = ChangeState
+value = 640
+triggerall = command = "b"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+; Jump Strong Kick
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 650
+triggerall = command = "c"
+trigger1 = statetype = A
+trigger1 = ctrl
+trigger2 = var(4)
+
+;---------------------------------------------------------------------------
+

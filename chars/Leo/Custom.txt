@@ -1,0 +1,88 @@
+;==================< INITIALIZE >========================================
+
+;Initialize Start Round
+[Statedef 5900]
+type = S
+
+;==========================================================================
+
+[state 5900, Reset Variables]
+type = varrangeset
+trigger1 = !roundsexisted && matchno = 1
+value = 0
+[state 5900, Reset Variables]
+type = varrangeset
+trigger1 = !roundsexisted && matchno = 1
+fvalue = 0
+
+
+; Palette Selector
+[State 5900, Palette Selector]
+type = VarSet
+trigger1 = 1
+fv = 37
+value = 0
+
+; If value = 1 Palette Selector is ON
+; If value = 0 Palette Selector is OFF
+
+;___________________________________________________________________________
+
+;CUSTOM COMBO / MAX MODE SELECT
+[State 5900, Custom Combo / Max Mode Select]
+type = VarSet
+trigger1 = 1
+var(54) = 0
+ignoreHitPause = 1
+;0 = custom combo
+;1 = max mode
+;___________________________________________________________________________
+
+[State 5900, Pal Selector on]
+type=helper
+triggerall=fvar(37)&&!numhelper(256)&&!AILevel&&numenemy 
+trigger1= roundno = 1 && matchno=1 && !(teammode = simul) && !(enemy, teammode = simul)
+trigger2= !fvar(36) 
+trigger3=(teammode = turns)
+trigger3=!roundsexisted && (enemy,roundsexisted)
+id=256
+stateno=256
+facing=facing
+ownpal=1
+size.xScale=0.5
+size.yScale=0.5
+
+[state 5900, No Palette selector]
+type = remappal
+trigger1 = !fvar(37)||AILevel
+source = 1, 1
+dest = 1, palno
+ignorehitpause = 1
+
+
+[State 5900, Intro]
+type = ChangeState
+trigger1 = roundno = 1
+value = 190
+
+[State 5900, Turns Intro]
+type = ChangeState
+trigger1 = !RoundsExisted
+trigger1 = teammode = Turns
+value = 190
+
+[State 5900, Intro Decider]
+type = ChangeState
+trigger1 = RoundNo = 1
+value = 190
+
+[State 5900, Start round timer if No Intro Available]
+type = ChangeState
+trigger1 = 1
+value = 0
+ 
+
+[State 5900, End]
+type = ChangeState
+trigger1 = 1
+value = 0

@@ -1,0 +1,482 @@
+
+
+
+
+;	Alright! Here's how to make special dialogues to your characters...
+
+;	First of all, you add these lines to you character's ANIMATION file:
+;===========================================================
+
+
+
+
+
+
+
+
+
+; Winane's AI Method
+[Begin Action 9741]
+-1,-1, 0,0, -1,
+
+;Black lines
+[Begin Action 70000]
+9300,0, 0,0, 1, , AS256D250
+9300,0, 0,0, 1, , AS256D200
+9300,0, 0,0, 1, , AS256D150
+9300,0, 0,0, 1, , AS256D100
+9300,0, 0,0, 1, , AS256D50
+9300,0, 0,0, -1, , AS256D25
+
+
+
+
+
+
+
+
+
+
+
+
+
+;=================================================
+
+
+
+
+;	Then... you add these lines to the intro state of your character...
+
+
+
+
+
+
+;===================================
+
+[State 195, DIALOGUE]
+type = helper
+trigger1 = ((time = 10 && !roundsexisted) && !(teammode = simul)) && !(teammode = turns) && !(enemy, teammode = turns) && gametime
+helpertype = normal
+stateno = 9200
+ID = 9200
+postype = p1
+pos = 0, 0
+size.xscale = 1
+size.yscale = 1
+ownpal = 0
+persistent = 0
+ignorehitpause = 1
+[State 256, AS]
+type=assertspecial
+trigger1=1
+flag=intro
+flag2 = nobardisplay
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;==================================
+
+;	Aaand then... add THIS helper as a new statedef:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;==========================<SPECIAL DIALOGUES>===============================
+;===<DIALOGUE>===
+[Statedef 9200]
+physics = N
+anim = 9741
+velset=0,0
+sprpriority=99999
+
+[State 191, 2]
+type = AssertSpecial
+trigger1 = 1
+flag = Intro
+flag2 = nobardisplay
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;			Here... uhm, let's see...
+;
+;		For example, if you want to add an intro VS. Ken:
+
+
+
+
+
+[State 0, Vs. M. Bison]
+type = VarSet
+trigger1 = enemy, name = "M. Bison"
+var(10) = 3
+
+
+[State 0, Vs. Ken]
+type = VarSet
+trigger1 = enemy, name = "Ken" || enemy, name = "Ken Masters"		; || enemy, name = "[Any Ken character's NAME (not the displayname) in the .def file of the character]"
+var(10) = 6
+
+
+[State 0, Vs. Iori]
+type = VarSet
+trigger1 = enemy, name = "Iori"
+trigger2 = enemy, name = "Iori Yagami"
+var(10) = 14
+
+
+
+
+
+; 
+;	"var(10) = 6" means that the dialogue sprites AND animations should be like this
+;		(... For example, if you're making a Terry Bogard char...)
+;
+;
+;	(ANIMATION):
+;; Terry vs Ken
+;[Begin Action 90060]
+;9200,10, -72,0, 1
+;9200,10, -56,0, 1
+;9200,10, -40,0, 1
+;9200,10, -24,0, 1
+;9200,10, -8,0, 1
+;9200,10, 0,0, -1
+;
+;; Ken vs Terry
+;[Begin Action 95060]
+;9200,60, -72,0, 1
+;9200,60, -56,0, 1
+;9200,60, -40,0, 1
+;9200,60, -24,0, 1
+;9200,60, -8,0, 1
+;9200,60, 0,0, -1
+
+
+;			This means, the PORTRAITS animation of YOUR character in this case should be (90000 + (var(10) *10)).
+;			In this case, since we're making a vs. Ken animation, it should be 90060.
+;			
+;			AND, for your enemy's PORTRAITS animation, it should be (95000  + (var(10) *10)).
+;		So in this case, Ken's potrait animation would be 95060.	
+;
+;	Terry's potrait sprites would have to be in the group (9200,10 to 9200,19)
+;		And Ken's sprites would be in the group (9200,(var(10*10) to 9200,(var(10)*10)+9)
+;		So in this case, if you want to add 4 different Ken potraits, they should be (9200,60, 9200,61, 9200,62, 9200,63).
+;
+;
+;
+;		THE PORTRAIT SPRITES SHOULD BE 80x96
+;
+;
+;
+; 	FIRST OF ALL, the timing is an important thing...
+; 			So, this is how it works...
+;
+;TIME OF THE FRAME	TEXT LINES OF THE FRAME
+;	83			1
+;	167			2
+;	250			3
+;	333			4
+;	417			5
+;	500			6
+;	583			7
+;	667			8
+;	750			9
+;	833			10
+;	917			11
+;	1000			12
+;	1083			13
+;	1167			14
+;	1250			15
+;
+;		So, let's see... "83 per line" means... this...
+;			(EXAMPLE):		
+;
+;		"What's this, then?
+;		 Can I help you, sir?"
+;
+;	As there are 2 lines, the animation frame to show this text should have 167 timing.
+;
+;		IF, the enemy answers with 
+;			(EXAMPLE):
+;
+;		"Hmpf! You mean to tell me
+;		 this little wimp is s'pposed to be
+;		 the British champ!?"
+;
+;	As there are 3 lines, the animation frame to show this text should have 250 timing.
+;
+;
+;			SOOOOOOO.... Now if the first character will answer again, you should change the timing of the
+; 			first character's frame to (In this case, 167+250, so 417).
+;		If after you add the third dialogue frame, you want the other guy to reply with another text, you'd have to change the timing
+;			Of his first dialogue to (in this case, 250 + (depending on how many lines the other charater's text shown))
+;
+
+
+;				SOOOOOO... 
+;
+;			Let's see how the TEXT animation works...
+;				(EXAMPLE):					
+
+
+;; Terry vs Ken text
+;[Begin Action 80060]
+;-1,0, 0,0, 5
+;9400,60, 0,0, -1
+;
+;; Ken vs Terry text
+;[Begin Action 85060]
+;-1,0, 0,0, 172
+;9400,5060, 0,0, -1
+;
+;
+;					The text sprites should be located this way:
+;					YOUR CHARACTER's Text sprites VS:
+;
+;					9400,(var(10)*10) to 9400,(var(10)*10)+9
+;				So in this case, if he/she will have 3 different text sprites vs. KEN, it would be:
+;
+;					9400,60, 9400,61, 9400,62
+;
+;				YOUR ENEMY's Text sprites VS your character:
+;					
+;					9400,5000+(var(10)*10) to 9400,5000+(var(10)*10)+9
+;				So in this case... if KEN will have 5 different text sprites vs. [your character], it would be:
+;
+;					9400,5060, 9400,5061, 9400,5062, 9400,5063, 9400,5064
+;
+;				The first frame should always 5 (If (in this case), Terry will say the first line).
+;					Then, KEN's first frame depends on how many lines TERRY said (always 5+ enemy's lines)
+;				So basically, if the first character says 2 lines, the other character's first (and blank) frame should be 172 (167+5)
+
+
+
+
+
+
+; The LAST frame should always have "-1" timing for both the dialogues and portrait animations.
+
+
+
+
+; ALL THE SPRITES SHOULD BE LOCATED AT 0,0 IN BOTH "X" AND "Y" AXIS.
+
+
+; Don't forget to add the "Black Lines.png" sprite in the group "9300,0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+[State 0, ChangeState]
+type = ChangeState
+trigger1 = var(10)
+trigger1 = (root, stateno = 0) && (enemy, stateno = 0)
+value = 9201
+ctrl = 0
+[State 0, DestroySelf]
+type = DestroySelf
+trigger1 = !var(10)
+
+[Statedef 9201]
+physics = N
+anim = 9741
+velset=0,0
+sprpriority=99999
+
+[State 256, AS]
+type=assertspecial
+trigger1=1
+flag=intro
+flag2=noshadow
+flag3 = nobardisplay
+
+[State 7610, BLACK LINES]
+type = explod
+trigger1 = !time
+anim = 70000
+ID = 9200
+sprpriority = 80
+postype = left
+pos = 0, floor((gameheight / gamewidth) * 80) - 60
+bindtime = -1
+removetime = -1
+scale = 1, 1
+pausemovetime = 300
+supermovetime = 300
+ontop = 1
+
+[State 7610, vs ANYONE - Portraits1]
+type = explod
+trigger1 = !time
+anim = 90000 +var(10)*10
+ID = 9200
+sprpriority = 81
+postype = left
+pos = 0+ifelse(root, facing =1, 0, 320), floor((gameheight / gamewidth) * 80) +ifelse(root, facing =1, -59, 41)
+bindtime = -1
+removetime = -1
+facing = ifelse(root, facing = 1, 1, -1)
+scale = 1.05, 1.05
+pausemovetime = 300
+supermovetime = 300
+ontop = 1
+[State 7610, vs ANYONE - Portraits2]
+type = explod
+trigger1 = !time 
+anim = 95000 +var(10)*10
+ID = 9200
+sprpriority = 81
+postype = left
+pos = 0+ifelse(root, facing =1, 320, 0), floor((gameheight / gamewidth) * 80) +ifelse(root, facing =1, 41, -59)
+bindtime = -1
+facing = ifelse(root, facing = 1, -1, 1)
+removetime = -1
+scale = 1.05, 1.05
+pausemovetime = 300
+supermovetime = 300
+ontop = 1
+
+[State 7610, vs ANYONE - Text1]
+type = explod
+trigger1 = !time
+anim = 80000 +var(10)*10
+ID = 9200
+sprpriority = 82
+postype = left
+pos = 0 -ifelse(facing =1, 0, 82), floor((gameheight / gamewidth) * 80) +ifelse(facing =1, -60, 41)
+bindtime = -1
+removetime = -1
+scale = 0.5, 0.5
+pausemovetime = 300
+supermovetime = 300
+ontop = 1
+[State 7610, vs ANYONE - Text2]
+type = explod
+trigger1 = !time
+anim = 85000 +var(10)*10
+ID = 9200
+sprpriority = 82
+postype = left
+pos = 0 -ifelse(facing =1, 82, 0), floor((gameheight / gamewidth) * 80) +ifelse(facing =1, 41, -60)
+bindtime = -1
+removetime = -1
+scale = 0.5, 0.5
+pausemovetime = 300
+supermovetime = 300
+ontop = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[State 0, Vs. Ken]
+type = Removeexplod
+triggerall = time >= 588 			;THIS VALUE DEPENDS ON HOW LONG THE DIALOGUE BETWEEN [Terry] and [Ken] is. If they show 7 lines in total (583), then it'd be 588 (583+5)
+trigger1 = var(10) = 6			
+[State 0, Vs. Ken]
+type = DestroySelf
+triggerall = time >= 588 			;THIS VALUE DEPENDS ON HOW LONG THE DIALOGUE BETWEEN [Terry] and [Ken] is. If they show 7 lines in total (583), then it'd be 588 (583+5)
+trigger1 = var(10) = 6					;Just like it was set in the statedef 9200, "var(10)=6" would mean that your enemy is Ken.
+
+
+
+[State 0, Vs. M. Bison / Iori]
+type = Removeexplod
+triggerall = time >= 422 			; 5 Lines long (417+5)
+trigger1 = var(10) = 3			; In this case, [your character] would have a 5 lines long dialogue with M. Bison and Iori, with M. Bison being the var(10)=3, and Iori being the var(10)=14
+trigger2 = var(10) = 14			;Of course, this is just an example... you can set these values up there in the in the statedef 9200.
+[State 0, Vs. M. Bison / Iori]
+type = DestroySelf
+triggerall = time >= 422
+trigger1 = var(10) = 3		
+trigger2 = var(10) = 14
+

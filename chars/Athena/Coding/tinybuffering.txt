@@ -1,0 +1,468 @@
+;==============================================================================;
+;Command Buffering File for: Athena                                   ;
+;Tiny Buffering! An easy, simple and compact buffering system!                 ;
+;by Vans                                                                       ;
+;http://www.trinitymugen.net/                                                  ;
+;==============================================================================;
+;Introduction:
+;Welcome to Tiny Buffering! A simple and compact system for handling command
+; buffering in MUGEN.
+;
+;This system is capable of providing command buffering, reversed commands among
+; many other features!
+;
+;To begin editing commands, skip over to the BUFFER DEFINITION section!
+;
+;Here is a small reference of the variables used for Tiny Buffering:
+;Fundamental movement		= System variables  
+;Buttons:				= var(0)  - var(19) 
+;Special commands:			= var(20) - var(39)
+;Super commands:			= var(40) - var(49)
+;MISC. commands:			= var(50) - var(59)
+
+[Statedef 10371] ;Define a state number for the helper here. 
+anim = 1		;This can be any animation that is empty.
+ctrl = 0
+
+;-------------------------------------------------------------------------------
+
+;---------------------------------[DEBUG]--------------------------------------;
+;This controller is used to display debug text.
+[State 10371, Display to Clipboard]
+type = DisplayToClipboard
+trigger1 = 1
+text = "Tiny Buffering! A simple and compact buffering system!"
+;params = prevstateno, numhelper(10371), (helper(10371),var(59))
+;text = "prevstateno = %d numhelper = %d var(59) = %d"
+
+;---------------------------------[???]--------------------------------------;
+;[State 10371, VarSet: System Check?]
+;type = VarSet
+;trigger1 = 1
+;var(59) = 65535
+
+;------------------------------------------------------------------------------;
+
+;------------------------------[BASIC SETUP]-----------------------------------;
+;Make sure the helper draws no graphics.
+[State 10371, No graphics] 
+type = AssertSpecial
+trigger1 = 1
+flag = invisible ;Just in case.
+ignorehitpause = 1
+
+;This controller binds the buffering helper to the root.
+; it is only used for reference.
+[State 10371, BindToRoot]
+type = BindToRoot
+trigger1 = 1
+time = 1
+pos = Const(size.head.pos.x),Const(size.head.pos.y) ;You can use this to check head.pos! 
+ignorehitpause = 1
+
+;------------------------------------------------------------------------------;
+
+;----------------------------[BUFFER DECREASE]---------------------------------;
+;This section of the code is used to decrease the timers for the buffering.
+; Since the buttons are already fixed, only the COMMANDS section needs to be
+; modified.
+
+;--------------------------------[BUTTONS]-------------------------------------;
+;NON-NEGATIVE EDGE:
+;var(0)  = LP 
+;var(1)  = MP 
+;var(2)  = HP 
+;var(3)  = LK 
+;var(4)  = MK 
+;var(5)  = HK 
+;var(6)  = Start
+;NEGATIVE EDGE:
+;var(7)  = LP
+;var(8)  = MP
+;var(9)  = HP
+;var(10) = LK
+;var(11) = MK
+;var(12) = HK
+;var(13) = Start
+;DOUBLE BUTTON:
+;var(14) = LP+LK 
+;var(15) = MP+MK
+;var(16) = HP+HK 
+;var(17) = 
+;var(18) = 
+;var(19) = 
+
+[State 10371, LP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(0)
+var(0) = -1
+
+[State 10371, MP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(1)
+var(1) = -1
+
+[State 10371, HP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(2)
+var(2) = -1
+
+[State 10371, LK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(3)
+var(3) = -1
+
+[State 10371, MK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(4)
+var(4) = -1
+
+[State 10371, HK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(5)
+var(5) = -1
+
+[State 10371, START Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(6)
+var(6) = -1
+
+;------------------------ [NEGATIVE EDGE BUTTONS]------------------------------;
+[State 10371, NEG LP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(7) && !var(0)
+var(7) = -1
+
+[State 10371, NEG MP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(8) && !var(1)
+var(8) = -1
+
+[State 10371, NEG HP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(9) && !var(2)
+var(9) = -1
+
+[State 10371, NEG LK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(10) && !var(3)
+var(10) = -1
+
+[State 10371, NEG MK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(11) && !var(4)
+var(11) = -1
+
+[State 10371, NEG HK Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(12) && !var(5)
+var(12) = -1
+
+[State 10371, NEG START Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 
+trigger1 = var(13) && !var(6)
+var(13) = -1
+
+;--------------------------------[COMMANDS]------------------------------------;
+;This is where we shall decrease the buffers for the commands.
+; to conserve space, it is preferred to add them one by one.
+;var(20)  = QCBD
+;var(21)  = QCF
+;var(22)  = QCB
+;var(23)  = DP
+;var(24)  = HCF
+;var(25)  = HCB
+;var(40)  = QCFx2
+;var(41)  = HCBx2
+;var(42)  = HCBF
+;var(43)  = 
+;var(44)  = 
+;------------------- SUPERS ---------------------------------------------------;
+[State 10371, HCBx2 Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(41)
+var(41) = -1
+
+[State 10371, HCBF Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(42)
+var(42) = -1
+
+[State 10371, QCFx2 Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(40)
+var(40) = -1
+;------------------- SPECIALS -------------------------------------------------;
+[State 10371, HCB Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(25)
+var(25) = -1
+
+[State 10371, HCF Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(24)
+var(24) = -1
+
+[State 10371, DP Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(23)
+var(23) = -1
+
+[State 10371, QCB Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(22)
+var(22) = -1
+
+[State 10371, QCF Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(21)
+var(21) = -1
+
+[State 10371, QCBD Dec]
+type = VarAdd
+triggerall = root, HitPauseTime = 0 ;^^ root, HitPausetime = 1
+trigger1 = var(20)
+var(20) = -1
+
+;--------------------------[BUFFER DEFINITION]---------------------------------;
+;----------------------------[BUTTON BUFFER]-----------------------------------;
+;Leave the BUTTON BUFFER alone for compatibility.
+;NON-NEGATIVE EDGE:
+;var(0)  = LP (A)
+;var(1)  = MP (C)
+;var(2)  = HP (E)
+;var(3)  = LK (B)
+;var(4)  = MK (D)
+;var(5)  = HK (SHORTCUT)
+;var(6)  = Start
+;NEGATIVE EDGE (RESERVED):
+;var(7)  = LP
+;var(8)  = MP
+;var(9)  = HP
+;var(10) = LK
+;var(11) = MK
+;var(12) = HK
+;var(13) = Start
+;DOUBLE BUTTON:
+;var(14) = LP+LK
+;var(15) = MP+LK
+;var(16) = HP+HK
+;var(17) = 
+
+[State 10371, LP Init]
+type = VarSet
+trigger1 = command = "x"
+var(0) = 2 ;(3)This defines how long the buffering should be for this button.
+
+[State 10371, MP Init]
+type = VarSet
+trigger1 = command = "y"
+var(1) = 2
+
+[State 10371, HP Init]
+type = VarSet
+trigger1 = command = "z"
+var(2) = 2
+
+[State 10371, LK Init]
+type = VarSet
+trigger1 = command = "a"
+var(3) = 2
+
+[State 10371, MK Init]
+type = VarSet
+trigger1 = command = "b"
+var(4) = 2
+
+[State 10371, HK Init]
+type = VarSet
+trigger1 = command = "c"
+var(5) = 2
+
+[State 10371, START Init]
+type = VarSet
+trigger1 = command = "start"
+var(6) = 2
+
+[State 10371, Neg LP Init]
+type = VarSet
+trigger1 = command != "x" && command = "rlsx"
+var(7) = 1 ;???
+
+[State 10371, Neg MP Init]
+type = VarSet
+trigger1 = command != "y" && command = "rlsy"
+var(8) = 1 
+
+[State 10371, Neg HP Init]
+type = VarSet
+trigger1 = command != "z" && command = "rlsz"
+var(9) = 1
+
+[State 10371, Neg LK Init]
+type = VarSet
+trigger1 = command != "a" && command = "rlsa"
+var(10) = 1
+
+[State 10371, Neg MK Init]
+type = VarSet
+trigger1 = command != "b" && command = "rlsb"
+var(11) = 1
+
+[State 10371, Neg HK Init]
+type = VarSet
+trigger1 = command != "c" && command = "rlsc"
+var(12) = 1
+
+[State 10371, Neg Start Init]
+type = VarSet
+trigger1 = command != "start" && command = "rlss"
+var(13) = 1
+
+;-----------------------  [SHORTCUT DEFINITIONS]-------------------------------;
+;This section allows you to define the behavior of shortcut buttons.
+
+;-----------------------  [DOUBLE BUTTON BUFFER]-------------------------------;
+;This section allows you to detect when multiple buttons have been pressed.
+;
+;Checklist:
+;
+;var(14) = LP+LK
+;var(15) = MP+MK
+;var(16) = HP+HK
+;var(17) =  
+;var(18) = 
+;var(19) = 
+
+[State 10371, DOUBLE BUTTON init(LP+LK)]
+type = null
+trigger1 = var(14) := (((var(0) = [1,2]) && (var(3) = [1,2]))) ;var(0) is LP and var(3) is LK.
+
+[State 10371, DOUBLE BUTTON init(MP+MK)]
+type = null
+trigger1 = var(15) := (((var(1) = [1,2]) && (var(4) = [1,2])))
+
+[State 10371, DOUBLE BUTTON init(HP+HK)]
+type = null
+trigger1 = var(16) := (((var(2) = [1,2]) && (var(5) = [1,2])))
+
+;----------------------------[COMMAND BUFFER]----------------------------------;
+;This is where we shall define the joystick commands that will be buffered.
+;For each command, we need the normal and the reversed equivalents to be defined
+; in the .cmd.
+;For each command you add here, do not forget to decrease the timer accordingly
+; in the BUFFER DECREASE section!
+;As a rule of thumb, you want to add the more complicated commands first and 
+; the more simple ones later, just as you would code the .cmd.
+;
+;Command checklist:
+;
+;var(20)  = QCBD(Quarter Back Down)
+;var(21)  = QCF(Quarter Forward)
+;var(22)  = QCB(Quarter Back)
+;var(23)  = DP(Forward Down Down-Forward)
+;var(24)  = HCF(Half Circle Forward)
+;var(25)  = HCB(Half Cicrle Back)
+;var(40)  = QCFx2(Quarter Circle Forward x2)
+;var(41)  = HCBx2(Half Circle Back x2)
+;var(42)  = HCBF(Half Circle Back, Forward)
+;var(43)  = 
+;var(44)  = 
+
+[State 10371, HCBx2 Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "HCBx2" 
+trigger2 = p2dist X < 0 && command = "HCFx2" 
+var(41) = 12
+
+[State 10371, HCBF Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "HCBF" 
+trigger2 = p2dist X < 0 && command = "HCFB" 
+var(42) = 9
+
+[State 10371, QCFx2 Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "QCFx2" 
+trigger2 = p2dist X < 0 && command = "QCBx2" 
+var(40) = 9
+;------------------------------------------
+;This is the command buffer for HCB/F
+[State 10371, HCB Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "HCB" 
+trigger2 = p2dist X < 0 && command = "HCF" 
+var(25) = 12;<=== ADJUST THIS VALUE ONLY!!!
+
+[State 10371, HCF Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "HCF" 
+trigger2 = p2dist X < 0 && command = "HCB" 
+var(24) = 12;<=== ADJUST THIS VALUE ONLY!!!
+;^use 6/7 for easier method HCB/F
+;-------------------------------------------
+[State 10371, DP Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "DP" 
+trigger2 = p2dist X < 0 && command = "RDP" 
+var(23) = 8
+
+[State 10371, QCB Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "QCB" 
+trigger2 = p2dist X < 0 && command = "QCF" 
+var(22) = 7
+
+[State 10371, QCF Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "QCF" 
+trigger2 = p2dist X < 0 && command = "QCB" 
+var(21) = 7
+
+[State 10371, QCBD Init]
+type = VarSet
+trigger1 = p2dist X >= 0 && command = "QCBD" 
+trigger2 = p2dist X < 0 && command = "QCFD" 
+var(20) = 7
+
+;------------------------[Safety Measure]---------------------------------
+[State 10371, DestroySelf]
+type = DestroySelf
+trigger1 = NumHelper(10371)>1 
+ignorehitpause = 1
+persistent = 1
+
+;================================================================================
+; ------- Chizuru compatibility --------
+;===============================================================================
+;Don't forget to add the PalFX in the State -2 DW!
+;This always goes on the bottom!
+[State 10371, NO SPECIAL COMMANDS]
+type = VarRangeSet
+trigger1 = root,numprojid(131035)
+value = 0
+first = 20
+last = 59
+

@@ -1,0 +1,426 @@
+;---------------------------------------------------------------------------
+;close strong punch
+[Statedef 4509]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+velset = 0, 0
+poweradd = 15
+anim = 4009
+facep2 = 1
+
+;[state 0, snd]
+;type = playsnd
+;triggerall = prevstateno = 150
+;trigger1 = AnimElem = 1
+;value = S4909, 0
+
+[State 0, var]
+type = varset
+trigger1 = !time
+var(27) = 0
+
+[State 0, var]
+type = varset
+trigger1 = prevstateno = 150 || prevstateno = 152
+var(27) = 1
+
+[State 0, snd]
+type = playsnd
+trigger1 = AnimElem = 2
+value = S75, 0+(random%7)
+channel = 0
+
+[state 0, snd]
+type = playsnd
+trigger1 = AnimElem = 2
+value = S51, 3
+
+[State 0, hit]
+type = HitDef
+triggerall = (!var(4) && var(2) < 1) || numtarget(555)
+trigger1 = AnimElem = 3
+attr = S, NA
+damage = 50
+animtype = Up
+air.animtype = back
+fall.animtype = back
+guardflag = M
+hitflag = MAF
+priority = 5, Hit
+pausetime = ifelse(prevstateno = 150, 19,13), ifelse(prevstateno = 150, 19,13)
+;sparkno = 0+(random%4)
+;guard.sparkno = 40
+;sparkxy = -10, -76
+hitsound = S2, 2
+guardsound = S6, 0
+ground.type = Low
+ground.slidetime = 17
+ground.hittime = 17
+ground.velocity = -1, ifelse(frontedgebodydist <= 25, -15,-12)
+air.type = High
+fall = 1
+fall.recover = 1
+fall.recovertime = 120
+yaccel = .5
+air.velocity = -1, -11
+air.hittime = 120
+air.recover = 0
+Id = 555
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+forcestand = 1
+envshake.time = 9
+fall.envshake.time = 0
+fall.envshake.freq = 0.0
+fall.envshake.ampl = 0
+fall.envshake.phase = 0.0
+sparkno = S-1 + 0 * (var(33) := 8012)
+guard.sparkno = S-1 + 0 * (var(34) := 8000)
+sparkxy = -10 + 0 * (var(35) := 47), var(36) := -76
+
+[State 0, change]
+type = changestate
+triggerall = !movereversed
+trigger1 = movehit && movetype != H && anim = 4009
+;trigger2 = Animelemtime(6) > 0 && (backedgebodydist < 15 || frontedgebodydist < 15)
+value = 4510
+
+[state 0, end]
+type = ChangeState
+triggerall = !Animtime
+trigger1 = !movehit
+trigger2 = (!movecontact || moveguarded)
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+; Entering the screen
+[Statedef 4500]
+type = S
+movetype = I
+physics = N
+anim = 110	; <- You can use the standard running animation or put another one
+sprpriority = 2
+ctrl = 0
+
+[State 0, bound]
+type = screenbound
+trigger1 = movehit && numtarget(555)
+value = 1
+
+;[State 4500, 1]
+;type = ChangeAnim
+;trigger1 = Partner, Life <= 0
+;trigger1 = Anim != 4500
+;value = 4500
+
+[State 0, pos]
+type = PosSet
+trigger1 = time = 0
+x = -243*facing
+y = 0
+
+[State 0, vel]
+type = VelSet
+trigger1 = 1;Anim != 4500
+x = ifelse(p2bodydist x > 45, 16,10)
+
+[State 0, vel]
+type = velset
+triggerall = backedgebodydist >= 0
+trigger1 = p2bodydist x < 20
+trigger2 = win
+trigger3 = time >= 20
+trigger4 = partner, life <= 0
+trigger5 = frontedgebodydist <= 0
+x = 0
+
+[State 0, anim]
+type = changeanim
+triggerall = anim != 111 && Anim != 0
+trigger1 = !vel x
+value = 111
+
+[State 0, anim]
+type = changeanim
+trigger1 = anim = 111 && !animtime
+value = 0
+
+[State 0, snd]
+type = PlaySnd
+triggerall = anim = 110
+trigger1 = AnimElemTime(3) = 0
+value = 100,1
+
+[State 0, snd]
+type = PlaySnd
+triggerall = anim = 110
+trigger1 = AnimElemTime(6) = 0
+value = 100,2
+
+[State 0, cheat] ; the character cannot be hit until he has fully entered on the stage
+type = NotHitBy
+triggerall = stateno = 4500
+trigger1 = BackEdgeBodyDist <= 0
+value = SCA
+;time = 2
+
+[State 0, cheat] ; if partner was KOed, appear being invincible
+type = NotHitBy
+triggerall = stateno = 4500
+trigger1 = Partner, Life <= 0
+value = SCA
+;time = 6
+
+;[State 0, screen] ; Prevents the camera from following the char
+;type = ScreenBound
+;trigger1 = 1
+;value = 0
+
+[State 0, hit] ; the character attacks his opponent when :
+type = ChangeState
+;triggerall = var(26) = 1 ;|| (partner, name = Ryu)
+triggerall = BackEdgeBodyDist >= 0
+triggerall = partner, life > 0
+triggerall = !win && !lose
+triggerall = !var(28)
+trigger1 = P2BodyDist X < 40 && p2bodydist y <= -25
+trigger2 = p2bodydist x < 25
+value = 1100
+
+[State 0, hit] ; the character attacks his opponent when :
+type = ChangeState
+;triggerall = var(26) = 1 ;|| (partner, name = Ryu)
+triggerall = BackEdgeBodyDist >= 0
+triggerall = partner, life > 0
+triggerall = !win && !lose
+triggerall = var(28) = 1
+trigger1 = P2BodyDist X < 40 && p2bodydist y <= -25
+trigger2 = p2bodydist x < 25
+value = 1200
+
+[State 0, var]
+type = varset
+trigger1 = !time
+var(27) = 2
+
+[State 0, end] ; cancel if:
+type = ChangeState
+triggerall = backedgebodydist >= 0
+trigger1 = (enemy, pos y >= 0) && (enemy, vel y > 0);Time >= 25
+trigger2 = win || (win && time >= 20)
+trigger3 = p2bodydist x <= 0
+trigger4 = partner, life <= 0
+trigger5 = frontedgebodydist <= 0
+value = 0
+ctrl = 1
+
+; Leaving Taunt
+;--------------
+
+[Statedef 4510] ; Define your own taunt here
+type = S
+movetype = I
+physics = S
+anim = 195
+sprpriority = -2
+velset = 0,0
+ctrl = 0
+
+[State 0, snd]
+type = PlaySnd
+trigger1 = AnimElemTime(1) = 0
+value = S195, 0+(random%2)
+channel = 0
+
+[state 0, poweradd]
+type = poweradd
+triggerall = var(27) = 1
+trigger1 = partner, life
+trigger1 = life
+trigger1 = time = 0
+value = -1000
+
+[State 0, cheat] ; the character cannot be hit since he is leaving
+type = NotHitBy
+trigger1 = stateno = 4510
+value = SCA
+
+[State 0, ghost] ; Prevents the camera from following the char
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 0, end]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 4511
+
+
+; Leave the stage
+;----------------
+
+[Statedef 4511]
+type = S
+movetype = I
+physics = N
+anim = 40	; <- Jump Start animation
+sprpriority = -2
+ctrl = 0
+
+[State 0, anim]
+type = ChangeAnim
+trigger1 = Anim = 40 && AnimTime = 0 ; <- plays the jump back animation when the jump start animation is finished
+value = 43
+
+[State 0, state type]
+type = StateTypeSet
+trigger1 = Anim = 43 && AnimElem = 1
+statetype = A
+
+[State 0, vel]
+type = VelSet
+trigger1 = Anim = 43 && AnimElem = 1 ; <- jumping back animation
+x = -12
+y = -7.5
+
+[State 0, cheat]
+type = NotHitBy
+trigger1 = stateno = 4511
+value = SCA
+
+[State 0, ghost]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 0, screen]
+type = ScreenBound
+trigger1 = 1
+value = 0
+
+[State 0, wait]
+type = ChangeState
+trigger1 = backedgedist < -30
+value = 4512
+
+
+; Wait out of the screen
+;-----------------------
+
+[Statedef 4512]
+type = A
+movetype = I
+physics = N
+anim = 0
+velset = 0,0
+ctrl = 0
+
+[State 0, cheat]
+type = NotHitBy
+trigger1 = stateno = 4512
+value = SCA
+
+[State 0, ghost]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 0, screen] ; Prevents the camera from following the char
+type = ScreenBound
+trigger1 = 1
+value = 0
+
+[State 0, life] ; Gains life (optional)
+type = LifeAdd
+trigger1 = (gametime%10) = 0
+value = 1
+
+[State 0, turn] ; always face the same direction as partner
+type = turn
+trigger1 = facing != partner,facing
+
+[State 0, pos] ; always stay behind and at the same distance of the char on the stage
+type = posset
+trigger1 = 1
+x = (partner, pos x) - 1000*facing
+y = -150
+
+;---------------------------------------------------------------------------
+; Jumping in
+[Statedef 4520]
+type = S
+movetype = I
+physics = N
+anim = 42
+sprpriority = 2
+ctrl = 0
+
+[State 0, pos]
+type = PosSet
+trigger1 = AnimElemtime(2) < 0
+x = -243*Facing
+y = 0
+
+[State 0, vel]
+type = VelSet
+trigger1 = AnimElemtime(2) = 0
+x = 4 ;.5
+y = -8.75
+
+[State 0, cheat]
+type = NotHitBy
+trigger1 = stateno = 4520
+value = SCA
+
+[State 0, bound]
+type = ScreenBound
+trigger1 = 1
+value = 0
+
+[State 0, vel]
+type = Gravity
+trigger1 = AnimElemtime(2) >= 0
+
+[State 0, vel]
+type = VelSet
+triggerall = AnimElemtime(2) >= 0
+trigger1 = pos y > 0 && Vel Y >= 0
+x = 0
+y = 0
+
+[State 0, change]
+type = ChangeState
+triggerall = AnimElemtime(2) >= 0
+trigger1 = Vel Y >= 0 && Pos y > 0
+;trigger1 = Pos Y > 0
+value = 4521
+
+;---------------------------------------------------------------------------
+; Landing
+[Statedef 4521]
+type = S
+movetype = I
+physics = N
+anim = 47
+sprpriority = 2
+ctrl = 0
+
+[State 0, pos]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 0, cheat]
+type = NotHitBy
+trigger1 = stateno = 4521
+value = SCA
+;time = 2
+
+[State 0, end]
+type = ChangeState
+trigger1 = !AnimTime; >= 0
+value = 0
+ctrl = 1

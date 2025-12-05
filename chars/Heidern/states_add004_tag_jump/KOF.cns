@@ -1,0 +1,278 @@
+;============================================================================
+;From now on, it's all about KOF features.
+;============================================================================
+;Guard Crushed
+;============================================================================
+[Statedef 5350]
+type = S
+movetype = H
+physics = S
+anim = 5350
+ctrl = 0
+
+[State 0, EnvColor]
+type = EnvColor
+trigger1 = (!time)
+value = 200,200,200
+time = 3
+ignorehitpause = 1
+
+[State 903, VarSet]
+type = VarSet
+trigger1 = (!Time)
+v = 49
+value = 0
+
+[State 903, VelSet]
+type = VelSet
+trigger1 = animelem = 2
+x = -5
+
+[State 903, ChangeState]
+type = ChangeState
+trigger1 = animtime = 0
+value = 0
+ctrl = 1
+;============================================================================
+; Cheap KO
+; This is the "collapse into their knees" anim that KOF has since 2003, as well
+; as SVC characters. You'll probably need to edit this.
+; CNS Difficult: Easy
+;============================================================================
+[Statedef 5950]
+physics = S
+movetype = H
+ctrl = 0
+velset = 0,0
+
+[State 5950, 1]
+type = HitVelSet
+trigger1 = Time = 0
+x = 2
+
+[State 5950, 4]
+type = VelSet
+trigger1 = HitOver
+x = 0
+
+[State 5950, 4]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 5950, 4]
+type = ChangeAnim
+trigger1 = !HitOver
+value = ifElse(FVar(1)=0,5010,5020)
+
+[State 190, 4]
+type = ChangeAnim
+trigger1 = HitOver
+value = 5950
+persistent = 0
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 10
+x = 20
+
+[State 1100, ChangeState]
+type = ChangeState
+trigger1 = AnimElem = 10
+value = 5150
+;===============================================================================
+;Thanks to Warusaki's original roll code, which these rolls were adapted from.
+;Roll 1
+;===============================================================================
+[Statedef 700]
+type = S
+movetype= i
+physics = N
+juggle = 0
+velset = 0,0
+ctrl = 0
+anim = 700
+
+[State 750, VelSet]
+type = VelSet
+trigger1 = animelem = 3
+x = 5+((prevstateno = 100)*2)
+
+[State 750, VelSet]
+type = VelSet
+trigger1 = animelem = 6
+x = 0
+
+[State 320, Voice]
+type = PlaySnd
+trigger1 = animelem = 1
+value = 200,0
+
+[State 750, Push]
+type = PlayerPush
+trigger1 = AnimElemTime(1) > 0
+value = 0
+
+[State 750, Width]
+type = Width
+trigger1 = Vel X != 0
+edge = 10,0
+
+[State 810, 1]
+type = AfterImage
+trigger1 = !time
+time = 26
+length = 12
+framegap = 4
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 750, PowerAdd]
+type = PowerAdd
+trigger1 = prevstateno = 150
+trigger2 = prevstateno = 151
+value = -1000
+persistent = 0
+
+[State 750, 1]
+type = NotHitBy
+trigger1 = prevstateno = 150 || prevstateno = 151
+value = SCA
+
+[State 750, 1]
+type = HitBy
+trigger1 = prevstateno != 150 || prevstateno != 151
+trigger1 = AnimElemTime(6) < 0
+value = SCA,NT,ST,HT
+
+[State 0, VarRandom]
+type = VarSet
+trigger1 = prevstateno = 150 || prevstateno = 151
+v = 42
+value = 1
+ignorehitpause = 1
+
+[State 750, 1]
+type = Changestate
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+;--------------------------------------------
+;Roll 2
+[Statedef 710]
+type = S
+movetype= i
+physics = N
+juggle = 0
+velset = 0,0
+ctrl = 0
+anim = 710
+
+[State 750, VelSet]
+type = VelSet
+trigger1 = animelem = 3
+x = -5
+
+[State 750, VelSet]
+type = VelSet
+trigger1 = animelem = 6
+x = 0
+
+[State 750, Width]
+type = Width
+trigger1 = Vel X != 0
+edge = 10,0
+
+[State 320, Voice]
+type = PlaySnd
+trigger1 = animelem = 1
+value = 200,0
+
+[State 750, Push]
+type = PlayerPush
+trigger1 = AnimElemTime(1) > 0
+value = 0
+
+[State 810, 1]
+type = AfterImage
+trigger1 = !time
+time = 24
+length = 12
+framegap = 4
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 750, PowerAdd]
+type = PowerAdd
+trigger1 = prevstateno = 150
+trigger2 = prevstateno = 151
+value = -1000
+persistent = 0
+
+[State 750, 1]
+type = NotHitBy
+trigger1 = prevstateno = 150 || prevstateno = 151
+value = SCA
+
+[State 750, 1]
+type = HitBy
+trigger1 = prevstateno != 150 || prevstateno != 151
+trigger1 = AnimElemTime(6) < 0
+value = SCA,NT,ST,HT
+
+[State 750, 1]
+type = Changestate
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;===============================================================================
+;Thanks to Warusaki's original roll code, which these rolls were adapted from.
+;Roll 1
+;===============================================================================
+[Statedef 720]
+type = S
+Physics = S
+MoveType = I
+Ctrl = 0
+Anim = 720
+SprPriority = -1
+VelSet = 0,0
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 =animelem=2
+value = 200,0
+channel = 1
+
+[State 100, Shadows]
+type = Afterimage
+trigger1 = !time
+time = 22
+length = 8
+PalBright = 0,0,0
+PalContrast = 128,128,128
+PalAdd = 0,0,0
+PalMul = 1,1,1
+FrameGap = 6
+Trans = Add1
+
+[State 510, Push]
+type = PLayerPush
+trigger1 = 1
+value = 0
+
+[State 700, HitBy]
+type = NotHitBy
+trigger1 = AnimElemTime(6)<0
+value = SCA, AA, AP
+time = 1
+[State 510, State]
+type = ChangeState
+trigger1 = !AnimTime
+value = 0
+ctrl = 1

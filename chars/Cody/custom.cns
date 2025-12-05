@@ -1,0 +1,401 @@
+;------------------
+; Hit by Fast Kung Fu Palm - shaking from the hit
+; (a custom gethit state)
+; See State 1020 for details
+[Statedef 2990]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 1025, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = 1
+value = 2990
+
+[State 1025, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 2989
+;------------------
+; Hit by Fast Kung Fu Palm - flying through the air
+; (a custom gethit state)
+[Statedef 2989]
+type    = A
+movetype= H
+physics = N
+
+[State 1026, Velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+
+[State 1026, Gravity]
+type = VelAdd
+trigger1 = 1
+y = .45
+
+[State 1026, No scroll]
+type = ScreenBound
+triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist < 55;65
+trigger2 = FrontEdgeBodyDist < 55;65
+value = 1
+movecamera = 0,1
+
+[State 1026, Hit wall]
+type = ChangeState
+triggerall = Pos y < -15
+trigger1 = BackEdgeBodyDist <= 20
+trigger2 = FrontEdgeBodyDist <= 20
+value = 2988
+
+[State 1026, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= 0)
+value = 5100
+
+;------------------
+; Hit by Fast Kung Fu Palm - hit wall
+; (a custom gethit state)
+[Statedef 2988]
+type    = A
+movetype= H
+physics = N
+
+[State 0, PlaySnd]
+type = PlaySnd
+trigger1 = time = 0
+value = 830,0
+
+[State 1027, Turn]
+type = Turn
+trigger1 = (Time = 0) && (FrontEdgeBodyDist <= 30)
+
+[State 1027, Pos]
+type = PosAdd
+trigger1 = Time = 0
+x = 15 - BackEdgeBodyDist
+
+[State 1027, Stop moving]
+type = PosFreeze
+trigger1 = 1
+x = 1
+y = 1
+
+[State 1027, No scroll]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 0,1
+
+[State 1027, Spark]
+type = Explod
+trigger1 = Time = 0
+anim = F72
+pos = 0, floor (screenpos y) - 50
+postype = back
+sprpriority = 3
+
+[State 1027, Anim]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 2988
+
+[State 1027, Sound]
+type = PlaySnd
+trigger1 = Time = 0
+value = F7,0
+
+[State 1027, State]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 2987
+
+;------------------
+; Hit by Fast Kung Fu Palm - bounce off wall
+; (a custom gethit state)
+[Statedef 2987]
+type    = A
+movetype= H
+physics = N
+
+[State 1028, 1]
+type = NotHitBy
+trigger1 = 1
+value = , NA, NP
+
+[State 1028, Vel Y]
+type = VelSet
+trigger1 = Time = 0
+y = -6
+
+[State 1028, Vel X]
+type = VelSet
+trigger1 = Time = 0
+x = 1.6
+
+[State 1028, Turn]
+type = Turn
+trigger1 = (Time = 0) && (BackEdgeDist < 30)
+
+[State 1028, Gravity]
+type = VelAdd
+trigger1 = 1
+y = .35
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = time=0
+x = -20
+y = -60
+;ignorehitpause =
+persistent =0
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 =  time >= 0
+value = -45
+scale = 1,1
+[State 1028, Anim 5050] ;Self falling animation
+type = ChangeAnim
+trigger1 = Time = 0
+;trigger1 = !SelfAnimExist(5052)
+value = 2999
+
+[State 1028, Anim 5052] ;Self falling animation (diagup type)
+type = null;ChangeAnim
+trigger1 = Time = 0
+trigger1 = SelfAnimExist(5052)
+value = 5052
+
+[State 1028, Anim 5060] ;Coming down - normal
+type = null;ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5050
+trigger1 = SelfAnimExist(5060)
+persistent = 0
+value = 5060
+
+[State 1028, Anim 5062] ;Coming down - diagup type
+type = null;ChangeAnim
+trigger1 = Vel Y > -2
+trigger1 = Anim = 5052
+trigger1 = SelfAnimExist(5062)
+persistent = 0
+value = 5062
+
+[State 1028, Hit ground]
+type = SelfState
+trigger1 = (Vel y > 0) && (Pos y >= -50)
+value = 5100
+
+
+;------------------------------------------------------------------------
+[Statedef 2995]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 1025, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = time=0
+value = 5030
+
+[State 1025, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 2994
+;------------------------------------------------------------------------
+[Statedef 2994]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+ctrl = 0
+juggle = 0
+poweradd = 0
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = time=0
+x = -20
+y = -60
+;ignorehitpause =
+persistent =0
+[State 1025, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = time=0
+value = 2999
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 =  time >= 0
+value = 45
+scale = 1,1
+
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 5
+x = -4
+y = -12
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 10
+y = -10
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 15
+y = -8
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 20
+y = -6
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 25
+y = -4
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 30
+y = -2
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 35
+y = -1
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 40
+y = 0
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 45
+y = 1
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 50
+y = 2
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 55
+y = 4
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 60
+y = 6
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 65
+y = 8
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 70
+y = 10
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 75
+y = 12
+
+[State 0, SelfState]
+type = SelfState
+trigger1 = time > 10 && pos Y >= -60 && vel Y > 0
+value = 5100
+
+;------------------------------------------------------------------------
+[Statedef 2997]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 1025, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = time=0
+value = 5030
+
+[State 1025, State]
+type = ChangeState
+trigger1 = HitShakeOver = 1
+value = 2996
+
+;------------------------------------------------------------------------
+[Statedef 2996]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+ctrl = 0
+juggle = 0
+poweradd = 0
+
+[State 0, PosAdd]
+type = PosAdd
+trigger1 = time=0
+x = -20
+y = -60
+;ignorehitpause =
+persistent =0
+[State 1025, Anim] ;Custom animation
+type = ChangeAnim2
+trigger1 = time=0
+value = 2999
+[State 0, AngleDraw]
+type = AngleDraw
+trigger1 =  time >= 0
+value = 45
+scale = 1,1
+
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 0
+x = -4
+y = -10
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 5
+y = -4
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 10
+y = -2
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 15
+y = -1
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 20
+y = 0
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 25
+y = 2
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 30
+y = 4
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 35
+y = 6
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 40
+y = 8
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 55
+y = 10
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 50
+y = 12
+[State 0, VelSet]
+type = VelSet
+trigger1 = time >= 55
+y = 14
+
+[State 0, SelfState]
+type = SelfState
+trigger1 = time > 10 && pos Y >= -60 && vel Y > 0
+value = 5100
