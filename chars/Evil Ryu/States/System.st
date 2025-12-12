@@ -757,7 +757,6 @@ value = 21
 
 
 ;JUMPING
-;JUMPING
 [Statedef 40]
 type = S
 physics = S
