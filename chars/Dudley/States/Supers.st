@@ -441,7 +441,7 @@ sprpriority = -1
 [State 3011, VelAdd]
 type = VelAdd
 trigger1 = AnimElemtime(20)>0 && animelemtime(29)<0
-y = .5
+y = 1.5
 
 [State 3010, HitDef]
 type = HitDef

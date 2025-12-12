@@ -1,12 +1,11 @@
 ; _______________________________________
 ;| Dudley by Dick Buckus & Mr.Ansatsuken |
 ; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-;============================================================================================
-;=====================================< NORMAL STATES >========================================
-;============================================================================================
+;
+; NORMAL STATES;
+;
 
 ; Stand Light Punch
-; CNS difficulty: easy
 [Statedef 200]
 type    = S                      ;State-type: S-stand, C-crouch, A-air, L-liedown
 movetype= A                      ;Move-type: A-attack, I-idle, H-gethit
@@ -74,7 +73,6 @@ value = 201
 ctrl = 0
 ;---------------------------------------------------------------------------
 ; Stand Light Punch
-; CNS difficulty: easy
 [Statedef 201]
 type    = S                      ;State-type: S-stand, C-crouch, A-air, L-liedown
 movetype= A                      ;Move-type: A-attack, I-idle, H-gethit
@@ -138,7 +136,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ; Standing strong punch
-; CNS difficulty: easy
 [Statedef 210]
 type    = S
 movetype= A
@@ -233,7 +230,6 @@ value = 320
 ctrl = 0
 ;---------------------------------------------------------------------------
 ; Standing strong punch
-; CNS difficulty: easy
 [Statedef 211]
 type    = S
 movetype= A
@@ -310,7 +306,6 @@ value = 0
 ctrl = 1
 ;---------------------------------------------------------------------------
 ; Standing fierce punch
-; CNS difficulty: easy
 [Statedef 220]
 type    = S
 movetype= A
@@ -397,7 +392,6 @@ value = 221
 ctrl = 0
 ;---------------------------------------------------------------------------
 ; Standing fierce punch
-; CNS difficulty: easy
 [Statedef 221]
 type    = S
 movetype= A
@@ -495,7 +489,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ; Standing light kick
-; CNS difficulty: easy
 [Statedef 230]
 type    = S
 movetype= A
@@ -548,7 +541,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ; Standing strong kick
-; CNS difficulty: easy
 [Statedef 240]
 type    = S
 movetype= A
@@ -642,7 +634,6 @@ value = 310
 ctrl = 0
 ;---------------------------------------------------------------------------
 ; Standing strong kick
-; CNS difficulty: easy
 [Statedef 241]
 type    = S
 movetype= A
@@ -719,7 +710,6 @@ value = 320
 ctrl = 0
 ;---------------------------------------------------------------------------
 ; Standing fierce kick
-; CNS difficulty: easy
 [Statedef 250]
 type    = S
 movetype= A
@@ -827,7 +817,6 @@ value = 0
 ctrl = 1
 ;---------------------------------------------------------------------------
 ; Forward fierce kick
-; CNS difficulty: easy
 [Statedef 251]
 type    = S
 movetype= A
@@ -911,7 +900,6 @@ ctrl = 0
 
 ;---------------------------------------------------------------------------
 ;Chain 1
-; CNS difficulty: easy
 [Statedef 300]
 type    = C
 movetype= A
@@ -969,7 +957,6 @@ value = 11
 ctrl = 1
 ;---------------------------------------------------------------------------
 ; Chain 2
-; CNS difficulty: easy
 [Statedef 310]
 type    = S
 movetype= A
@@ -1196,7 +1183,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ;Crouching light punch
-; CNS difficulty: easy
 [Statedef 400]
 type    = C
 movetype= A
@@ -1252,7 +1238,6 @@ value = 11
 
 ;---------------------------------------------------------------------------
 ;Crouching strong punch
-; CNS difficulty: easy
 [Statedef 410]
 type    = C
 movetype= A
@@ -1324,7 +1309,6 @@ value = 11
 ctrl = 1
 ;---------------------------------------------------------------------------
 ;Crouching fierce punch
-; CNS difficulty: easy
 [Statedef 420]
 type    = C
 movetype= A
@@ -1376,7 +1360,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ;Crouching light kick
-; CNS difficulty: easy
 [Statedef 430]
 type    = C
 movetype= A
@@ -1429,7 +1412,6 @@ value = 11
 ctrl = 1
 ;---------------------------------------------------------------------------
 ;Crouching strong kick
-; CNS difficulty: easy
 [Statedef 440]
 type    = C
 movetype= A
@@ -1487,7 +1469,6 @@ ctrl = 1
 
 ;---------------------------------------------------------------------------
 ;Crouch Fierce Kick
-; CNS difficulty: easy
 [Statedef 450]
 type    = C
 movetype= A
@@ -1557,7 +1538,6 @@ value = 11
 ctrl = 1
 ;---------------------------------------------------------------------------
 ;Jump Light Punch
-; CNS difficulty: easy
 [Statedef 600]
 type    = A
 movetype= A
@@ -1608,7 +1588,6 @@ value = 1
 
 ;---------------------------------------------------------------------------
 ;Jump Strong Punch
-; CNS difficulty: easy
 [Statedef 610]
 type    = A
 movetype= A
@@ -1655,7 +1634,6 @@ movetype=I
 
 ;--------------------------------------------------------------
 ;Jump Fierce Punch
-; CNS difficulty: easy
 [Statedef 620]
 type    = A
 movetype= A
@@ -1704,7 +1682,6 @@ movetype=I
 
 ;---------------------------------------------------------------------------
 ;Jump Light Kick
-; CNS difficulty: easy
 [Statedef 630]
 type    = A
 movetype= A
@@ -1750,7 +1727,6 @@ movetype=I
 
 ;---------------------------------------------------------------------------
 ;Jump Strong Kick
-; CNS difficulty: easy
 [Statedef 640]
 type    = A
 movetype= A
@@ -1796,7 +1772,6 @@ trigger1= animelemtime(12)>=0
 movetype=I
 ;---------------------------------------------------------------------------
 ;Jump Fierce Kick
-; CNS difficulty: easy
 [Statedef 650]
 type    = A
 movetype= A

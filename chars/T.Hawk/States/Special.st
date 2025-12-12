@@ -1,9 +1,9 @@
 ; _________________________________________
 ;| T.Hawk by varo_hades                    |
 ; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-;===============================================================================
-;================================<SPECIAL MOVES>================================
-;===============================================================================
+;====
+;==<SPECIAL MOVES===
+;====
 
 ;MEXICAN TYPHOON
 [StateDef 1000]
@@ -496,7 +496,7 @@ value = 1010
 type = VelSet
 trigger1 = Time = 10
 x = -2.5
-y = -8.5
+y = -8
 
 [State 1000, 1]
 type = VelAdd
@@ -1184,7 +1184,7 @@ value = 1010
 type = VelSet
 trigger1 = Time = 10
 x = -2.5
-y = -8.5
+y = -7
 
 [State 1000, 1]
 type = VelAdd
@@ -1707,7 +1707,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;========================<EX TOMAHAWK BUSTER>========================
+;EX TOMAHAWK BUSTER
 [StateDef 1130]
 type = S
 physics = S
@@ -1939,7 +1939,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 1105
 
-;========================<CONDOR DIVE>=============================
+;CONDOR DIVE
 [StateDef 1200]
 type = A
 physics = N
@@ -2114,7 +2114,7 @@ trigger1 = Time >= 20
 value = 11
 ctrl = 1
 
-;========================<EX CONDOR DIVE>==========================
+;EX CONDOR DIVE
 [StateDef 1230]
 type = A
 physics = N
@@ -2259,7 +2259,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 1202
 
-;========================<EX CONDOR DIVE(SECOND HIT)>===================
+;EX CONDOR DIVE(SECOND HIT)
 [Statedef 1231]
 type = A
 physics = N
@@ -2333,7 +2333,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 1202
 
-;========================<CONDOR SPIRE>=============================
+;CONDOR SPIRE
 [StateDef 1300]
 type = A
 physics = N
@@ -2504,7 +2504,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;========================<EX CONDOR SPIRE>=========================
+;EX CONDOR SPIRE=
 [StateDef 1330]
 type = A
 physics = N
@@ -2691,7 +2691,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 1305
 
-;========================<CONDOR SPIRE 2>=========================
+;CONDOR SPIRE 2=
 [StateDef 1400]
 type = S
 physics = S
@@ -2925,7 +2925,7 @@ trigger1 = !AnimTime
 value = 1405
 ctrl = 1
 
-;========================<EX CONDOR SPIRE 2>=========================
+;EX CONDOR SPIRE 2=
 [StateDef 1430]
 type = S
 physics = S
@@ -3064,7 +3064,7 @@ type = ChangeState
 trigger1 = FrontEdgeBodyDist < 10 || Time = 26
 value = 1450
 
-;========================<PUNCH ZERO COUNTER>=======================
+;PUNCH ZERO COUNTER====
 [StateDef 2900]
 type = S
 physics = N
@@ -3151,7 +3151,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;========================<KICK ZERO COUNTER>==========================
+;KICK ZERO COUNTER==
 [StateDef 2910]
 type = S
 physics = N

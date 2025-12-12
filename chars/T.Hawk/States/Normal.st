@@ -1,11 +1,11 @@
 ; _________________________________________
 ;| T.Hawk by varo_hades                    |
 ; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-;===============================================================================
-;==============================<NORMAL MOVES>===================================
-;===============================================================================
+;===
+;==<NORMAL MOVES=====
+;===
 
-;===========<STANDING LIGHT PUNCH>==========
+;STANDING LIGHT PUNCH
 [StateDef 200]
 type = S
 physics = S
@@ -82,7 +82,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING FAR MEDIUM PUNCH>==========
+;STANDING FAR MEDIUM PUNCH
 [StateDef 210]
 type = S
 physics = S
@@ -159,7 +159,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING CLOSE MEDIUM PUNCH>==========
+;STANDING CLOSE MEDIUM PUNCH
 [StateDef 215]
 type = S
 physics = S
@@ -278,7 +278,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING FAR HEAVY PUNCH>==========
+;STANDING FAR HEAVY PUNCH
 [StateDef 220]
 type = S
 physics = S
@@ -355,7 +355,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING CLOSE HEAVY PUNCH>==========
+;STANDING CLOSE HEAVY PUNCH
 [StateDef 225]
 type = S
 physics = S
@@ -433,7 +433,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;========================<MEXICAN CHOP>========================
+;MEXICAN CHOP
 [Statedef 228]
 type = S
 physics = S
@@ -526,7 +526,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;========================<MEXICAN CHOP(CANCELED)>========================
+;MEXICAN CHOP(CANCELED)
 [Statedef 229]
 type = S
 physics = S
@@ -619,7 +619,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING LIGHT KICK>==========
+;STANDING LIGHT KICK
 [StateDef 230]
 type = S
 physics = S
@@ -696,7 +696,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING FAR MEDIUM KICK>==========
+;STANDING FAR MEDIUM KICK
 [StateDef 240]
 type = S
 physics = S
@@ -773,7 +773,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING CLOSE MEDIUM KICK>==========
+;STANDING CLOSE MEDIUM KICK
 [StateDef 245]
 type = S
 physics = S
@@ -850,7 +850,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING FAR HEAVY KICK>==========
+;STANDING FAR HEAVY KICK
 [StateDef 250]
 type = S
 physics = N
@@ -927,7 +927,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;=================<DODGE HEAVY KICK>==========
+;DODGE HEAVY KICK
 [StateDef 251]
 type = S
 physics = N
@@ -1004,7 +1004,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<STANDING CLOSE HEAVY KICK>==========
+;STANDING CLOSE HEAVY KICK
 [StateDef 255]
 type = S
 physics = S
@@ -1125,7 +1125,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<CROUCHING LIGHT PUNCH>==========
+;CROUCHING LIGHT PUNCH
 [StateDef 400]
 type = C
 physics = C
@@ -1202,7 +1202,7 @@ trigger1 = !AnimTime
 value = 11
 ctrl = 1
 
-;===========<CROUCHING MEDIUM PUNCH>==========
+;CROUCHING MEDIUM PUNCH
 [StateDef 410]
 type = C
 physics = C
@@ -1279,7 +1279,7 @@ trigger1 = !AnimTime
 value = 11
 ctrl = 1
 
-;===========<CROUCHING HEAVY PUNCH>==========
+;CROUCHING HEAVY PUNCH
 [StateDef 420]
 type = C
 physics = C
@@ -1400,7 +1400,7 @@ trigger1 = !AnimTime
 value = 11
 ctrl = 1
 
-;===========<CROUCHING LIGHT KICK>==========
+;CROUCHING LIGHT KICK
 [StateDef 430]
 type = C
 physics = C
@@ -1477,7 +1477,7 @@ trigger1 = !AnimTime
 value = 11
 ctrl = 1
 
-;===========<CROUCHING MEDIUM KICK>==========
+;CROUCHING MEDIUM KICK
 [StateDef 440]
 type = C
 physics = C
@@ -1554,7 +1554,7 @@ trigger1 = !AnimTime
 value = 11
 ctrl = 1
 
-;===========<CROUCHING HEAVY KICK>==========
+;CROUCHING HEAVY KICK
 [StateDef 450]
 type = C
 physics = C
@@ -1692,7 +1692,7 @@ trigger1 = !AnimTime
 value = 11
 ctrl = 1
 
-;===========<JUMPING LIGHT PUNCH>==========
+;JUMPING LIGHT PUNCH
 [StateDef 600]
 type = A
 physics = N
@@ -1773,7 +1773,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<JUMPING MEDIUM PUNCH>==========
+;JUMPING MEDIUM PUNCH
 [StateDef 610]
 type = A
 physics  = N
@@ -1854,7 +1854,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<NEUTRAL JUMPING HEAVY PUNCH>==========
+;NEUTRAL JUMPING HEAVY PUNCH
 [StateDef 620]
 type = A
 physics = N
@@ -1935,7 +1935,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<ANGLED JUMPING HEAVY PUNCH>==========
+;ANGLED JUMPING HEAVY PUNCH
 [StateDef 625]
 type = A
 physics = N
@@ -2016,7 +2016,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;=================<MEXICAN PRESS>================
+;MEXICAN PRESS
 [StateDef 629]
 type = A
 physics = N
@@ -2097,7 +2097,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<JUMPING LIGHT KICK>==========
+;JUMPING LIGHT KICK
 [StateDef 630]
 type = A
 physics = N
@@ -2178,7 +2178,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<JUMPING MEDIUM KICK>==========
+;JUMPING MEDIUM KICK
 [StateDef 640]
 type = A
 physics = N
@@ -2259,7 +2259,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<NEUTRAL JUMPING HEAVY KICK>==========
+;NEUTRAL JUMPING HEAVY KICK
 [StateDef 650]
 type = A
 physics = N
@@ -2340,7 +2340,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<ANGLED JUMPING HEAVY KICK>==========
+;ANGLED JUMPING HEAVY KICK
 [StateDef 655]
 type = A
 physics = N
@@ -2421,7 +2421,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<THROW ATTEMPT>==========
+;THROW ATTEMPT
 [StateDef 800]
 type = S
 physics = S
@@ -2537,7 +2537,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<THROW ARM>==========
+;THROW ARM
 [Statedef 801]
 type = S
 movetype = A
@@ -2574,7 +2574,7 @@ trigger3 = Root, Anim = 830
 trigger3 = Root, AnimElem = 6, >= 0
 value = 0
 
-;===========<THROW SWITCHING SIDES>==========
+;THROW SWITCHING SIDES
 [StateDef 805]
 type = S
 moveType = A
@@ -2656,7 +2656,7 @@ type = ChangeState
 trigger1 = AnimElemTime(4) >= 0
 value = ifElse(var(10), 820, 810)
 
-;===========<THROW SWITCHING SIDES (TARGET)>==========
+;THROW SWITCHING SIDES (TARGET)
 [StateDef 806]
 type = A
 moveType = H
@@ -2688,7 +2688,7 @@ trigger1 = Time >= 60
 value = ifElse(pos y < 0, 5040, 0)
 ctrl = 1
 
-;===========<NECK HANGING TREE>==========
+;NECK HANGING TREE
 [Statedef 810]
 type = S
 physics = N
@@ -3018,7 +3018,7 @@ trigger1 = AnimTime = 0
 value = 0
 ctrl = 1
 
-;===========<NECK HANGING TREE (TARGET)>==========
+;NECK HANGING TREE (TARGET)
 ;Being Thrown
 [Statedef 815]
 type = A
@@ -3097,7 +3097,7 @@ type = SelfState
 trigger1 = AnimTime = 0
 value = 5050
 
-;===========<CONDOR HUNTING>==========
+;CONDOR HUNTING
 [StateDef 820]
 type = S
 physics = N
@@ -3230,7 +3230,7 @@ trigger1 = !AnimTime
 value = 0
 ctrl = 1
 
-;===========<CONDOR HUNTING(TARGET)>==========
+;CONDOR HUNTING(TARGET)
 ;Being Hit
 [StateDef 825]
 type = A
@@ -3274,7 +3274,7 @@ type = SelfState
 trigger1 = AnimTime = 0
 value = 5050
 
-;===========<AIR THROW ATTEMPT>==========
+;AIR THROW ATTEMPT
 [StateDef 850]
 type = A
 physics = N
@@ -3348,7 +3348,7 @@ type = ChangeState
 trigger1 = Pos y > -Vel y
 value = 52
 
-;===========<FLYING MARE>==========
+;FLYING MARE
 [StateDef 860]
 type = A
 movetype = A
@@ -3585,7 +3585,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 52
 
-;===========<FLYING MARE (TARGET)>==========
+;FLYING MARE (TARGET)
 ;In Air
 [StateDef 865]
 type = A
@@ -3693,7 +3693,7 @@ trigger1 = Vel Y > 0
 trigger1 = Pos Y >= 0
 value = 5100 ;Hit ground
 
-;===========<THROW ESCAPED>==========
+;THROW ESCAPED
 [StateDef 890]
 type = S
 physics = N
@@ -3847,7 +3847,7 @@ trigger1 = Time >= 27
 value = 0
 ctrl = 1
 
-;===========<THROW ESCAPE MIDAIR>==========
+;THROW ESCAPE MIDAIR
 [StateDef 892]
 type = A
 physics = N
