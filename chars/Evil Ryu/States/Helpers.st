@@ -223,7 +223,7 @@ ignoreHitPause = 1
 
 [State 1005, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 [Statedef 1006]
 type = A
@@ -459,7 +459,7 @@ ignoreHitPause = 1
 
 [State 1015, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 [Statedef 1016]
 type = A
@@ -696,7 +696,7 @@ ignoreHitPause = 1
 
 [State 1015, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 [Statedef 1018]
 type = A

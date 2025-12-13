@@ -533,7 +533,7 @@ ignoreHitPause = 1
 [State 1055, Projectile Flag Off]
 type = ParentVarSet
 trigger1 = pos y >= 0
-trigger2 = pos x != [ -200, 200]
+trigger2 = pos x != [ -300, 300]
 var(39) = 0
 
 [State 1055, End]

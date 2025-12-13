@@ -351,7 +351,7 @@ value = 1006
 ignorehitpause = 1
 [State 1005, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 [State 1005, End]
 type = changestate
@@ -946,7 +946,7 @@ trigger2 = var(5) = 3020 && var(1) >= 20
 value = 3007
 [State 3005, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 [Statedef 3006]
 type = A
@@ -1381,7 +1381,7 @@ value = 4311
 ignorehitpause = 1
 [State 4310, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 trigger2 = !animtime
 
 [Statedef 4311]

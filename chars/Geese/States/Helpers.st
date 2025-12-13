@@ -124,7 +124,7 @@ value = 1006
 ignorehitpause = 1
 [State 1005, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 
 ;--- Hitpause ---
@@ -1079,7 +1079,7 @@ trigger1 = pos y >= 0
 value = 1307
 [State 1305, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 
 ;--- Hitpause ---
@@ -1332,7 +1332,7 @@ trigger1 = pos y >= 0
 value = 1307
 [State 1325, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 
 ;========================< RAISING STORM >=============================

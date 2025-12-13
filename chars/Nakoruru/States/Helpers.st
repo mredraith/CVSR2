@@ -394,7 +394,7 @@ value = 1261
 ignorehitpause = 1
 [State 1260, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 
 ;--- Hitpause ---

@@ -152,7 +152,7 @@ value = 1610
 
 [State 1606, End]
 type = destroyself
-trigger1 = pos x != [ -200, 200]
+trigger1 = pos x != [ -300, 300]
 
 
 ;--- CANCELLED ---

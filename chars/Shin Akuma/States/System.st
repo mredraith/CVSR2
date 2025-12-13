@@ -1,19 +1,19 @@
 ; ADD004 BASIC PIEs ReBuilded CNS (27/12/2018)
-;==============================================
+;====
 ; This file is Made by PIE.
 ; there is a backup of this file in the same folder, named "<samename>.a4bk".
 ; to Restore, use assist tool, or delete this file, then remove ".a4bk" from the neme of backup.
-;==============================================
+;====
 
  ________________________________________
 ;| Gouki by Phantom.of.the.Server and Mwryly |
 ; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-;==============================================================================================
-;=======================================< COMMON STATES >========================================
-;==============================================================================================
+;====
+;===< COMMON STATES===
+;====
 
-;==========< PARRY >==========
-;--- STANDING ---
+;PARRY
+;STANDING ---
 [Statedef 700]
 type = S
 physics = S
@@ -86,7 +86,7 @@ value = 0
 ctrl = 1
 
 
-;--- CROUCHING ---
+;CROUCHING ---
 [Statedef 701]
 type = C
 physics = C
@@ -159,7 +159,7 @@ value = 11
 ctrl = 1
 
 
-;--- AERIAL ---
+;AERIAL ---
 [Statedef 702]
 type = A
 physics = A
@@ -249,7 +249,7 @@ trigger1 = time > 10
 value = 1
 
 
-;==========< DODGE >==========
+;DODGE
 [Statedef 710]
 type = S
 physics = S
@@ -288,7 +288,7 @@ value = 0
 ctrl = 1
 
 
-;==========< FORWARD ROLL >==========
+;FORWARD ROLL
 [Statedef 720]
 type = C
 physics = C
@@ -371,7 +371,7 @@ value = 0
 ctrl = 1
 
 
-;==========< POWER CHARGE >==========
+;POWER CHARGE
 [Statedef 740]
 type = S
 physics = S
@@ -464,7 +464,7 @@ value = 0
 ctrl = 1
 
 
-;==========< ZERO COUNTER >==========
+;ZERO COUNTER
 [Statedef 750]
 type = S
 physics = S
@@ -518,7 +518,7 @@ trigger1 = time >= 20
 value = ifelse(var(10) = 1, 1100, 255)
 
 
-;===================< CUSTOM COMBO >===================
+;CUSTOM COMBO
 [Statedef 760]
 type = U
 physics = U
@@ -614,7 +614,7 @@ value = 0
 ctrl = 1
 
 
-;====================< STANDING >====================
+;==< STANDING=
 [Statedef 0]
 type = S
 physics = S
@@ -652,7 +652,7 @@ trigger3 = (enemy(1), name = "M -NES Game 1" + enemy(1), name = "M -NES Game 2" 
 value = 50
 
 
-;====================< CROUCHING >====================
+;==< CROUCHING=
 [Statedef 10]
 type = C
 physics = C
@@ -716,7 +716,7 @@ trigger1 = !animtime
 value = 0
 
 
-;==========< WALKING >==========
+;WALKING
 [Statedef 20]
 type = S
 physics = S
@@ -745,79 +745,95 @@ trigger2 = anim = 5 && animelemtime(1) >= 1
 value = 21
 
 
-;===================< JUMPING >================
-[Statedef 40]
+;JUMPING
+[StateDef 40]
 type = S
 physics = S
+moveType = I
 anim = 40
 ctrl = 0
-velset = 0, 0
-sprpriority = 1
-facep2 = 1
+velSet = 0,0
+sprPriority = 1
+faceP2 = 1
 
-[State 40, Var]
-type = varset
-trigger1 = !time && AIlevel
-var(9) = ifelse((p2dist x > 240 || p2dist y > 180 || random < 100), 3, 1)
-[State 40, Var]
-type = varset
-trigger1 = AIlevel
-sysvar(1) = ifelse((enemynear, movetype != A || backedgebodydist <= 10), 1, ifelse((enemynear, movetype = A), -1, 0))
-[State 40, Var]
-type = varset
-trigger1 = !time && !AIlevel
-var(9) = ifelse(command = "highjump", 3, 1)
-[State 40, Var]
-type = varset
-trigger1 = !AIlevel
-sysvar(1) = ifelse(!time, 0, ifelse(command = "holdfwd", 1, ifelse(command = "holdback", -1, sysvar(1))))
-[State 40, Var]
-type = varset
-trigger1 = !AIlevel && var(9) != 3 && command != "holdup"
-trigger2 = AIlevel && var(9) != 3 && random < 100
-var(9) = 2
+[State 40, Direction]
+type = VarSet
+trigger1 = !AILevel
+sysvar(1) = ifElse(!Time, 0, ifElse(command = "holdfwd", 1, ifElse(command = "holdback", -1, sysvar(1))))
 
-[State 40, Dust]
-type = helper
-trigger1 = !animtime
-helpertype = normal
-stateno = 7100
+[State 40, Direction (AI)]
+type = VarSet
+trigger1 = AILevel
+sysvar(1) = ifElse((EnemyNear, MoveType != A || BackEdgeBodyDist <= 10), 1, ifElse((EnemyNear, MoveType = A), -1, 0))
+
+[State 40, High Jump]
+type = VarSet
+trigger1 = !Time && !AILevel
+var(3) = ifElse(command = "highjump", 3, 0)
+
+[State 40, High Jump (AI)]
+type = VarSet
+trigger1 = !Time && AILevel
+var(3) = ifElse((P2BodyDist x >= 160 || Random < (125 * (AILevel ** 2 / 64.0))), 3, 0)
+
+[State 40, High Jump]
+type = VarSet
+trigger1 = !Time && PrevStateNo = 100
+var(3) = 3
+
+[State 40, Low Jump]
+type = VarSet
+trigger1 = !AILevel && command != "holdup" && (var(3) != [1,2])
+var(3) = ifElse((var(3) = 3 && sysvar(1)), 2, 1)
+
+[State 40, Low Jump (AI)]
+type = VarSet
+trigger1 = AILevel && (var(3) != [1,2])
+trigger1 = (EnemyNear, StateType = C) && Random < 500
+var(3) = ifElse((var(3) = 3 && sysvar(1)), 2, 1)
+
+[State 40, Jump Sound]
+type = PlaySnd
+trigger1 = !AnimTime
+value = ifElse((var(3) = [2,3]), 41, 40), 0
+
+[State 40, Dust Helper]
+type = Helper
+trigger1 = !AnimTime
+helperType = Normal
+stateNo = 7100
 ID = 7100
 name = "Dust"
-postype = p1
-ownpal = 1
+posType = P1
+ownPal = 1
 
-[State 40, Vel]
-type = velset
-trigger1 = !animtime && var(9) != 3
-x = ifelse(!sysvar(1), const(velocity.jump.neu.x), ifelse(sysvar(1) = 1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
-y = ifelse(var(9) = 2, 0.75, 1) * const(velocity.jump.y)
-[State 40, Vel]
-type = velset
-trigger1 = !animtime && var(9) = 3
-x = ifelse(!sysvar(1), const(velocity.jump.neu.x), ifelse(sysvar(1) = 1, 1.5 * const(velocity.jump.fwd.x), 1.5 * const(velocity.jump.back.x)))
-y = ifelse(!sysvar(1), 1.15, 1) * const(velocity.jump.y)
-[State 40, Vel]
-type = velset
-trigger1 = !animtime && var(9) = 3 && sysvar(1)
-x = ifelse(!sysvar(1), const(velocity.jump.neu.x), ifelse(sysvar(1) = 1, 1.5 * const(velocity.jump.fwd.x), 1.5 * const(velocity.jump.back.x)))
+[State 40, Velocity: Normal Jump]
+type = VelSet
+trigger1 = !AnimTime
+x = ifElse(!sysvar(1), const(velocity.jump.neu.x), ifElse(sysvar(1) = 1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
 y = const(velocity.jump.y)
 
-[State 40, Vel]
-type = velset
-trigger1 = !animtime && prevstateno = 100 && sysvar(1) = 1
-trigger1 = var(9) := 3
-x = const(velocity.runjump.fwd.x)
+[State 40, Velocity: Low Jump]
+type = VelSet
+trigger1 = !AnimTime && var(3) = 1
+x = ifElse(!sysvar(1), const(velocity.jump.neu.x), ifElse(sysvar(1) = 1, const(velocity.jump.fwd.x), const(velocity.jump.back.x)))
+y = 0.75 * const(velocity.jump.y)
 
-[State 40, VelMul]
-type = VelMul
-trigger1 = !AnimTime && var(1)
-x = ifElse(var(1) = 1, 1.010665,1)
-y = ifElse(var(1) = 1, 1.010665,1)
+[State 40, Velocity: Long Low Jump]
+type = VelSet
+trigger1 = !AnimTime && var(3) = 2
+x = ifElse(!sysvar(1), const(velocity.jump.neu.x), ifElse(sysvar(1) = 1, const(velocity.runjump.fwd.x), const(velocity.runjump.back.x)))
+y = 0.75 * const(velocity.jump.y)
+
+[State 40, Velocity: Long Jump]
+type = VelSet
+trigger1 = !AnimTime && var(3) = 3
+x = ifElse(!sysvar(1), const(velocity.jump.neu.x), ifElse(sysvar(1) = 1, const(velocity.runjump.fwd.x), const(velocity.runjump.back.x)))
+y = ifElse(!sysvar(1), const(velocity.runjump.y), const(velocity.jump.y))
 
 [State 40, End]
-type = changestate
-trigger1 = !animtime
+type = ChangeState
+trigger1 = !AnimTime
 value = 50
 ctrl = 1
 
@@ -965,7 +981,7 @@ value = 0
 ctrl = 1
 
 
-;======================< RUN >===========================
+;====< RUN==
 [Statedef 100]
 type = S
 movetype = I
@@ -1012,7 +1028,7 @@ value = 0
 ctrl = 1
 
 
-;========================< FORWARD DASH >==========================
+;< FORWARD DASH=
 [Statedef 102]
 type = S
 movetype = I
@@ -1055,7 +1071,7 @@ value = 0
 ctrl = 1
 
 
-;========================< BACK DASH >==========================
+;< BACK DASH=
 [Statedef 105]
 type = A
 movetype = I
@@ -1096,8 +1112,8 @@ value = 0
 ctrl = 1
 
 
-;==========< GUARD >==========
-;--- START ---
+;GUARD
+;START ---
 [Statedef 120]
 type = U
 physics = U
@@ -1151,7 +1167,7 @@ trigger3 = enemynear, hitdefattr = SCA, AT
 value = 140
 
 
-;--- STAND GUARD (guarding) ---
+;STAND GUARD (guarding) ---
 [Statedef 130]
 type = S
 physics = S
@@ -1195,7 +1211,7 @@ ownpal = 1
 pausemovetime = -1
 supermovetime = -1
 
-;--- CROUCH GUARD (guarding) ---
+;CROUCH GUARD (guarding) ---
 [Statedef 131]
 type = C
 physics = C
@@ -1222,7 +1238,7 @@ trigger3 = enemynear, hitdefattr = SCA, AT
 value = 140
 
 
-;--- AIR GUARD (guarding) ---
+;AIR GUARD (guarding) ---
 [Statedef 132]
 type = A
 physics = N
@@ -1268,7 +1284,7 @@ trigger3 = enemynear, hitdefattr = SCA, AT
 value = 140
 
 
-;--- GUARD (end) ---
+;GUARD (end) ---
 [Statedef 140]
 type = U
 physics = U
@@ -1308,7 +1324,7 @@ type = changestate
 trigger1 = !animtime
 value = (statetype = C) * 11 + (statetype = A) * 51
 
-;--- SGUARDHIT (shaking) ---
+;SGUARDHIT (shaking) ---
 [Statedef 150]
 type = S
 movetype = H
@@ -1322,7 +1338,7 @@ value = 150
 type = changestate
 trigger1 = hitshakeover
 value = 151 + 2 * ((!AIlevel && command = "holddown") || (AIlevel && (enemynear, movetype = A) && (enemynear, statetype = C)))
-;===========================================
+;=
 ;[State 150, ChangeState]
 ;type = ChangeState
 ;trigger1 = (HitShakeOver) && (Command = "holdback")
@@ -1337,7 +1353,7 @@ value = 151 + 2 * ((!AIlevel && command = "holddown") || (AIlevel && (enemynear,
 ;type = ChangeState
 ;trigger1 = (Command != "holdback")
 ;value = 10160
-;==============================================
+;====
 [State 150, High to Low]
 type = statetypeset
 trigger1 = !AIlevel && statetype = S && command = "holddown"
@@ -1352,7 +1368,7 @@ trigger2 = AIlevel && random < (125 * (AIlevel ** 2 / 64.0))
 trigger2 = statetype = C && (enemynear, movetype = A) && (enemynear, statetype != C)
 statetype = S
 physics = S
-;=================================================
+;=
 ;[State 150, VarSet]
 ;type = VarSet
 ;trigger1 = Time = 0
@@ -1363,8 +1379,8 @@ physics = S
 ;trigger1 = (!Time)
 ;waveform = Square
 ;time = 3
-;===================================================
-;--- SGUARDHIT2 (knocked back) ---
+;===
+;SGUARDHIT2 (knocked back) ---
 [Statedef 151]
 type = S
 movetype = H
@@ -1397,20 +1413,20 @@ trigger2 = AIlevel && random < (125 * (AIlevel ** 2 / 64.0))
 trigger2 = statetype = C && (enemynear, movetype = A) && (enemynear, statetype != C)
 statetype = S
 physics = S
-;================================================
+;
 ;[State 151, ChangeState]
 ;type = ChangeState
 ;trigger1 = Time >= GetHitVar(hittime)
 ;value = 130
 ;ctrl = 1
-;================================================
+;
 [State 151, End]
 type = changestate
 trigger1 = hitover
 value = 130
 ctrl = 1
-;================================================
-;--- CGUARDHIT (shaking) ---
+;
+;CGUARDHIT (shaking) ---
 [Statedef 152]
 type = C
 movetype = H
@@ -1439,7 +1455,7 @@ trigger2 = statetype = C && (enemynear, movetype = A) && (enemynear, statetype !
 statetype = S
 physics = S
 
-;--- CGUARDHIT2 (knocked back) ---
+;CGUARDHIT2 (knocked back) ---
 [Statedef 153]
 type = C
 movetype = H
@@ -1478,7 +1494,7 @@ trigger1 = hitover
 value = 131
 ctrl = 1
 
-;--- AGUARDHIT (shaking) ---
+;AGUARDHIT (shaking) ---
 [Statedef 154]
 type = A
 movetype = H
@@ -1493,7 +1509,7 @@ type = changestate
 trigger1 = hitshakeover
 value = 155
 
-;--- AGUARDHIT2 (knocked away) ---
+;AGUARDHIT2 (knocked away) ---
 [Statedef 155]
 type = A
 movetype = H
@@ -1811,7 +1827,7 @@ type = ChangeState
 trigger1 = sysvar(0)
 value = 130
 
-;==========< CHEAP K.O. >==========
+;CHEAP K.O.
 [Statedef 5130]
 type = S
 movetype = H
@@ -1882,7 +1898,7 @@ value = ifelse(alive, 5110, 5150)
 
 
 
-;==========< TAUNT >==========
+;TAUNT
 [Statedef 195]
 type = S
 movetype = A
@@ -2052,7 +2068,7 @@ trigger1 = !animtime
 value = 0
 ctrl = 1
 
-;==========< LOSE (Time over) >==========
+;LOSE (Time over)
 [Statedef 170]
 type = S
 ctrl = 0
@@ -2079,7 +2095,7 @@ trigger1 = animelem = 2
 value = 0, 52
 
 
-;==========< DRAWGAME (Time over) >==========
+;DRAWGAME (Time over)
 [Statedef 175]
 type = S
 ctrl = 0
@@ -2105,7 +2121,7 @@ trigger1 = animelem = 5
 value = 5, 4
 
 
-;=========<PRE INTRO>=======
+;===<PRE INTRO>=
 [Statedef 190]
 type = S
 ctrl = 0
@@ -2203,7 +2219,7 @@ trigger1 = var(1) = 1
 trigger1 = ifelse(var(0) = 2, time >= 1, 1)
 value = ifelse(random < 500, 187, 181)
 
-;==========< INTRO 1 >==========
+;INTRO 1
 [Statedef 182]
 type = S
 anim = 182
@@ -2279,7 +2295,7 @@ trigger1 = !animtime
 value = 0
 
 
-;==========< INTRO SHIN GOUKI >==========
+;INTRO SHIN GOUKI
 [Statedef 187]
 type = S
 anim = 187
@@ -2418,7 +2434,7 @@ trigger1 = !animtime
 value = 0
 
 
-;==========< INTRO 3 >==========
+;INTRO 3
 [Statedef 181]
 type = S
 anim = 181
@@ -2469,7 +2485,7 @@ trigger1 = !animtime
 value = 0
 
 
-;========================< SGS INTRO >=============================
+;< SGS INTRO====
 [Statedef 178]
 type = A
 physics = N
@@ -2649,7 +2665,7 @@ type = changestate
 trigger1 = !animtime
 value = 0
 
-;========================< MISOGI INTRO >=============================
+;< MISOGI INTRO====
 [Statedef 188]
 type = A
 physics = N
@@ -2752,7 +2768,7 @@ trigger1 = !animtime
 value = 0
 
 
-;==========< INTRO vs EVIL RYU >==========
+;INTRO vs EVIL RYU
 [Statedef 192]
 type = S
 physics = N
@@ -2909,7 +2925,7 @@ trigger1 = !animtime
 value = 0
 
 
-;==========< INTRO vs HAOHMARU >==========
+;INTRO vs HAOHMARU
 [Statedef 191]
 type = S
 anim = 191
@@ -2945,7 +2961,7 @@ trigger1 = !animtime
 value = 0
 
 
-;==========< INTRO vs ADON by Sepp >==========
+;INTRO vs ADON by Sepp
 [Statedef 193]
 type = S
 anim = 193
@@ -3094,7 +3110,7 @@ trigger1 = !animtime
 value = 0
 
 
-;========================< INTRO vs VEGA >=============================
+;< INTRO vs VEGA====
 [Statedef 350]
 type = A
 physics = N
@@ -3185,7 +3201,7 @@ trigger1 = !animtime
 value = 0
 
 
-;==========< WIN POSE DECIDER >==========
+;WIN POSE DECIDER
 [Statedef 180]
 type = S
 
@@ -3225,7 +3241,7 @@ trigger1 = !time
 value = ifelse(random < 333, 185, ifelse(random < 500, 186, 189))
 
 
-;==========< WIN 1 >==========
+;WIN 1
 [Statedef 185]
 type = S
 anim = 185
@@ -3266,7 +3282,7 @@ bindtime = -1
 removeongethit = 1
 ownpal = 1
 
-;==========< WIN 2 >==========
+;WIN 2
 [Statedef 186]
 type = S
 anim = 186
@@ -3279,7 +3295,7 @@ channel = 0
 persistent = 0
 
 
-;==========< WIN 3 >==========
+;WIN 3
 [Statedef 189]
 type = S
 anim = 189
@@ -3375,7 +3391,7 @@ loop = 1
 persistent = 0
 
 
-;==========< WIN by MISOGI >==========
+;WIN by MISOGI
 [Statedef 184]
 type = S
 sprpriority = -5
@@ -3410,7 +3426,7 @@ trigger1 = time >= 30 && roundstate = 3
 value = ifelse(roundstate = 3, 180, 0)
 ctrl = 1
 
-;==========< WIN by S.G.S. >==========
+;WIN by S.G.S.
 [Statedef 362]
 type = S
 sprpriority = -1
@@ -3483,7 +3499,7 @@ trigger1 = time >= 120 && roundstate = 3
 value = ifelse(roundstate = 3, 180, 0)
 ctrl = 1
 
-;====================<TURNS INTRO>====================
+;==<TURNS INTRO>==
 [StateDef 6900]
 type = A
 anim = 42
@@ -3644,7 +3660,7 @@ type = ChangeState
 trigger1 = !AnimTime
 value = 0
 
-;==========< CONTINUE? >==========
+;CONTINUE?
 [Statedef 5500]
 type = S
 ctrl = 0
@@ -3655,7 +3671,7 @@ trigger1 = !time
 value = 5500
 
 
-;==========< FALL RECOVERY >==========
+;FALL RECOVERY
 [Statedef 5200]
 type = A
 movetype = H
@@ -3790,7 +3806,7 @@ trigger1 = pos y > -vel y
 value = 52
 
 
-;==========< TARGET SAFE FALL >==========
+;TARGET SAFE FALL
 [Statedef 5205]
 type = A
 physics = N
@@ -3818,7 +3834,7 @@ type = selfstate
 trigger1 = time >= 60
 value = 5210
 
-;====================<K.O.>====================
+;==<K.O.>==
 [StateDef 5150]
 type = L
 movetype = H
@@ -3860,7 +3876,7 @@ trigger1 = 1
 value = SCA
 time = 1
 
-;====================<AIR HIT TRANSITION>====================
+;==<AIR HIT TRANSITION>==
 [Statedef 5035]
 type = A
 movetype = H
@@ -3898,14 +3914,14 @@ trigger4 = !Time
 trigger4 = Anim != 5035
 value = 5050
 
-;===============================< -2 STATES >=================================
-;===========================================================================
+;=< -2 STATES==
+;===
 [Statedef -2]
 
 ;#ADD004BASIC PIEs#
-;//==========================
+;//==
 ;// add004-sctrls-start
-;//==========================
+;//==
 ;sys::-2::partners_standby ; ???????
 [state 0]
 	type=selfstate
@@ -3975,7 +3991,7 @@ value = 5050
 	time=1
 	ignorehitpause=1
 
-;//==========================
+;//==
 ;;>>@Config.Face>>
 ;sys::-2::face_d ; portrait (?)
 [state 0]
@@ -4010,7 +4026,7 @@ value = 5050
 	id=490600
 	ignorehitpause=1
 
-;//==========================
+;//==
 ;;>>@Config.Camera>>
 ;sys::-2::camera_nc ; ????
 [state 0]
@@ -4036,7 +4052,7 @@ value = 5050
 	movecamera=0,0 ;; [x,y]
 	ignorehitpause=1
 
-;//==========================
+;//==
 ;sys::-2::add.option2-noko
 [state 0] ;; opt-noko
 	type=assertspecial
@@ -4055,7 +4071,7 @@ value = 5050
 	kill=0
 	ignorehitpause=1
 
-;//==========================
+;//==
 ;// optional settings
 ;sys::-2::guard_crush_fx ; ????????
 [state 0]
@@ -4071,7 +4087,7 @@ value = 5050
 	trigger1=playerid(floor(sysfvar(0))),var(0)=90900 && playerid(floor(sysfvar(0))),var(36)>=50
 	value=190010
 	ignorehitpause=1
-;;--- dizzy
+;;dizzy
 ;sys::-2::goto-dizzy_s/c
 [state 0] ;[.03-2d1]
 	type=selfstate
@@ -4084,7 +4100,7 @@ value = 5050
 	trigger1=(stateno=5030 || stateno=5071) && hitshakeover && alive && !ishelper && life>1 && roundstate=2 && sysfvar(0)>id && playeridexist(floor(sysfvar(0)))
 	trigger1=playerid(floor(sysfvar(0))),var(0)=90900 && playerid(floor(sysfvar(0))),var(50)>=1000
 	value=195050
-;;--- fadeout when KOed ; KO????
+;;fadeout when KOed ; KO????
 ;sys::-2::st5150-1
 [state 0]
 	type=varset
@@ -4096,7 +4112,7 @@ value = 5050
 	trigger1=stateno=5150 && alive=0 && !ishelper && numpartner && sysvar(1) && (((time=[80,150]) && time%10<5) || time>150)
 	flag=invisible
 	flag2=noshadow
-;;--- intro-pos-reset
+;;intro-pos-reset
 ;sys::-2::st5900-p3
 [state 0]
 	type=turn
@@ -4117,9 +4133,9 @@ value = 5050
 	trigger1=playerid(id-3),ishelper=0 && playerid(id-3),teamside=teamside
 	x=const240p(144)*ifelse(teamside=1,-1,1)
 
-;//==========================
+;//==
 ;// add004-sctrls-end
-;//==========================
+;//==
 
 
 [State -2, Hit Detection]
@@ -4601,9 +4617,9 @@ text = "\nBy PotS - http://www.mugenguild.com/pots/"
 ignorehitpause = 1
 
 
-;===========================================================================
-;===============================< -3 STATES >=================================
-;===========================================================================
+;===
+;=< -3 STATES==
+;===
 [Statedef -3]
 
 [State -3, Gametime Var]
@@ -4658,64 +4674,73 @@ add = 32 + ceil(sin(gametime / 1.5) * 32), 32 + ceil(sin(gametime / 1.5) * 32), 
 mul = 300, 300, 200
 ignorehitpause = 1
 
-[State -3, Lv1 Shadows]
-type = afterimage
-trigger1 = stateno = 3000 && anim = 3000 && animelem = 3
-trigger2 = stateno = 3050 && animelem = 2
-trigger3 = stateno = 3100 && anim = 3100 && animelemtime(1) = 2
-trigger4 = stateno = 3200 && anim = 3200 && animelem = 2
-trigger5 = stateno = 3250 && anim = 3250 && animelem = 2
+[State -3, Movement AfterImage]
+type = AfterImage
+triggerAll = Time = 1 && !var(20)
+trigger1 = StateNo = 50 && (var(3) = 2 || var(3) = 3)
+trigger2 = (StateNo = [700,715])
 time = 2
-timegap = 1
-framegap = 10
+timeGap = 1
+frameGap = 4
+length = 9
+palBright = 0,0,0
+palContrast = 128,128,128
+palPostBright = 0,0,0
+palAdd = 0,0,0
+palMul = 0.9,0.9,0.9
+trans = Add1
+
+[State -3, Level 1 Super AfterImage]
+type = AfterImage
+trigger1 = (StateNo = 3000 || StateNo = 3100 || StateNo = 3300) && Time = 43
+time = 2
+timeGap = 1
+frameGap = 10
 length = 21
-paladd = 0, 0, 0
-palmul = 0.75, 0.75, 0.75
-palcontrast = 128, 128, 128
-palpostbright = 0, 0, 0
-trans = add1
+palBright = 0,0,0
+palContrast = 128,128,128
+palPostBright = 0,0,0
+palAdd = 0,0,0
+palMul = 0.75,0.75,0.75
+trans = Add1
 
-[State -3, Lv2 Shadows]
-type = afterimage
-trigger1 = stateno = 3070 && anim = 3070 && animelem = 2
-trigger2 = stateno = 3020 && anim = 3000 && animelem = 3
-trigger3 = stateno = 3300 && anim = 3300 && animelem = 2
+[State -3, Level 2 Super AfterImage]
+type = AfterImage
+trigger1 = StateNo = 3050 && Time = 43
+trigger2 = StateNo = 3150 && Time = 43
+trigger3 = StateNo = 3350 && Time = 43
 time = 2
-timegap = 1
-framegap = 10
-length = 30
-paladd = 0, 0, 0
-palmul = 0.75, 0.75, 0.75
-palcontrast = 32, 32, 160
-palpostbright = 0, 0, 0
-trans = add1
+timeGap = 1
+frameGap = 10
+length = 21
+palBright = 0,0,0
+palContrast = 32,32,160
+palPostBright = 0,0,0
+palAdd = 0,0,0
+palMul = 0.75,0.75,0.75
+trans = Add1
 
-[State -3, Lv3 Shadows]
-type = afterimage
-trigger1 = stateno = 192 && time = 1
-trigger2 = stateno = 4000 && time = 1
-trigger3 = stateno = 4100 && anim = 4100 && time = 63
-trigger4 = stateno = 4200 && animelem = 2
-trigger5 = stateno = 178 && time = 1
+[State -3, Level 3 Super AfterImage]
+type = AfterImage
+trigger1 = StateNo = 3200 && Time = 43
 time = 2
-timegap = 1
-framegap = 10
-length = 30
-paladd = 0, 0, 0
-palmul = 0.75, 0.75, 0.75
-palcontrast = 160, 32, 32
-palpostbright = 0, 0, 0
-trans = add1
+timeGap = 1
+frameGap = 10
+length = 21
+palBright = 0,0,0
+palContrast = 160,32,32
+palPostBright = 0,0,0
+palAdd = 0,0,0
+palMul= 0.75,0.75,0.75
+trans = Add1
 
-[State -3, AfterImagePersist]
-type = afterimagetime
-trigger1 = stateno = 50 && var(9) = 3 && vel y < -1
-trigger2 = var(20) > 0
-trigger3 = stateno = 710 || stateno = 720 || stateno = 1400
-trigger4 = (stateno = [1000, 2999]) && var(10) = 4 && (anim != [1101, 1103]) && anim != 1207
-trigger5 = (stateno = [3000, 4999]) && (anim != [1101, 1102]) && (anim != [1111, 1112])
-trigger6 = stateno = 192 && animelemtime(2) < 0
-trigger7 = stateno = 178 && animelemtime(2) < 0
+[State -3, AfterImage Persist]
+type = AfterImageTime
+trigger1 = StateNo = 50 || (StateNo = [600,699])
+trigger1 = (var(3) = 2 || var(3) = 3) && vel y < -1
+trigger2 = var(20)
+trigger3 = StateNo = [700,715]
+trigger4 = (StateNo = [3000,4999])
 time = 2
 
 [State -3, Corner Push]
