@@ -759,14 +759,15 @@ value = 21
 
 
 ;JUMPING
-[Statedef 40]
+[StateDef 40]
 type = S
 physics = S
+moveType = I
 anim = 40
 ctrl = 0
-velset = 0, 0
-sprpriority = 1
-facep2 = 1
+velSet = 0,0
+sprPriority = 1
+faceP2 = 1
 
 [State 40, Direction]
 type = VarSet
@@ -804,15 +805,20 @@ trigger1 = AILevel && (var(3) != [1,2])
 trigger1 = (EnemyNear, StateType = C) && Random < 500
 var(3) = ifElse((var(3) = 3 && sysvar(1)), 2, 1)
 
-[State 40, Dust]
-type = helper
-trigger1 = !animtime
-helpertype = normal
-stateno = 7100
+[State 40, Jump Sound]
+type = PlaySnd
+trigger1 = !AnimTime
+value = ifElse((var(3) = [2,3]), 41, 40), 0
+
+[State 40, Dust Helper]
+type = Helper
+trigger1 = !AnimTime
+helperType = Normal
+stateNo = 7100
 ID = 7100
 name = "Dust"
-postype = p1
-ownpal = 1
+posType = P1
+ownPal = 1
 
 [State 40, Velocity: Normal Jump]
 type = VelSet
@@ -838,14 +844,9 @@ trigger1 = !AnimTime && var(3) = 3
 x = ifElse(!sysvar(1), const(velocity.jump.neu.x), ifElse(sysvar(1) = 1, const(velocity.runjump.fwd.x), const(velocity.runjump.back.x)))
 y = ifElse(!sysvar(1), const(velocity.runjump.y), const(velocity.jump.y))
 
-[State 40, Vel]
-type = velset
-trigger1 = !animtime && prevstateno = 100 && sysvar(1) = 1
-trigger1 = var(9) = 3
-x = const(velocity.runjump.fwd.x)
 [State 40, End]
-type = changestate
-trigger1 = !animtime
+type = ChangeState
+trigger1 = !AnimTime
 value = 50
 ctrl = 1
 
@@ -4500,7 +4501,7 @@ ignorehitpause = 1
 [State -3, Shadows]
 type = afterimage
 triggerall = time = 1 && !var(20)
-trigger1 = stateno = 50 || stateno = 40 || stateno = 51 || stateno = 52 && var(9) = 3
+trigger1 = stateno = 50 && var(9) = 3
 trigger2 = stateno = 710 || stateno = 720
 time = 2
 timegap = 1
@@ -4560,13 +4561,25 @@ ignoreHitPause = 1
 ;mul = 300, 300, 200
 ;ignorehitpause = 1
 
-[State -3, Lv1 Shadows]
-type = afterimage
-trigger1 = stateno = 3000 && animelem = 4
-trigger2 = stateno = 3020 && animelem = 3
-trigger3 = stateno = 3100 && anim = 3100 && animelem = 4
-trigger4 = stateno = 3140 && anim = 3140 && animelemtime(1) = 2
-trigger5 = stateno = 3700 && animelem = 4
+[State -3, Movement AfterImage]
+type = AfterImage
+triggerAll = Time = 1 && !var(20)
+trigger1 = StateNo = 50 && (var(3) = 2 || var(3) = 3)
+trigger2 = (StateNo = [700,715])
+time = 2
+timeGap = 1
+frameGap = 4
+length = 9
+palBright = 0,0,0
+palContrast = 128,128,128
+palPostBright = 0,0,0
+palAdd = 0,0,0
+palMul = 0.9,0.9,0.9
+trans = Add1
+
+[State -3, Level 1 Super AfterImage]
+type = AfterImage
+trigger1 = (StateNo = 3000 || StateNo = 3100 || StateNo = 3300) && Time = 43
 time = 2
 timeGap = 1
 frameGap = 10
@@ -4578,11 +4591,11 @@ palAdd = 0,0,0
 palMul = 0.75,0.75,0.75
 trans = Add1
 
-[State -3, Lv2 Shadows]
-type = afterimage
-trigger1 = stateno = 3180 && anim = 3180 && animelem = 2
-trigger2 = stateno = 3160 && anim = 3160 && animelem = 4
-trigger3 = stateno = 3200 && anim = 3200 && animelem = 3
+[State -3, Level 2 Super AfterImage]
+type = AfterImage
+trigger1 = StateNo = 3050 && Time = 43
+trigger2 = StateNo = 3150 && Time = 43
+trigger3 = StateNo = 3350 && Time = 43
 time = 2
 timeGap = 1
 frameGap = 10
@@ -4594,15 +4607,9 @@ palAdd = 0,0,0
 palMul = 0.75,0.75,0.75
 trans = Add1
 
-[State -3, Lv3 Shadows]
-type = afterimage
-trigger1 = stateno = 3040 && anim = 3040 && animelem = 4
-trigger2 = stateno = 3120 && anim = 3120 && animelem = 2
-trigger3 = stateno = 4000 && time = 1
-trigger4 = stateno = 368 && time = 1
-trigger5 = stateno = 3601 && time = 1
-trigger6 = stateno = 3701 && animelem = 31
-trigger7 = stateno = 3150 && time = 1
+[State -3, Level 3 Super AfterImage]
+type = AfterImage
+trigger1 = StateNo = 3200 && Time = 43
 time = 2
 timeGap = 1
 frameGap = 10
@@ -4613,17 +4620,14 @@ palPostBright = 0,0,0
 palAdd = 0,0,0
 palMul= 0.75,0.75,0.75
 trans = Add1
-ignorehitpause = 1
 
-[State -3, AfterImagePersist]
-type = afterimagetime
-trigger1 = stateno = 50 && var(9) = 3 && vel y < -1
-trigger2 = var(20) > 0
-trigger3 = stateno = 710 || stateno = 720 || stateno = 1400
-trigger4 = (stateno = [1000, 2999]) && var(10) = 4 && (anim != [1101, 1103]) && anim != 1207
-trigger5 = (stateno = [3000, 4999]) && (anim != [1101, 1102]) && (anim != [1111, 1112])
-trigger6 = stateno = 368 && animelemtime(2) < 0
-trigger7 = stateno = 5982 && anim = 1400
+[State -3, AfterImage Persist]
+type = AfterImageTime
+trigger1 = StateNo = 50 || (StateNo = [600,699])
+trigger1 = (var(3) = 2 || var(3) = 3) && vel y < -1
+trigger2 = var(20)
+trigger3 = StateNo = [700,715]
+trigger4 = (StateNo = [3000,4999])
 time = 2
 
 [State -3, Corner Push]
