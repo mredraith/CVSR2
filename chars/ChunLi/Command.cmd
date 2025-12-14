@@ -3091,7 +3091,7 @@ type = ChangeState
 value = 1030
 triggerAll = !AILevel
 ;command = "HCF"
-triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010406)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
+triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010006)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
 ;x + y / x + z / y + z
 triggerAll = (ifElse(NumExplod(90000200), 1, 0) + ifElse(NumExplod(90000210), 1, 0) + ifElse(NumExplod(90000220), 1, 0) >= 2) || (ifElse(NumExplod(90000205), 1, 0) + ifElse(NumExplod(90000215), 1, 0) + ifElse(NumExplod(90000225), 1, 0) >= 2)
 triggerAll = RoundState = 2 && StateType != A && !NumProjID(131035)
@@ -3105,7 +3105,7 @@ type = ChangeState
 value = 1330 + 200 * var(40)
 triggerAll = !AILevel
 ;command = "HCB"
-triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010504)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010406))
+triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010504)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010006))
 ;a + b / a + c / b + c
 triggerAll = (ifElse(NumExplod(90000230), 1, 0) + ifElse(NumExplod(90000240), 1, 0) + ifElse(NumExplod(90000250), 1, 0) >= 2) || (ifElse(NumExplod(90000235), 1, 0) + ifElse(NumExplod(90000245), 1, 0) + ifElse(NumExplod(90000255), 1, 0) >= 2)
 triggerAll = RoundState = 2 && StateType != A && !NumProjID(131035)
@@ -3143,7 +3143,7 @@ type = ChangeState
 value = 1130
 triggerAll = !AILevel
 ;command = "HCF"
-triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010406)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
+triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010006)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
 ;a + b / a + c / b + c
 triggerAll = (ifElse(NumExplod(90000230), 1, 0) + ifElse(NumExplod(90000240), 1, 0) + ifElse(NumExplod(90000250), 1, 0) >= 2) || (ifElse(NumExplod(90000235), 1, 0) + ifElse(NumExplod(90000245), 1, 0) + ifElse(NumExplod(90000255), 1, 0) >= 2)
 triggerAll = RoundState = 2 && StateType != A  && !NumProjID(131035)
@@ -3156,7 +3156,7 @@ type = ChangeState
 value = 1000
 triggerAll = !AILevel
 ;command = "HCF"
-triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010406)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
+triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010006)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
 ;x / y / z
 triggerAll = NumExplod(90000200) || NumExplod(90000205) || NumExplod(90000210) || NumExplod(90000215) || NumExplod(90000220) || NumExplod(90000225)
 triggerAll = RoundState = 2 && StateType != A && !NumProjID(131035)
@@ -3169,7 +3169,7 @@ type = ChangeState
 value = 1300 + 200 * var(40)
 triggerAll = !AILevel
 ;command = "HCB"
-triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010504)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010406))
+triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010504)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010006))
 ;a / b / c
 triggerAll = NumExplod(90000230) || NumExplod(90000235) || NumExplod(90000240) || NumExplod(90000245) || NumExplod(90000250) || NumExplod(90000255)
 triggerAll = RoundState = 2 && StateType != A && !NumProjID(131035)
@@ -3204,7 +3204,7 @@ type = ChangeState
 value = 1100
 triggerAll = !AILevel
 ;command = "HCF"
-triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010406)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
+triggerAll = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90010006)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90010504))
 ;a / b / c
 triggerAll = NumExplod(90000230) || NumExplod(90000235) || NumExplod(90000240) || NumExplod(90000245) || NumExplod(90000250) || NumExplod(90000255)
 triggerAll = RoundState = 2 && StateType != A && !NumProjID(131035)
