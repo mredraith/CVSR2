@@ -1514,7 +1514,7 @@ time = 1
 [State 1510, Vel]
 type = velset
 trigger1 = anim = 1503 && animelemtime(5) < 0
-x = 3
+x = 100
 
 [State 1510, EX FX]
 type = Explod

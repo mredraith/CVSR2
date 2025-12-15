@@ -1671,7 +1671,7 @@ value = ifelse(var(10) = 3, 1502, ifelse(var(10) = 2, 1501, 1500))
 [State 1500, Vel]
 type = velset
 trigger1 = (anim = [1500, 1502]) && animelemtime(5) < 0
-x = ifelse(var(10) = 3, 3, ifelse(var(10) = 2, 4, 1))
+x = 30
 
 [State 1500, Vel]
 type = velset

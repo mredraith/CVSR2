@@ -1,9 +1,9 @@
 ; ________________________________________
 ;| Ryu by Phantom.of.the.Server and Mwryly |
 ; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-;
-;HYPER STATES
-;
+;============================================================================================
+;======================================< HYPER STATES===========
+;============================================================================================
 
 ;SHINKUU HADOU KEN
 [Statedef 3000]
@@ -3405,7 +3405,7 @@ value = SCA
 [State 4000, Vel]
 type = velset
 trigger1 = 1
-x = 20
+x = 5
 [State 4000, Snd]
 type = playsnd
 trigger1 = animelemtime(1) > 1
@@ -3441,7 +3441,7 @@ value = 0
 ctrl = 1
 
 
-;PLAYER
+;--- PLAYER ---
 [Statedef 4001]
 type = S
 physics = N
@@ -3488,7 +3488,7 @@ var(41) = 20
 [State 4001, vsevilryu]
 type = varset
 triggerall = !time && numtarget
-trigger1 = target, name = "Funny Ryu" || target, name = "FRyu"
+trigger1 = target, name = "Evil Ryu" || target, name = "ERyu"
 trigger2 = target, name = "Ryu" && target, authorname = "Phantom.of.the.Server" && target, var(1) != 1
 trigger3 = target, name = "CVSEvilRyu" || target, name = "Destrudo Ryu"
 trigger4 = target, name = "Ryu" && target, authorname = "N64Mario" && target, palno >= 7
@@ -3747,7 +3747,7 @@ value = 0
 ctrl = 1
 
 
-;TARGET
+;--- TARGET ---
 [Statedef 1114002]
 type = S
 physics = N
@@ -3779,7 +3779,7 @@ trigger1 = time >= 76 && alive
 value = 5120
 
 
-;PLAYER
+;--- PLAYER ---
 [Statedef 4009]
 type = S
 physics = S
@@ -3835,7 +3835,7 @@ value = 0
 ctrl = 1
 
 
-;PLAYER
+;--- PLAYER ---
 [Statedef 1114010]
 type = S
 physics = S
@@ -4079,7 +4079,7 @@ ctrl = 1
 
 
 
-;<SOURYKEN>=======
+;======================<SOURYKEN>=============================
 [Statedef 3700]
 type=S
 physics=N
@@ -4562,7 +4562,7 @@ value = 0
 ctrl = 1
 
 
-;==<WIN BY SOURYKEN>=======
+;========================<WIN BY SOURYKEN>=============================
 [Statedef 3711]
 type = S
 
