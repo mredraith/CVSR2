@@ -1,11 +1,11 @@
 ; ________________________________________
 ;| Ryu by Phantom.of.the.Server and Mwryly |
 ; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-;============================================================================================
-;======================================< HYPER STATES >========================================
-;============================================================================================
+;
+;HYPER STATES
+;
 
-;======================< SHINKUU HADOU KEN >=============================
+;SHINKUU HADOU KEN
 [Statedef 3000]
 type = S
 physics = S
@@ -145,7 +145,7 @@ value = 0
 ctrl = 1
 
 
-;======================< DENJIN HADOU KEN >=============================
+;DENJIN HADOU KEN
 [Statedef 3020]
 type = S
 physics = S
@@ -434,7 +434,7 @@ value = 0
 ctrl = 1
 
 
-;======================< METSU HADOU KEN >=============================
+;METSU HADOU KEN
 [Statedef 3040]
 type = S
 physics = S
@@ -647,7 +647,7 @@ value = 0
 ctrl = 1
 
 
-;======================< RYUU KOKU HADOU KEN >=============================
+;RYUU KOKU HADOU KEN
 [Statedef 3050]
 type = S
 physics = S
@@ -793,7 +793,7 @@ value = 0
 ctrl = 1
 
 
-;======================< NIDAN SHORYUU TSUKI >=============================
+;NIDAN SHORYUU TSUKI
 [Statedef 3100]
 type = S
 physics = S
@@ -1194,7 +1194,7 @@ value = 11
 ctrl = 1
 
 
-;======================< SHIN SHORYUU KEN >=============================
+;SHIN SHORYUU KEN
 [Statedef 3120]
 type = S
 physics = S
@@ -1634,7 +1634,7 @@ value = ifelse(anim = 3122, 11, 0)
 ctrl = 1
 
 
-;======================< MESSATSU GOU SHORYUU >=============================
+;MESSATSU GOU SHORYUU
 [Statedef 3140]
 type = S
 physics = S
@@ -2072,7 +2072,7 @@ type = statetypeset
 trigger1 = anim = 1101
 movetype = I
 
-;======================< METSU SHORYUU KEN >=============================
+;METSU SHORYUU KEN
 [Statedef 3160]
 type = S
 physics = S
@@ -2506,7 +2506,7 @@ value = 0
 ctrl = 1
 
 
-;--- --TARGET -----
+;TARGET
 [Statedef 3162]
 type = S
 physics = S
@@ -2537,7 +2537,7 @@ trigger1 = time >= 90
 value = 5001
 
 
-;======================< REPPU JINRAI SHOU >=============================
+;REPPU JINRAI SHOU
 [Statedef 3180]
 type = S
 physics = S
@@ -2818,7 +2818,7 @@ value = 0
 ctrl = 1
 
 
-;======================< SHINKUU TATSUMAKI SENPUU KYAKKU >=============================
+;SHINKUU TATSUMAKI SENPUU KYAKKU
 [Statedef 3200]
 type = S
 physics = S
@@ -3339,7 +3339,7 @@ trigger1 = anim = 1207
 movetype = I
 
 
-;======================< SHUN GOKU SATSU >=============================
+;SHUN GOKU SATSU
 [Statedef 4000]
 type = S
 physics = S
@@ -3405,7 +3405,7 @@ value = SCA
 [State 4000, Vel]
 type = velset
 trigger1 = 1
-x = 5
+x = 20
 [State 4000, Snd]
 type = playsnd
 trigger1 = animelemtime(1) > 1
@@ -3441,7 +3441,7 @@ value = 0
 ctrl = 1
 
 
-;--- PLAYER ---
+;PLAYER
 [Statedef 4001]
 type = S
 physics = N
@@ -3488,7 +3488,7 @@ var(41) = 20
 [State 4001, vsevilryu]
 type = varset
 triggerall = !time && numtarget
-trigger1 = target, name = "Funny Ryu" || target, name = "ERyu"
+trigger1 = target, name = "Funny Ryu" || target, name = "FRyu"
 trigger2 = target, name = "Ryu" && target, authorname = "Phantom.of.the.Server" && target, var(1) != 1
 trigger3 = target, name = "CVSEvilRyu" || target, name = "Destrudo Ryu"
 trigger4 = target, name = "Ryu" && target, authorname = "N64Mario" && target, palno >= 7
@@ -3649,7 +3649,7 @@ value = 1
 type = targetlifeadd
 trigger1 = animelem = 2 || animelem = 3 || animelem = 4 || animelem = 5 || animelem = 6 || animelem = 7 || animelem = 8 || animelem = 9
 trigger2 = animelem = 10 || animelem = 11 || animelem = 12 || animelem = 13 || animelem = 14 || animelem = 15 || animelem = 16
-value = ifelse((var(41) = 456), -40, -32)
+value = -20
 kill = animelem = 16
 
 [State 4001, givepower]
@@ -3747,7 +3747,7 @@ value = 0
 ctrl = 1
 
 
-;--- TARGET ---
+;TARGET
 [Statedef 1114002]
 type = S
 physics = N
@@ -3779,7 +3779,7 @@ trigger1 = time >= 76 && alive
 value = 5120
 
 
-;--- PLAYER ---
+;PLAYER
 [Statedef 4009]
 type = S
 physics = S
@@ -3835,7 +3835,7 @@ value = 0
 ctrl = 1
 
 
-;--- PLAYER ---
+;PLAYER
 [Statedef 1114010]
 type = S
 physics = S
@@ -3865,7 +3865,7 @@ value = 0
 ctrl = 1
 
 
-;======================< DOUBLE SHINKUU HADOU KEN >=============================
+;DOUBLE SHINKUU HADOU KEN
 [Statedef 3600]
 type = S
 physics = S
@@ -4079,7 +4079,7 @@ ctrl = 1
 
 
 
-;======================<SOURYKEN>=============================
+;<SOURYKEN>=======
 [Statedef 3700]
 type=S
 physics=N
@@ -4562,7 +4562,7 @@ value = 0
 ctrl = 1
 
 
-;========================<WIN BY SOURYKEN>=============================
+;==<WIN BY SOURYKEN>=======
 [Statedef 3711]
 type = S
 

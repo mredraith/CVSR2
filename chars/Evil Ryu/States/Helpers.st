@@ -1,9 +1,9 @@
 ; ________________________________________
 ;| Ryu by Phantom.of.the.Server and Mwryly |
 ; ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-;==============================================================================================
-;===============HELPER STATES===========
-;==============================================================================================
+;
+;HELPER STATES
+;
 
 ;JUMP DUST
 [Statedef 7100]
@@ -80,7 +80,7 @@ ignorehitpause = 1
 [State 1005, Vel]
 type = velset
 trigger1 = 1
-x = ifelse(var(10) = 3, 6, ifelse(var(10) = 2, 4.5, 3.375))
+x = ifelse(var(10) = 3, 20, ifelse(var(10) = 2, 5, 1))
 y = 0
 
 [State 1005, Assert]
@@ -296,7 +296,7 @@ ignorehitpause = 1
 [State 1015, Vel]
 type = velset
 trigger1 = 1
-x = ifelse((time < 2 && var(2) > 1), 1, 7)
+x = ifelse((time < 2 && var(2) > 1), 1, 30)
 y = 0
 
 [State 1015, Assert]
@@ -934,7 +934,7 @@ persistent = 0
 type = destroyself
 trigger1 = !animtime
 
-;==============================<EX SHAKUNETSU HADOUKEN>============================
+;====<EX SHAKUNETSU HADOUKEN>======
 [Statedef 1035]
 type = S
 physics = N
@@ -1204,7 +1204,7 @@ var(4) = 1
 [State 3005, Vel]
 type = velset
 trigger1 = 1
-x = ifelse((time < 2 && var(2) > 1), 1, 9)
+x = ifelse((time < 2 && var(2) > 1), 1, 40)
 y = 0
 
 [State 3005, shield]
@@ -2383,7 +2383,7 @@ trans = add
 type = destroyself
 trigger1 = !animtime
 
-;========================================================================
+;==
 [Statedef 6150]
 physics = N
 velset = 0, 0
@@ -3268,7 +3268,7 @@ ID = 7050
 type = destroyself
 trigger1 = time >= 15
 
-;========================<RECOVER FX>=============================
+;=========<RECOVER FX>=======
 [StateDef 7200]
 type = A
 velSet = 0,0
@@ -4468,7 +4468,7 @@ movecamera = 1, 1
 type = destroyself
 trigger1 = roundstate = 2
 
-;========================<SPARKS>=============================
+;=========<SPARKS>=======
 ;Guard Spark (Normal)
 [StateDef 8000]
 type = A
@@ -5584,7 +5584,7 @@ ignoreHitPause = 1
 type = DestroySelf
 trigger1 = Time >= 8
 
-;======================<IMPACT DUST>===========================
+;=======<IMPACT DUST>=====
 [StateDef 8110]
 type = A
 anim = 9741
@@ -5628,7 +5628,7 @@ trigger1 = Time >= 8
 type = DestroySelf
 trigger1 = !NumExplod
 
-;========================<COUNTER FX>=============================
+;=========<COUNTER FX>=======
 [StateDef 8290]
 type = A
 physics = N
@@ -5673,7 +5673,7 @@ type = DestroySelf
 trigger1 = Time >= 16
 
 
-;========================<SUPER PAUSE FX>=============================
+;=========<SUPER PAUSE FX>=======
 ;Level 1 Super FX
 [StateDef 8500]
 type = A
@@ -6115,7 +6115,7 @@ trigger1 = Time >= 40
 type = DestroySelf
 trigger1 = Time >= 40
 
-;========================<CAMERA CONTROL>=============================
+;=========<CAMERA CONTROL>=======
 [StateDef 8999]
 type = S
 velSet = 0,0
