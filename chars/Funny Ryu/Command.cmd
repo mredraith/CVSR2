@@ -1069,7 +1069,7 @@ type = changestate
 value = 3040
 triggerall = !AIlevel
 triggerall = (var(1) = 2 && command = "2qcbp") || (var(1) != 2 && command = "hcb2p")
-triggerall = var(1) != 1 && roundstate = 2 && statetype != A && power >= 3000 && !var(20)
+triggerall = var(1) != 1 && roundstate = 2  && power >= 3000 && !var(20)
 triggerall = !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 triggerall = !numhelper(3033)
 triggerall = !var(6)
@@ -1090,7 +1090,7 @@ type = changestate
 value = 3020
 triggerall = !AIlevel
 triggerall = command = "2qcbp"
-triggerall = var(1) != 2 && roundstate = 2 && statetype != A && power >= 1000 && var(20) <= 60
+triggerall = var(1) != 2 && roundstate = 2  && power >= 1000 && var(20) <= 60
 triggerall = !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 triggerall = !numhelper(3033)
 triggerall = !var(6)
@@ -1193,7 +1193,7 @@ type = changestate
 value = 3000
 triggerall = !AIlevel
 triggerall = command = "2qcfp"
-triggerall = roundstate = 2 && statetype != A && power >= 1000 && var(20) <= 60
+triggerall = roundstate = 2  && power >= 1000 && var(20) <= 60
 triggerall = !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 triggerall = !var(6)
 trigger1 = ctrl || (stateno = [100,101]) || ((stateno = [200, 299]) && time <= 2) || (stateno = 200 || stateno = 230 || stateno = 245)
@@ -1310,8 +1310,8 @@ type = changestate
 value = 1010
 triggerall = !AIlevel
 triggerall = command = "qcf2p"
-triggerall = var(1)!= 3 && roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60
-triggerall = !numhelper(1005) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
+triggerall = var(1)!= 3 && roundstate = 2  && power >= 500 && var(20) <= 60
+;triggerall = !numhelper(1005) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 trigger1 = ctrl || (stateno = [100,101]) || ((stateno = [200, 299]) && time <= 2) || (stateno = 200 || stateno = 230 || stateno = 245)
 trigger2 = !var(6) && (stateno = [200, 255]) && stateno != 225 && stateno != 207 && (movecontact = [1, 8])
 trigger3 = var(20) && (stateno = [200, 289])
@@ -1326,8 +1326,8 @@ type = changestate
 value = 1030
 triggerall = !AIlevel
 triggerall = command = "hcb2p"
-triggerall = var(1) = 2 && roundstate = 2 && statetype != A && power >= 500 && var(20) <= 60
-triggerall = !numhelper(1005) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
+triggerall = var(1) = 2 && roundstate = 2  && power >= 500 && var(20) <= 60
+;triggerall = !numhelper(1005) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 trigger1 = ctrl || (stateno = [100,101]) || ((stateno = [200, 299]) && time <= 2) || (stateno = 200 || stateno = 230 || stateno = 245)
 trigger2 = !var(6) && (stateno = [200, 255]) && stateno != 225 && stateno != 207 && (movecontact = [1, 8])
 trigger3 = var(20) && (stateno = [200, 289])
@@ -1431,7 +1431,7 @@ value = 1020
 triggerall = !AIlevel
 triggerall = command = "hcbx" || command = "hcby" || command = "hcbz";command = "hcfx" || command = "hcfy" || command = "hcfz"
 triggerall = var(1) != 1 && roundstate = 2 && statetype != A
-triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
+;triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 trigger1 = ctrl || (stateno = [100,101]) || ((stateno = [200, 299]) && time <= 2) || (stateno = 200 || stateno = 230 || stateno = 245)
 trigger2 = !var(6) && (stateno = [200, 255]) && stateno != 225 && stateno != 207 && (movecontact = [1, 8])
 trigger3 = var(20) && (stateno = [200, 289])
@@ -1444,8 +1444,8 @@ type = changestate
 value = 1000
 triggerall = !AIlevel
 triggerall = command = "qcfx" || command = "qcfy" || command = "qcfz"
-triggerall = roundstate = 2 && statetype != A
-triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
+triggerall = roundstate = 2 
+;triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(1017) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 trigger1 = ctrl || (stateno = [100,101]) || ((stateno = [200, 299]) && time <= 2) || (stateno = 200 || stateno = 230 || stateno = 245)
 trigger2 = !var(6) && (stateno = [200, 255]) && stateno != 225 && stateno != 207 && (movecontact = [1, 8])
 trigger3 = var(20) && (stateno = [200, 289])
@@ -1469,7 +1469,7 @@ value = 750
 trigger1 = !AIlevel
 trigger1 = stateno = 150 || stateno = 152
 trigger1 = command = "Counter_P" || command = "Counter_K"
-trigger1 = roundstate = 2 && !var(20) && power >= 2000 && statetype != A
+trigger1 = roundstate = 2 && !var(20) && power >= 2000 
 
 [State -1, run / dash]
 type = changestate
@@ -2299,7 +2299,7 @@ type = changestate
 value = 1020
 triggerall = AIlevel && numenemy
 triggerall = var(1) != 1 && roundstate = 2 && statetype != A
-triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
+;triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 triggerall = (p2bodydist x >= 0) && (p2dist y >= -25) && p2movetype != A && p2statetype != L
 triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
 triggerall = !var(6)
@@ -2314,7 +2314,7 @@ triggerall = AIlevel && numenemy
 triggerall = roundstate = 2 && statetype != A
 triggerall = (p2stateno != [120, 155]) && p2statetype != L
 triggerall = (enemynear, vel y > -1)
-triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
+;triggerall = ifelse(!var(20), !numhelper(1005) && !numhelper(1025), 1) && !numhelper(1015) && !numhelper(3005) && !numhelper(3025) && !numhelper(3045) && !numhelper(3055)
 triggerall = (enemynear, const(size.head.pos.y) <= -40) || (enemynear, statetype = A)
 triggerall = !var(6)
 trigger1 = ctrl && p2dist x > 160 && random < (150 * (AIlevel ** 2 / 64.0))

@@ -740,7 +740,7 @@ channel = 1
 [State 212, Vel]
 type = velset
 trigger1 = animelemtime(4) >= 0 && animelemtime(6) <= 0
-x = 6
+x = 12
 
 [State 212, Hit]
 type = hitdef
