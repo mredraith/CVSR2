@@ -1883,6 +1883,23 @@ triggerall = (p2bodydist x = [0, 80]) && backedgebodydist > 80 && (stateno != [1
 trigger1 = enemynear, movetype = A && random < (50 * (AIlevel ** 2 / 64.0))
 trigger2 = enemynear, stateno = 5120 && enemynear, animtime = -3 && random < (200 * (AIlevel ** 2 / 64.0))
 
+; Forward Air Dash
+[State -1, Air Dash Fwd]
+type = ChangeState
+value = 1102
+triggerall = statetype = A
+triggerall = ctrl
+trigger1 = command = "FF"
+
+; Back Air Dash
+[State -1, Air Dash Back]
+type = ChangeState
+value = 1105
+triggerall = statetype = A
+triggerall = ctrl
+trigger1 = command = "BB"
+
+
 [State -1, Jump]
 type = changestate
 value = 40

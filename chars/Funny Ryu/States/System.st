@@ -1090,6 +1090,37 @@ trigger1 = !animtime
 value = 0
 ctrl = 1
 
+[Statedef 1102]
+type = A
+movetype = I
+physics = N
+velset = 0, 0
+anim = ifelse(var(1)!=1,103,102)
+ctrl = 0
+sprpriority = 1
+
+[State 1102, Vel]
+type = VelSet
+trigger1 = animelem = 2
+x = -1.33 * const(velocity.run.back.x) * ifelse(var(1) > 1, 1.11, 1)
+y = vel y
+
+[State 1102, Snd]
+type = PlaySnd
+trigger1 = animelem = 2
+value = 0,105
+
+[State 1102, EndByTime]
+type = ChangeState
+trigger1 = Time > 10
+value = 50
+
+
+[State 1102, Land]
+type = ChangeState
+trigger1 = Pos Y >= 0
+value = 52
+
 
 ;< BACK DASH=
 [Statedef 105]
@@ -1131,6 +1162,31 @@ type = changestate
 trigger1 = !animtime
 value = 0
 ctrl = 1
+
+[Statedef 1105]
+type = A
+movetype = I
+physics = N
+velset = 0, 0
+anim = 105
+ctrl = 0
+sprpriority = 1
+
+[State 1105, Vel]
+type = VelSet
+trigger1 = animelem = 2
+x = const(velocity.run.back.x) * ifElse(var(1) > 1, 0.8, 1)
+y = vel y
+
+[State 1105, EndByTime]
+type = ChangeState
+trigger1 = Time > 10
+value = 50
+
+[State 1105, Land]
+type = ChangeState
+trigger1 = Pos Y >= 0
+value = 52
 
 
 ;GUARD
