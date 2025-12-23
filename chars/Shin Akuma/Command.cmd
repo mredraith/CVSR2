@@ -625,65 +625,65 @@ time = 15
 
 [Command]
 name = "dfx"
-command = ~d, d, x
+command = ~F, D, DF, x
 time = 20
 [Command]
 name = "dfy"
-command = ~d, d, y
+command = ~F, D, DF, y
 time = 20
 [Command]
 name = "dfz"
-command = ~d, d, z
+command = ~F, D, DF, z
 time = 20
 [Command]
 name = "dfx"
-command = ~d, d, ~x
+command = ~F, D, DF, ~x
 time = 20
 [Command]
 name = "dfy"
-command = ~d, d, ~y
+command = ~F, D, DF, ~y
 time = 20
 [Command]
 name = "dfz"
-command = ~d, d, ~z
+command = ~F, D, DF, ~z
 time = 20
 
 [Command]
 name = "dfa"
-command = ~d, d, a
+command = ~F, D, DF, a
 time = 20
 [Command]
 name = "dfb"
-command = ~d, d, b
+command = ~F, D, DF, b
 time = 20
 [Command]
 name = "dfc"
-command = ~d, d, c
+command = ~F, D, DF, c
 time = 20
 [Command]
 name = "dfa"
-command = ~d, d, ~a
+command = ~F, D, DF, ~a
 time = 20
 [Command]
 name = "dfb"
-command = ~d, d, ~b
+command = ~F, D, DF, ~b
 time = 20
 [Command]
 name = "dfc"
-command = ~d, d, ~c
+command = ~F, D, DF, ~c
 time = 20
 
 [Command]
 name = "df2p"
-command = ~d, d, x+y
+command = ~F, D, DF, x+y
 time = 20
 [Command]
 name = "df2p"
-command = ~d, d, x+z
+command = ~F, D, DF, x+z
 time = 20
 [Command]
 name = "df2p"
-command = ~d, d, y+z
+command = ~F, D, DF, y+z
 time = 20
 [Command]
 name = "db2p"
@@ -700,7 +700,7 @@ time = 20
 
 [Command]
 name = "df3p"
-command = ~d, d, x+y+z
+command = ~F, D, DF, x+y+z
 time = 20
 
 [Command]
@@ -710,7 +710,7 @@ time = 20
 
 [Command]
 name = "df3k"
-command = ~d, d, a+b+c
+command = ~F, D, DF, a+b+c
 time = 20
 
 [Command]
@@ -720,7 +720,7 @@ time = 20
 
 [Command]
 name = "dfs"
-command = ~d, d, s
+command = ~F, D, DF, s
 time = 20
 
 [Command]
@@ -730,15 +730,15 @@ time = 20
 
 [Command]
 name = "df2k"
-command = ~d, d, a+b
+command = ~F, D, DF, a+b
 time = 20
 [Command]
 name = "df2k"
-command = ~d, d, a+c
+command = ~F, D, DF, a+c
 time = 20
 [Command]
 name = "df2k"
-command = ~d, d, b+c
+command = ~F, D, DF, b+c
 time = 20
 
 [Command]

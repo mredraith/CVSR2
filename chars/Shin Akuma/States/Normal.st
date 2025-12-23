@@ -1127,7 +1127,7 @@ trigger1 = animelemtime(2) > 0
 type = hitdef
 ;trigger1 = ((p2stateno != [5020, 5050]) || var(20) || roundstate = 3) && p2stateno != 5040
 trigger1 = !var(16) && (var(15) < 1 || var(20))
-trigger1 = animelem = 6
+trigger1 = animelem = 6 && anim = 222
 attr = A, NA
 damage = ceil(ifelse(fvar(12) * 50 < 7, 7, fvar(12) * 50)), 0
 animtype = Medium
@@ -1806,7 +1806,7 @@ channel = 1
 type = hitdef
 ;trigger1 = ((p2stateno != [5020, 5050]) || var(20) || roundstate = 3) && p2stateno != 5040
 trigger1 = !var(16) && (var(15) < 1 || var(20))
-trigger1 = animelem = 3
+trigger1 = animelem = 2
 attr = C, NA 
 damage = ceil(ifelse(fvar(12) * 40 < 7, 7, fvar(12) * 40)), 0
 animtype = Medium
@@ -1890,7 +1890,7 @@ time = 1
 type = hitdef
 ;trigger1 = ((p2stateno != [5020, 5050]) || var(20) || roundstate = 3) && p2stateno != 5040
 trigger1 = !var(16) && !var(17) && (var(15) < 1 || var(20))
-trigger1 = animelem = 3 && prevstateno!= 750
+trigger1 = animelem = 2
 attr = C, NA
 damage = ceil(ifelse(fvar(12) * 64 < 7, 7, fvar(12) * 64)), 0
 animtype = Hard
@@ -1932,7 +1932,7 @@ palFX.sinAdd= -255,-255,-255,48
 
 [State 255, Hit]
 type = hitdef
-trigger1 = animelem = 3 && prevstateno = 750
+trigger1 = animelem = 2
 attr = C, SA
 damage = ceil(ifelse(fvar(12) * 60 < 7, 7, fvar(12) * 60)), 0
 animtype = Back
