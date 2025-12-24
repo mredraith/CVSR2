@@ -189,7 +189,7 @@ type = changestate
 trigger1 = !animtime
 value = 0
 ctrl = 1
-;ZANKUU HADOU KEN >=
+;ZANKUU HADOU KEN
 [Statedef 1050]
 type = A
 physics = N
@@ -286,7 +286,7 @@ y = .5
 [State 1050, Hadouken]
 type = helper
 trigger1 = !var(1) && !var(42)
-trigger1 = animelem = 5;animelem = 2 || animelem = 5
+trigger1 = animelem = 1 || animelem = 3
 helpertype = normal
 stateno = 1055
 ID = 1055
@@ -300,7 +300,7 @@ size.yscale = 0.6
 [State 1050, Hadouken]
 type = helper
 trigger1 =  var(1) && !var(43)
-trigger1 = animelem = 6
+trigger1 = animelem = 1 || animelem = 3
 helpertype = normal
 stateno = 1065
 ID = 1065
@@ -314,7 +314,7 @@ size.yscale = 0.6
 [State 1050, Hadouken]
 type = helper
 trigger1 =  var(1) && !var(43)
-trigger1 = animelem = 3
+trigger1 = animelem = 1 || animelem = 3
 helpertype = normal
 stateno = 1055
 ID = 1055
@@ -328,7 +328,7 @@ size.yscale = 0.6
 [State 1050, Hadouken]
 type = helper
 trigger1 = var(1) && var(43)
-trigger1 = animelem = 3
+trigger1 = animelem = 1 || animelem = 3
 helpertype = normal
 stateno = 1055
 ID = 1055
@@ -342,7 +342,7 @@ size.yscale = 0.6
 [State 1050, Hadouken]
 type = helper
 trigger1 = (!var(1) && var(42) || var(1) && var(43))
-trigger1 = animelem = 6
+trigger1 = animelem = 1 || animelem = 3
 helpertype = normal
 stateno = 1055
 ID = 1055
@@ -356,26 +356,26 @@ size.yscale = 0.6
 [State 1050, Snd]
 type = playsnd
 trigger1 = !var(1) && !var(42);var(1)!= 1
-trigger1 = animelem = 5;animelem = 2 || animelem = 5
+trigger1 = animelem = 1 || animelem = 3
 value = 3, 10
 channel = 0
 [State 1050, Snd]
 type = playsnd
 trigger1 = !var(1) && !var(42);var(1)!= 1
-trigger1 = animelem = 5;animelem = 2 || animelem = 5
+trigger1 = animelem = 1 || animelem = 3
 value = 5, 0
 channel = 1
 
 [State 1050, Snd]
 type = playsnd
 trigger1 = !var(1) && var(42);var(1) = 1
-trigger1 = animelem = 6
+trigger1 = animelem = 1 || animelem = 3
 value = 3, 10
 channel = 0
 [State 1050, Snd]
 type = playsnd
 trigger1 = !var(1) && var(42);var(1) = 1
-trigger1 = animelem = 6
+trigger1 = animelem = 1 || animelem = 3
 value = 5, 0
 channel = 1
 
@@ -402,7 +402,7 @@ type = ChangeState
 trigger1 = Pos Y >= 0 && Vel Y > 0
 value = 52
 
-;GOU SHORYUU KEN >=
+;GOU SHORYUU KEN
 [Statedef 1100]
 type = S
 physics = S
@@ -1337,7 +1337,7 @@ trigger1 = vel y > 0 && pos y >= -30
 value = 1305
 
 
-;=< HYAKKI GOU SHOU >==
+;HYAKKI GOU SHOU
 [Statedef 1301]
 type = A
 movetype = A
@@ -1525,7 +1525,7 @@ type = statetypeset
 trigger1 = animelemtime(7) >= 0
 movetype = I
 
-;=< HYAKKI GOU JIN >==
+;HYAKKI GOU JIN
 [Statedef 1302]
 type = A
 physics = N

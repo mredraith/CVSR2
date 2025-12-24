@@ -715,7 +715,7 @@ persistent = 0
 type = destroyself
 trigger1 = !animtime
 
-;==<EX SHAKUNETSU HADOUKEN>====
+;EX SHAKUNETSU HADOUKEN
 [Statedef 1035]
 type = S
 physics = N
@@ -917,7 +917,7 @@ persistent = 0
 type = destroyself
 trigger1 = !animtime
 
-;====<ZANKUU HADOUKEN
+;ZANKUU HADOUKEN
 [Statedef 1055]
 type = A
 physics = N
@@ -1001,7 +1001,7 @@ ID = 1055
 priority = 4, Hit
 attr = A, SP
 ;damage = ceil(ifelse(var(1) = 1, 32, 47) * root, fvar(12)), 7
-damage = ceil(ifelse((root, fvar(12)) * ifelse(var(1), 32, 47) < 7, 7, (root, fvar(12)) * ifelse(var(1), 32, 47))), 7
+damage = 20
 animtype = Back
 fall.animtype = Back
 hitflag = MAF
@@ -1013,7 +1013,7 @@ guard.sparkno = -1;s7001
 guardsound = s2, 0
 ground.type = High
 ground.slidetime = 16
-ground.hittime = 16
+ground.hittime = 20
 ground.velocity = -7.51, 0
 guard.velocity = -10.52
 ground.cornerpush.veloff = 0
@@ -1251,7 +1251,7 @@ supermovetime = -1
 type = destroyself
 trigger1 = !animtime
 
-;=<EX ZANKUU HADOUKEN>====
+;EX ZANKUU HADOUKEN
 [Statedef 1065]
 type = A
 physics = N
@@ -4331,7 +4331,7 @@ movecamera = 1, 1
 type = destroyself
 trigger1 = roundstate = 2
 
-;====<SPARKS>=
+;SPARKS>=
 ;Guard Spark (Normal)
 [StateDef 8000]
 type = A
@@ -5298,7 +5298,7 @@ ignoreHitPause = 1
 type = DestroySelf
 trigger1 = Time >= 8
 
-;==<IMPACT DUST>===
+;IMPACT DUST>===
 [StateDef 8110]
 type = A
 anim = 9741
@@ -5342,7 +5342,7 @@ trigger1 = Time >= 8
 type = DestroySelf
 trigger1 = !NumExplod
 
-;====<COUNTER FX>=
+;COUNTER FX>=
 [StateDef 8290]
 type = A
 physics = N
@@ -5827,7 +5827,7 @@ trigger1 = Time >= 40
 type = DestroySelf
 trigger1 = Time >= 40
 
-;====<CAMERA CONTROL>=
+;CAMERA CONTROL>=
 [StateDef 8999]
 type = S
 velSet = 0,0

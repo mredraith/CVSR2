@@ -1805,8 +1805,7 @@ channel = 1
 [State 250, Hit]
 type = hitdef
 ;trigger1 = ((p2stateno != [5020, 5050]) || var(20) || roundstate = 3) && p2stateno != 5040
-trigger1 = !var(16) && (var(15) < 1 || var(20))
-trigger1 = animelem = 2
+trigger1 = animelem = 2 || animelem = 3 || animelem = 4 || animelem = 5
 attr = C, NA 
 damage = ceil(ifelse(fvar(12) * 40 < 7, 7, fvar(12) * 40)), 0
 animtype = Medium
@@ -1890,7 +1889,7 @@ time = 1
 type = hitdef
 ;trigger1 = ((p2stateno != [5020, 5050]) || var(20) || roundstate = 3) && p2stateno != 5040
 trigger1 = !var(16) && !var(17) && (var(15) < 1 || var(20))
-trigger1 = animelem = 2
+trigger1 = animelem = 2 || animelem = 3 || animelem = 4 || animelem = 5
 attr = C, NA
 damage = ceil(ifelse(fvar(12) * 64 < 7, 7, fvar(12) * 64)), 0
 animtype = Hard
